@@ -17,8 +17,8 @@
 - [Command-line Interface](/docs/guide/usage/linter/cli.md)
 - [Configuration](/docs/guide/usage/formatter/config.md): Configure Oxfmt using a .oxfmtrc.json file.
 - [Configuration](/docs/guide/usage/linter/config.md): Configure Oxlint using a .oxlintrc.json file.
-- [Configuration options for the Oxfmt.](/docs/guide/usage/formatter/generated-config.md)
 - [Configuration options for the Oxfmt.](/docs/guide/usage/formatter/config-file-reference.md)
+- [Configuration options for the Oxfmt.](/docs/guide/usage/formatter/generated-config.md)
 - [Dead Code Elimination](/docs/guide/usage/minifier/dead-code-elimination.md)
 - [Dealing with Errors](/docs/learn/parser_in_rust/errors.md)
 - [Debugging](/docs/contribute/debugging.md)
@@ -192,8 +192,8 @@
 - [eslint/yoda](/docs/guide/usage/linter/rules/eslint/yoda.md)
 - [FAQ](/docs/guide/usage/minifier/faq.md)
 - [Formatter](/docs/contribute/formatter.md)
-- [Getting Started](/docs/guide/introduction.md)
 - [Getting Started](/docs/contribute/development.md)
+- [Getting Started](/docs/guide/introduction.md)
 - [Global Variable Replacement](/docs/guide/usage/transformer/global-variable-replacement.md)
 - [Grammar](/docs/learn/ecmascript/grammar.md)
 - [Ignore files](/docs/guide/usage/formatter/ignore-files.md)
@@ -231,8 +231,8 @@
 - [import/unambiguous](/docs/guide/usage/linter/rules/import/unambiguous.md)
 - [Inline ignore comments](/docs/guide/usage/formatter/ignore-comments.md)
 - [Inline ignore comments](/docs/guide/usage/linter/ignore-comments.md): Disable specific rules inline using Oxlint ignore comments
-- [Introduction](/docs/contribute/introduction.md)
 - [Introduction](/docs/learn/parser_in_rust/intro.md)
+- [Introduction](/docs/contribute/introduction.md)
 - [Isolated Declarations Emit](/docs/guide/usage/transformer/isolated-declarations.md)
 - [jest/consistent-test-it](/docs/guide/usage/linter/rules/jest/consistent-test-it.md)
 - [jest/expect-expect](/docs/guide/usage/linter/rules/jest/expect-expect.md)
@@ -428,8 +428,8 @@
 - [promise/prefer-catch](/docs/guide/usage/linter/rules/promise/prefer-catch.md)
 - [promise/spec-only](/docs/guide/usage/linter/rules/promise/spec-only.md)
 - [promise/valid-params](/docs/guide/usage/linter/rules/promise/valid-params.md)
-- [Quickstart](/docs/guide/usage/linter/quickstart.md): Install Oxlint and learn the common workflows.
 - [Quickstart](/docs/guide/usage/formatter/quickstart.md): Install Oxfmt and learn the common workflows.
+- [Quickstart](/docs/guide/usage/linter/quickstart.md): Install Oxlint and learn the common workflows.
 - [react-perf/jsx-no-jsx-as-prop](/docs/guide/usage/linter/rules/react_perf/jsx-no-jsx-as-prop.md)
 - [react-perf/jsx-no-new-array-as-prop](/docs/guide/usage/linter/rules/react_perf/jsx-no-new-array-as-prop.md)
 - [react-perf/jsx-no-new-function-as-prop](/docs/guide/usage/linter/rules/react_perf/jsx-no-new-function-as-prop.md)
@@ -486,8 +486,8 @@
 - [react/style-prop-object](/docs/guide/usage/linter/rules/react/style-prop-object.md)
 - [react/void-dom-elements-no-children](/docs/guide/usage/linter/rules/react/void-dom-elements-no-children.md)
 - [References](/docs/learn/references.md)
-- [Resolver](/docs/contribute/resolver.md)
 - [Resolver](/docs/guide/usage/resolver.md)
+- [Resolver](/docs/contribute/resolver.md)
 - [Rules](/docs/guide/usage/linter/rules.md)
 - [Rules and Policy](/docs/contribute/rules.md)
 - [Security Policy](/docs/contribute/security.md)
