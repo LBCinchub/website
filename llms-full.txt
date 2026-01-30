@@ -24473,71 +24473,6 @@ Only one of these options can be used at a time.
 ---
 
 ---
-url: /docs/learn/parser_in_rust/intro.md
----
-
-# Introduction
-
-We are in [The Third Age of JavaScript](https://www.swyx.io/js-third-age/),
-the common trend right now is to author JavaScript tools in Rust or Go for their performance gains.
-
-But authoring JavaScript tools are challenging, let alone writing them in Rust.
-I have struggled a lot when learning these technologies,
-and I wish fewer people to take the same struggling journey.
-
-I want to make my own contribution to the community by writing this guide,
-so you don't have to take the same journey as I had.
-
-There are only a handful of developers on the Rust side, and I would like to see you here and join us,
-so we can build better and faster tools for everyone to enjoy.
-
-## Overview
-
-For this guide, the standard compiler frontend phases will be applied:
-
-```
-Source Text --> Lexer --> Token --> Parser --> AST
-```
-
-Writing a JavaScript parser is fairly easy,
-it is 10% architectural decisions and 90% hard work on the fine-grained details.
-
-The architectural decisions will mostly affect two categories:
-
-* the performance of our parser
-* how nice it is to consume our AST
-
-Knowing all the options and trade-offs before building a parser in Rust will make our whole journey much smoother.
-
-## Performance
-
-The key to a performant Rust program is to **allocate less memory** and **use fewer CPU cycles**.
-
-It is mostly transparent where memory allocations are made just by looking for heap-allocated objects such as a `Vec`, `Box` or `String`.
-Reasoning about their usage will give us a sense of how fast our program will be - the more we allocate, the slower our program will be.
-
-Rust gives us the power of zero-cost abstractions, we don't need to worry too much about abstractions causing slower performance.
-Be careful with our algorithmic complexities and we will be all good to go.
-
-:::info
-You should also read [The Rust Performance Book](https://nnethercote.github.io/perf-book/introduction.html).
-:::
-
-## Rust Source Code
-
-Whenever the performance of a function call cannot be deduced,
-do not be afraid to click the "source" button on the Rust documentation and read the source code,
-they are easy to understand most of the time.
-
-:::info
-When navigating the Rust source code, searching for a definition is simply looking for
-`fn function_name`, `struct struct_name`, `enum enum_name`, etc.
-This is one advantage of having constant grammar in Rust (compared to JavaScript 😉).
-:::
-
----
-
----
 url: /docs/contribute/introduction.md
 ---
 
@@ -24639,6 +24574,71 @@ Ready to contribute? Here are some great places to start:
 * 🛠️ **Pick a Tool**: Dive into [parser](./parser.md), [linter](./linter.md), [transformer](./transformer.md), or [other tools](./formatter.md)
 
 We can't wait to see what you'll build with us! 🚀
+
+---
+
+---
+url: /docs/learn/parser_in_rust/intro.md
+---
+
+# Introduction
+
+We are in [The Third Age of JavaScript](https://www.swyx.io/js-third-age/),
+the common trend right now is to author JavaScript tools in Rust or Go for their performance gains.
+
+But authoring JavaScript tools are challenging, let alone writing them in Rust.
+I have struggled a lot when learning these technologies,
+and I wish fewer people to take the same struggling journey.
+
+I want to make my own contribution to the community by writing this guide,
+so you don't have to take the same journey as I had.
+
+There are only a handful of developers on the Rust side, and I would like to see you here and join us,
+so we can build better and faster tools for everyone to enjoy.
+
+## Overview
+
+For this guide, the standard compiler frontend phases will be applied:
+
+```
+Source Text --> Lexer --> Token --> Parser --> AST
+```
+
+Writing a JavaScript parser is fairly easy,
+it is 10% architectural decisions and 90% hard work on the fine-grained details.
+
+The architectural decisions will mostly affect two categories:
+
+* the performance of our parser
+* how nice it is to consume our AST
+
+Knowing all the options and trade-offs before building a parser in Rust will make our whole journey much smoother.
+
+## Performance
+
+The key to a performant Rust program is to **allocate less memory** and **use fewer CPU cycles**.
+
+It is mostly transparent where memory allocations are made just by looking for heap-allocated objects such as a `Vec`, `Box` or `String`.
+Reasoning about their usage will give us a sense of how fast our program will be - the more we allocate, the slower our program will be.
+
+Rust gives us the power of zero-cost abstractions, we don't need to worry too much about abstractions causing slower performance.
+Be careful with our algorithmic complexities and we will be all good to go.
+
+:::info
+You should also read [The Rust Performance Book](https://nnethercote.github.io/perf-book/introduction.html).
+:::
+
+## Rust Source Code
+
+Whenever the performance of a function call cannot be deduced,
+do not be afraid to click the "source" button on the Rust documentation and read the source code,
+they are easy to understand most of the time.
+
+:::info
+When navigating the Rust source code, searching for a definition is simply looking for
+`fn function_name`, `struct struct_name`, `enum enum_name`, etc.
+This is one advantage of having constant grammar in Rust (compared to JavaScript 😉).
+:::
 
 ---
 
@@ -34566,6 +34566,60 @@ If you no longer use Prettier, you can optionally move its contents from `.prett
 ---
 
 ---
+url: /docs/guide/usage/minifier.md
+---
+# Minifier
+
+::: tip
+`oxc-minify` is currently in alpha and may still have bugs.
+We recommend thoroughly testing its output before deploying to production environments.
+:::
+
+## Features
+
+* [Eliminate dead code.](./minifier/dead-code-elimination)
+* [Transforms syntaxes to make the output shorter and repetitive.](./minifier/syntax-normalization)
+* [Mangle variable names.](./minifier/mangling)
+* [Remove whitespace and comments.](./minifier/whitespace-stripping)
+
+## Assumptions
+
+To allow better optimizations, Oxc minifier makes some assumptions about your code. See [Assumptions document](https://github.com/oxc-project/oxc/blob/main/crates/oxc_minifier/docs/ASSUMPTIONS.md) for more information.
+
+## FAQ
+
+See [FAQ](./minifier/faq) for common questions.
+
+## Installation
+
+### With Rolldown
+
+If you are using [Rolldown][url-rolldown], `oxc-minify` will be used for minification by default. No extra installation is required.
+
+### Node.js
+
+* Use the node binding [oxc-minify][url-oxc-minify-npm].
+* Try on [stackblitz](https://stackblitz.com/edit/oxc-minify).
+
+### Rust
+
+Use the umbrella crate [oxc][url-oxc-crate] with the `minifier` feature.
+
+Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_minifier/examples/minifier.rs).
+
+## Integrations
+
+* [`unplugin-oxc`](https://github.com/unplugin/unplugin-oxc)
+
+[url-oxc-crate]: https://docs.rs/oxc
+
+[url-oxc-minify-npm]: https://www.npmjs.com/package/oxc-minify
+
+[url-rolldown]: https://rolldown.rs
+
+---
+
+---
 url: /docs/contribute/minifier.md
 ---
 
@@ -34654,60 +34708,6 @@ Key strategies for maintaining performance:
 [esbuild]: https://github.com/evanw/esbuild
 
 [tdewolff-minify]: https://github.com/tdewolff/minify
-
----
-
----
-url: /docs/guide/usage/minifier.md
----
-# Minifier
-
-::: tip
-`oxc-minify` is currently in alpha and may still have bugs.
-We recommend thoroughly testing its output before deploying to production environments.
-:::
-
-## Features
-
-* [Eliminate dead code.](./minifier/dead-code-elimination)
-* [Transforms syntaxes to make the output shorter and repetitive.](./minifier/syntax-normalization)
-* [Mangle variable names.](./minifier/mangling)
-* [Remove whitespace and comments.](./minifier/whitespace-stripping)
-
-## Assumptions
-
-To allow better optimizations, Oxc minifier makes some assumptions about your code. See [Assumptions document](https://github.com/oxc-project/oxc/blob/main/crates/oxc_minifier/docs/ASSUMPTIONS.md) for more information.
-
-## FAQ
-
-See [FAQ](./minifier/faq) for common questions.
-
-## Installation
-
-### With Rolldown
-
-If you are using [Rolldown][url-rolldown], `oxc-minify` will be used for minification by default. No extra installation is required.
-
-### Node.js
-
-* Use the node binding [oxc-minify][url-oxc-minify-npm].
-* Try on [stackblitz](https://stackblitz.com/edit/oxc-minify).
-
-### Rust
-
-Use the umbrella crate [oxc][url-oxc-crate] with the `minifier` feature.
-
-Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_minifier/examples/minifier.rs).
-
-## Integrations
-
-* [`unplugin-oxc`](https://github.com/unplugin/unplugin-oxc)
-
-[url-oxc-crate]: https://docs.rs/oxc
-
-[url-oxc-minify-npm]: https://www.npmjs.com/package/oxc-minify
-
-[url-rolldown]: https://rolldown.rs
 
 ---
 
@@ -40612,185 +40612,6 @@ Today, comments are not printed. *It will be supported thanks to [oxc-parser #13
 ---
 
 ---
-url: /docs/learn/architecture/parser.md
----
-
-# Parser Architecture
-
-Oxc maintains its own AST and parser, which is by far the fastest and most conformant JavaScript and TypeScript (including JSX and TSX) parser written in Rust.
-
-As the parser often represents a key performance bottleneck in JavaScript tooling,
-any minor improvements can have a cascading effect on our downstream tools.
-By developing our parser, we have the opportunity to explore and implement well-researched performance techniques.
-
-## AST Design Philosophy
-
-While many existing JavaScript tools rely on [estree] as their AST specification,
-a notable drawback is its abundance of ambiguous nodes.
-This ambiguity often leads to confusion during development with [estree].
-
-The Oxc AST differs from the [estree] AST by removing ambiguous nodes and introducing distinct types.
-For example, instead of using a generic [estree] `Identifier`,
-the Oxc AST provides specific types such as `BindingIdentifier`, `IdentifierReference`, and `IdentifierName`.
-
-This clear distinction greatly enhances the development experience by aligning more closely with the ECMAScript specification.
-
-### AST Node Types
-
-```rust
-// Instead of generic Identifier
-pub struct BindingIdentifier<'a> {
-    pub span: Span,
-    pub name: Atom<'a>,
-}
-
-pub struct IdentifierReference<'a> {
-    pub span: Span,
-    pub name: Atom<'a>,
-    pub reference_id: Cell<Option<ReferenceId>>,
-}
-
-pub struct IdentifierName<'a> {
-    pub span: Span,
-    pub name: Atom<'a>,
-}
-```
-
-### Semantic Clarity
-
-This approach provides semantic clarity:
-
-* **`BindingIdentifier`**: Variable declarations (`let x = 1`)
-* **`IdentifierReference`**: Variable usage (`console.log(x)`)
-* **`IdentifierName`**: Property names (`obj.property`)
-
-## Performance Architecture
-
-### How is it so fast
-
-* **Memory Arena**: AST is allocated in a [memory arena](https://crates.io/crates/bumpalo) for fast allocation and deallocation
-* **String Optimization**: Short strings are inlined by [CompactString](https://crates.io/crates/compact_str)
-* **Minimal Heap Usage**: No other heap allocations are done except the above two
-* **Separation of Concerns**: Scope binding, symbol resolution and some syntax errors are delegated to the semantic analyzer
-
-### Memory Management Details
-
-#### Arena Allocation
-
-```rust
-use oxc_allocator::Allocator;
-
-// All AST nodes are allocated in this arena
-let allocator = Allocator::default();
-let ast_node = allocator.alloc(Expression::NumericLiteral(
-    allocator.alloc(NumericLiteral { value: 42.0, span: SPAN })
-));
-```
-
-Benefits:
-
-* **O(1) allocation**: Simple pointer bump
-* **O(1) deallocation**: Drop entire arena at once
-* **Cache-friendly**: Linear memory layout
-* **No fragmentation**: Continuous memory usage
-
-#### String Interning with CompactString
-
-```rust
-// Strings ≤ 24 bytes are stored inline (no heap allocation)
-let short_name = CompactString::from("variableName");  // Stack allocated
-let long_name = CompactString::from("a_very_long_variable_name_that_exceeds_limit");  // Heap allocated
-```
-
-This reduces memory allocations for the majority of JavaScript identifiers and string literals.
-
-## Parser Architecture
-
-### Two-Phase Design
-
-The Oxc parser follows a two-phase approach:
-
-1. **Parsing Phase**: Build AST structure with minimal semantic analysis
-2. **Semantic Phase**: Perform scope analysis, symbol resolution, and advanced error checking
-
-```rust
-// Phase 1: Parse to AST
-let parser_result = Parser::new(&allocator, &source_text, source_type).parse();
-
-// Phase 2: Semantic analysis
-let semantic_result = SemanticBuilder::new()
-    // Enable additional syntax checks not performed by the parser
-    .with_check_syntax_error(true)
-    .build(&parser_result.program);
-```
-
-### Parser Components
-
-#### Lexer
-
-* **Token generation**: Converts source text to structured tokens
-* **SIMD optimization**: Uses SIMD instructions for whitespace skipping
-* **Context-aware**: Handles regex vs division operator disambiguation
-
-#### Recursive Descent Parser
-
-* **Hand-written**: Custom implementation for maximum performance
-* **Error recovery**: Advanced error handling with meaningful messages
-* **Grammar compliance**: Follows ECMAScript specification precisely
-
-#### AST Builder
-
-* **Type safety**: Leverages Rust's type system for correctness
-* **Memory efficiency**: Direct arena allocation
-* **Builder pattern**: Convenient node construction methods
-
-## Conformance Strategy
-
-### Test Suite Coverage
-
-* **Test262**: 100% pass rate on ECMAScript conformance tests
-* **Babel**: 99.62% compatibility with Babel parser tests
-* **TypeScript**: 99.86% compatibility with TypeScript compiler tests
-
-### Error Handling Philosophy
-
-```rust
-// Meaningful error messages with source location
-pub struct OxcDiagnostic {
-    pub message: String,
-    pub span: Span,
-    pub severity: Severity,
-    pub help: Option<String>,
-}
-```
-
-The parser provides:
-
-* **Precise error locations**: Exact source positions
-* **Recovery strategies**: Continue parsing after errors
-* **Helpful suggestions**: Actionable error messages
-
-## Advanced Features
-
-### TypeScript Support
-
-* **Type stripping**: Removes TypeScript-specific syntax
-* **Decorator parsing**: Handles experimental decorators
-* **Namespace support**: Full module and namespace parsing
-* **JSX integration**: TypeScript + JSX (TSX) support
-
-### Research Areas
-
-* **SIMD text processing**: Vectorized string operations
-* **Cache optimization**: Minimize memory access patterns
-* **Branch prediction**: Optimize hot parsing paths
-* **Zero-copy parsing**: Eliminate unnecessary string copies
-
-[estree]: https://github.com/estree/estree
-
----
-
----
 url: /docs/learn/parser_in_rust/parser.md
 ---
 
@@ -41197,6 +41018,185 @@ function isParenthesizedArrowFunctionExpression(): Tristate {
 ```
 
 In summary, the TypeScript parser uses a combination of lookahead (fast path) and backtracking to parse arrow functions.
+
+---
+
+---
+url: /docs/learn/architecture/parser.md
+---
+
+# Parser Architecture
+
+Oxc maintains its own AST and parser, which is by far the fastest and most conformant JavaScript and TypeScript (including JSX and TSX) parser written in Rust.
+
+As the parser often represents a key performance bottleneck in JavaScript tooling,
+any minor improvements can have a cascading effect on our downstream tools.
+By developing our parser, we have the opportunity to explore and implement well-researched performance techniques.
+
+## AST Design Philosophy
+
+While many existing JavaScript tools rely on [estree] as their AST specification,
+a notable drawback is its abundance of ambiguous nodes.
+This ambiguity often leads to confusion during development with [estree].
+
+The Oxc AST differs from the [estree] AST by removing ambiguous nodes and introducing distinct types.
+For example, instead of using a generic [estree] `Identifier`,
+the Oxc AST provides specific types such as `BindingIdentifier`, `IdentifierReference`, and `IdentifierName`.
+
+This clear distinction greatly enhances the development experience by aligning more closely with the ECMAScript specification.
+
+### AST Node Types
+
+```rust
+// Instead of generic Identifier
+pub struct BindingIdentifier<'a> {
+    pub span: Span,
+    pub name: Atom<'a>,
+}
+
+pub struct IdentifierReference<'a> {
+    pub span: Span,
+    pub name: Atom<'a>,
+    pub reference_id: Cell<Option<ReferenceId>>,
+}
+
+pub struct IdentifierName<'a> {
+    pub span: Span,
+    pub name: Atom<'a>,
+}
+```
+
+### Semantic Clarity
+
+This approach provides semantic clarity:
+
+* **`BindingIdentifier`**: Variable declarations (`let x = 1`)
+* **`IdentifierReference`**: Variable usage (`console.log(x)`)
+* **`IdentifierName`**: Property names (`obj.property`)
+
+## Performance Architecture
+
+### How is it so fast
+
+* **Memory Arena**: AST is allocated in a [memory arena](https://crates.io/crates/bumpalo) for fast allocation and deallocation
+* **String Optimization**: Short strings are inlined by [CompactString](https://crates.io/crates/compact_str)
+* **Minimal Heap Usage**: No other heap allocations are done except the above two
+* **Separation of Concerns**: Scope binding, symbol resolution and some syntax errors are delegated to the semantic analyzer
+
+### Memory Management Details
+
+#### Arena Allocation
+
+```rust
+use oxc_allocator::Allocator;
+
+// All AST nodes are allocated in this arena
+let allocator = Allocator::default();
+let ast_node = allocator.alloc(Expression::NumericLiteral(
+    allocator.alloc(NumericLiteral { value: 42.0, span: SPAN })
+));
+```
+
+Benefits:
+
+* **O(1) allocation**: Simple pointer bump
+* **O(1) deallocation**: Drop entire arena at once
+* **Cache-friendly**: Linear memory layout
+* **No fragmentation**: Continuous memory usage
+
+#### String Interning with CompactString
+
+```rust
+// Strings ≤ 24 bytes are stored inline (no heap allocation)
+let short_name = CompactString::from("variableName");  // Stack allocated
+let long_name = CompactString::from("a_very_long_variable_name_that_exceeds_limit");  // Heap allocated
+```
+
+This reduces memory allocations for the majority of JavaScript identifiers and string literals.
+
+## Parser Architecture
+
+### Two-Phase Design
+
+The Oxc parser follows a two-phase approach:
+
+1. **Parsing Phase**: Build AST structure with minimal semantic analysis
+2. **Semantic Phase**: Perform scope analysis, symbol resolution, and advanced error checking
+
+```rust
+// Phase 1: Parse to AST
+let parser_result = Parser::new(&allocator, &source_text, source_type).parse();
+
+// Phase 2: Semantic analysis
+let semantic_result = SemanticBuilder::new()
+    // Enable additional syntax checks not performed by the parser
+    .with_check_syntax_error(true)
+    .build(&parser_result.program);
+```
+
+### Parser Components
+
+#### Lexer
+
+* **Token generation**: Converts source text to structured tokens
+* **SIMD optimization**: Uses SIMD instructions for whitespace skipping
+* **Context-aware**: Handles regex vs division operator disambiguation
+
+#### Recursive Descent Parser
+
+* **Hand-written**: Custom implementation for maximum performance
+* **Error recovery**: Advanced error handling with meaningful messages
+* **Grammar compliance**: Follows ECMAScript specification precisely
+
+#### AST Builder
+
+* **Type safety**: Leverages Rust's type system for correctness
+* **Memory efficiency**: Direct arena allocation
+* **Builder pattern**: Convenient node construction methods
+
+## Conformance Strategy
+
+### Test Suite Coverage
+
+* **Test262**: 100% pass rate on ECMAScript conformance tests
+* **Babel**: 99.62% compatibility with Babel parser tests
+* **TypeScript**: 99.86% compatibility with TypeScript compiler tests
+
+### Error Handling Philosophy
+
+```rust
+// Meaningful error messages with source location
+pub struct OxcDiagnostic {
+    pub message: String,
+    pub span: Span,
+    pub severity: Severity,
+    pub help: Option<String>,
+}
+```
+
+The parser provides:
+
+* **Precise error locations**: Exact source positions
+* **Recovery strategies**: Continue parsing after errors
+* **Helpful suggestions**: Actionable error messages
+
+## Advanced Features
+
+### TypeScript Support
+
+* **Type stripping**: Removes TypeScript-specific syntax
+* **Decorator parsing**: Handles experimental decorators
+* **Namespace support**: Full module and namespace parsing
+* **JSX integration**: TypeScript + JSX (TSX) support
+
+### Research Areas
+
+* **SIMD text processing**: Vectorized string operations
+* **Cache optimization**: Minimize memory access patterns
+* **Branch prediction**: Optimize hot parsing paths
+* **Zero-copy parsing**: Eliminate unnecessary string copies
+
+[estree]: https://github.com/estree/estree
 
 ---
 
@@ -48342,6 +48342,25 @@ url: /docs/learn/references.md
 ---
 
 ---
+url: /docs/contribute/resolver.md
+---
+
+# Resolver
+
+The Oxc resolver is a high-performance Node.js module resolution implementation that's compatible with webpack's enhanced-resolve. It's maintained in [its own GitHub repository](https://github.com/oxc-project/oxc_resolver).
+
+## Architecture
+
+The resolver is designed as a direct port of [enhanced-resolve](https://github.com/webpack/enhanced-resolve) with significant performance improvements:
+
+* **28x faster** than enhanced-resolve
+* **Zero-copy string operations** where possible
+* **Optimized path traversal** algorithms
+* **Efficient caching** strategies
+
+---
+
+---
 url: /docs/guide/usage/resolver.md
 ---
 
@@ -48373,25 +48392,6 @@ See [https://crates.io/crates/oxc\_resolver][url-oxc-resolver-crate] and its doc
 [url-oxc-resolver-npm]: https://www.npmjs.com/package/oxc-resolver
 
 [url-enhanced-resolve]: https://github.com/webpack/enhanced-resolve
-
----
-
----
-url: /docs/contribute/resolver.md
----
-
-# Resolver
-
-The Oxc resolver is a high-performance Node.js module resolution implementation that's compatible with webpack's enhanced-resolve. It's maintained in [its own GitHub repository](https://github.com/oxc-project/oxc_resolver).
-
-## Architecture
-
-The resolver is designed as a direct port of [enhanced-resolve](https://github.com/webpack/enhanced-resolve) with significant performance improvements:
-
-* **28x faster** than enhanced-resolve
-* **Zero-copy string operations** where possible
-* **Optimized path traversal** algorithms
-* **Efficient caching** strategies
 
 ---
 
@@ -50471,8 +50471,82 @@ const result = await transform("lib.ts", sourceCode, {
 
 ## Caveats
 
+### Isolated Modules
+
 Because Oxc transformer transforms each files independently, some TypeScript features are not supported.
 To avoid using unsupported features, you should enable the [`isolatedModules`](https://www.typescriptlang.org/tsconfig/#isolatedModules) option in your `tsconfig.json` file.
+
+### Partial Namespace Support
+
+TypeScript has a legacy feature called [namespaces](https://www.typescriptlang.org/docs/handbook/namespaces.html). While [it is recommended to use ES modules for new projects](https://www.typescriptlang.org/docs/handbook/namespaces-and-modules.html#using-modules), Oxc transformer has a partial support for namespaces.
+
+#### Exporting a variable using `var` or `let` is not supported
+
+Exporting a variable using `var` or `let` is not supported.
+
+```ts
+namespace Foo {
+  export let bar = 1; // [!code highlight]
+}
+console.log(Foo.bar);
+```
+
+A workaround is to use `const`. If you need the variable to be mutable, use an object with internal mutability:
+
+```ts
+namespace Foo {
+  export const bar = { value: 1 }; // [!code highlight]
+}
+console.log(Foo.bar.value);
+```
+
+#### Namespaces does not share the scope between namespaces with the same name
+
+::: code-group
+
+```ts [input.ts]
+namespace Foo {
+  export const bar = 1;
+}
+namespace Foo {
+  export const baz = bar;
+}
+```
+
+```js [output(oxc).js]
+let foo;
+(function (_Foo) {
+  const bar = (_Foo.bar = 1);
+})(Foo || (Foo = {}));
+(function (_Foo2) {
+  const baz = (_Foo2.baz = bar); // [!code highlight]
+})(Foo || (Foo = {}));
+```
+
+```js [output(typescript_compiler).js]
+var Foo;
+(function (Foo) {
+  Foo.bar = 1;
+})(Foo || (Foo = {}));
+(function (Foo) {
+  Foo.baz = Foo.bar; // [!code highlight]
+})(Foo || (Foo = {}));
+```
+
+:::
+
+In this example, the `bar` reference in the second namespace points to the `bar` variable in the first namespace for the TypeScript compiler output, but it does not for the Oxc transformer output.
+
+A workaround is to explicitly reference via the namespace object:
+
+```ts
+namespace Foo {
+  export const bar = 1;
+}
+namespace Foo {
+  export const baz = Foo.bar; // [!code highlight]
+}
+```
 
 ---
 
