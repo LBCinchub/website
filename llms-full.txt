@@ -1498,6 +1498,69 @@ import styled from "styled-components/primitives";
 ---
 
 ---
+url: /docs/guide/usage/formatter/cli.md
+---
+
+# Command-line Interface
+
+## Usage
+
+**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
+
+## Mode Options:
+
+* **`    --init`** —
+  Initialize `.oxfmtrc.json` with default values
+* **`    --migrate`**=*`SOURCE`* —
+  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
+* **`    --lsp`** —
+  Start language server protocol (LSP) server
+* **`    --stdin-filepath`**=*`PATH`* —
+  Specify the file name to use to infer which parser to use
+
+## Output Options:
+
+* **`    --write`** —
+  Format and write files in place (default)
+* **`    --check`** —
+  Check if files are formatted, also show statistics
+* **`    --list-different`** —
+  List files that would be changed
+
+## Config Options
+
+* **`-c`**, **`--config`**=*`PATH`* —
+  Path to the configuration file
+
+## Ignore Options
+
+* **`    --ignore-path`**=*`PATH`* —
+  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
+* **`    --with-node-modules`** —
+  Format code in node\_modules directory (skipped by default)
+
+## Runtime Options
+
+* **`    --no-error-on-unmatched-pattern`** —
+  Do not exit with error when pattern is unmatched
+* **`    --threads`**=*`INT`* —
+  Number of threads to use. Set to 1 for using only 1 CPU core.
+
+## Available positional items:
+
+* *`PATH`* —
+  Single file, single path or list of paths. If not provided, current working directory is used. Glob is supported only for exclude patterns like `'!**/fixtures/*.js'`.
+
+## Available options:
+
+* **`-h`**, **`--help`** —
+  Prints help information
+* **`-V`**, **`--version`** —
+  Prints version information
+
+---
+
+---
 url: /docs/guide/usage/linter/cli.md
 ---
 
@@ -1656,65 +1719,131 @@ Arguments:
 ---
 
 ---
-url: /docs/guide/usage/formatter/cli.md
+url: /docs/guide/usage/formatter/config.md
+description: Configure Oxfmt using a .oxfmtrc.json file.
 ---
 
-# Command-line Interface
+# Configuration
 
-## Usage
+Oxfmt works out of the box, but most teams commit a configuration file to keep formatting consistent across local runs, editors, and CI.
 
-**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
+This page focuses on project configuration: formatting options, ignore patterns, and experimental features.
 
-## Mode Options:
+## Create a config file
 
-* **`    --init`** —
-  Initialize `.oxfmtrc.json` with default values
-* **`    --migrate`**=*`SOURCE`* —
-  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier
-* **`    --lsp`** —
-  Start language server protocol (LSP) server
-* **`    --stdin-filepath`**=*`PATH`* —
-  Specify the file name to use to infer which parser to use
+To generate a starter config in the current directory:
 
-## Output Options:
+```sh
+oxfmt --init
+```
 
-* **`    --write`** —
-  Format and write files in place (default)
-* **`    --check`** —
-  Check if files are formatted, also show statistics
-* **`    --list-different`** —
-  List files that would be changed
+Oxfmt automatically looks for `.oxfmtrc.json` or `.oxfmtrc.jsonc` starting from the current directory and walking up the tree. You can also pass a config explicitly:
 
-## Config Options
+```sh
+oxfmt -c path/to/yourconfig.json
+```
 
-* **`-c`**, **`--config`**=*`PATH`* —
-  Path to the configuration file
+A minimal configuration looks like this:
 
-## Ignore Options
+```json [.oxfmtrc.json]
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 80
+}
+```
 
-* **`    --ignore-path`**=*`PATH`* —
-  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
-* **`    --with-node-modules`** —
-  Format code in node\_modules directory (skipped by default)
+## Configuration file format
 
-## Runtime Options
+A configuration file is a JSON object. The most common top-level fields are:
 
-* **`    --no-error-on-unmatched-pattern`** —
-  Do not exit with error when pattern is unmatched
-* **`    --threads`**=*`INT`* —
-  Number of threads to use. Set to 1 for using only 1 CPU core.
+* `printWidth`: Line width limit (default: 100)
+* `tabWidth`: Spaces per indentation level (default: 2)
+* `useTabs`: Use tabs instead of spaces (default: false)
+* `semi`: Add semicolons (default: true)
+* `singleQuote`: Use single quotes (default: false)
+* `trailingComma`: Trailing commas in multi-line structures (default: "all")
+* `ignorePatterns`: Glob patterns to exclude from formatting
+* `experimentalSortImports`: Configure import sorting (disabled by default)
+* `experimentalSortPackageJson`: Configure package.json sorting (enabled by default)
+* `experimentalTailwindcss`: Configure Tailwind class sorting (disabled by default)
 
-## Available positional items:
+For a complete list of fields, see the [Config file reference](./config-file-reference).
 
-* *`PATH`* —
-  Single file, single path or list of paths. If not provided, current working directory is used. Glob is supported only for exclude patterns like `'!**/fixtures/*.js'`.
+## JSON schema
 
-## Available options:
+Add a `$schema` field for editor validation and autocomplete:
 
-* **`-h`**, **`--help`** —
-  Prints help information
-* **`-V`**, **`--version`** —
-  Prints version information
+```json [.oxfmtrc.json]
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json"
+}
+```
+
+## `.editorconfig`
+
+Oxfmt reads these `.editorconfig` properties:
+
+* `end_of_line` → `endOfLine`
+* `indent_style` → `useTabs`
+* `indent_size` → `tabWidth`
+* `max_line_length` → `printWidth`
+* `insert_final_newline` → `insertFinalNewline`
+
+Both root section and glob-based overrides are supported.
+
+```
+[*]
+indent_size = 4
+
+[*.{js,ts}]
+indent_size = 2
+```
+
+Oxfmt uses only the nearest `.editorconfig` from the current directory:
+
+* `root = true` is not respected
+* Nested `.editorconfig` files are not merged
+
+## Precedence
+
+Options are applied in order (lowest to highest priority):
+
+1. Defaults
+2. `.oxfmtrc.json(c)` root options
+3. `.oxfmtrc.json(c)` `overrides` options
+4. fallback to options supported by `.editorconfig` for unset fields
+
+## Oxfmt-specific options
+
+### `insertFinalNewline`
+
+Controls whether a final newline is added to formatted files. Defaults to `true`.
+
+This is a [frequently requested Prettier feature](https://github.com/prettier/prettier/issues/6360), as some environments (e.g., Salesforce) strip trailing newlines.
+
+### `printWidth`
+
+Oxfmt defaults to `printWidth: 100` (Prettier uses 80). Reasons:
+
+* TypeScript code is longer due to type annotations
+* Import statements often have many specifiers
+* Modern screens are wider
+* Fewer line breaks mean fewer LLM tokens
+
+To match Prettier's default:
+
+```json [.oxfmtrc.json]
+{
+  "printWidth": 80
+}
+```
+
+## Next steps
+
+* [Ignore files](./ignore-files): Ignore files and patterns, `.gitignore` and `.prettierignore` workflows.
+* [Inline ignore comments](./ignore-comments): Inline suppressions for specific code.
+* [Config file reference](./config-file-reference): Full schema and field documentation.
+* [CLI reference](./cli): Complete list of flags.
 
 ---
 
@@ -2039,136 +2168,7 @@ Example (monorepo + React + jsx-a11y):
 ---
 
 ---
-url: /docs/guide/usage/formatter/config.md
-description: Configure Oxfmt using a .oxfmtrc.json file.
----
-
-# Configuration
-
-Oxfmt works out of the box, but most teams commit a configuration file to keep formatting consistent across local runs, editors, and CI.
-
-This page focuses on project configuration: formatting options, ignore patterns, and experimental features.
-
-## Create a config file
-
-To generate a starter config in the current directory:
-
-```sh
-oxfmt --init
-```
-
-Oxfmt automatically looks for `.oxfmtrc.json` or `.oxfmtrc.jsonc` starting from the current directory and walking up the tree. You can also pass a config explicitly:
-
-```sh
-oxfmt -c path/to/yourconfig.json
-```
-
-A minimal configuration looks like this:
-
-```json [.oxfmtrc.json]
-{
-  "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "printWidth": 80
-}
-```
-
-## Configuration file format
-
-A configuration file is a JSON object. The most common top-level fields are:
-
-* `printWidth`: Line width limit (default: 100)
-* `tabWidth`: Spaces per indentation level (default: 2)
-* `useTabs`: Use tabs instead of spaces (default: false)
-* `semi`: Add semicolons (default: true)
-* `singleQuote`: Use single quotes (default: false)
-* `trailingComma`: Trailing commas in multi-line structures (default: "all")
-* `ignorePatterns`: Glob patterns to exclude from formatting
-* `experimentalSortImports`: Configure import sorting (disabled by default)
-* `experimentalSortPackageJson`: Configure package.json sorting (enabled by default)
-* `experimentalTailwindcss`: Configure Tailwind class sorting (disabled by default)
-
-For a complete list of fields, see the [Config file reference](./config-file-reference).
-
-## JSON schema
-
-Add a `$schema` field for editor validation and autocomplete:
-
-```json [.oxfmtrc.json]
-{
-  "$schema": "./node_modules/oxfmt/configuration_schema.json"
-}
-```
-
-## `.editorconfig`
-
-Oxfmt reads these `.editorconfig` properties:
-
-* `end_of_line` → `endOfLine`
-* `indent_style` → `useTabs`
-* `indent_size` → `tabWidth`
-* `max_line_length` → `printWidth`
-* `insert_final_newline` → `insertFinalNewline`
-
-Both root section and glob-based overrides are supported.
-
-```
-[*]
-indent_size = 4
-
-[*.{js,ts}]
-indent_size = 2
-```
-
-Oxfmt uses only the nearest `.editorconfig` from the current directory:
-
-* `root = true` is not respected
-* Nested `.editorconfig` files are not merged
-
-## Precedence
-
-Options are applied in order (lowest to highest priority):
-
-1. Defaults
-2. `.oxfmtrc.json(c)` root options
-3. `.oxfmtrc.json(c)` `overrides` options
-4. fallback to options supported by `.editorconfig` for unset fields
-
-## Oxfmt-specific options
-
-### `insertFinalNewline`
-
-Controls whether a final newline is added to formatted files. Defaults to `true`.
-
-This is a [frequently requested Prettier feature](https://github.com/prettier/prettier/issues/6360), as some environments (e.g., Salesforce) strip trailing newlines.
-
-### `printWidth`
-
-Oxfmt defaults to `printWidth: 100` (Prettier uses 80). Reasons:
-
-* TypeScript code is longer due to type annotations
-* Import statements often have many specifiers
-* Modern screens are wider
-* Fewer line breaks mean fewer LLM tokens
-
-To match Prettier's default:
-
-```json [.oxfmtrc.json]
-{
-  "printWidth": 80
-}
-```
-
-## Next steps
-
-* [Ignore files](./ignore-files): Ignore files and patterns, `.gitignore` and `.prettierignore` workflows.
-* [Inline ignore comments](./ignore-comments): Inline suppressions for specific code.
-* [Config file reference](./config-file-reference): Full schema and field documentation.
-* [CLI reference](./cli): Complete list of flags.
-
----
-
----
-url: /docs/guide/usage/formatter/generated-config.md
+url: /docs/guide/usage/formatter/config-file-reference.md
 ---
 
 # Configuration options for the Oxfmt.
@@ -3138,7 +3138,7 @@ Whether or not to indent the code inside `<script>` and `<style>` tags in Vue fi
 ---
 
 ---
-url: /docs/guide/usage/formatter/config-file-reference.md
+url: /docs/guide/usage/formatter/generated-config.md
 ---
 
 # Configuration options for the Oxfmt.
@@ -5360,51 +5360,85 @@ Examples of **correct** code for this rule with the default `"always"` option:
 
 ## Configuration
 
-This rule accepts a configuration object with the following properties:
+Configuration for the capitalized-comments rule.
 
-### block
+The first element specifies whether comments should `"always"` or `"never"`
+begin with a capital letter. The second element is an optional object
+containing additional options.
 
-type: `object`
+### The 1st option
 
-#### block.ignoreConsecutiveComments
+type: `"always" | "never"`
 
-type: `boolean`
+### The 2nd option
 
-#### block.ignoreInlineComments
+This option is an object with the following properties:
 
-type: `boolean`
-
-#### block.ignorePattern
-
-type: `string`
-
-### ignoreConsecutiveComments
-
-type: `boolean`
-
-### ignoreInlineComments
-
-type: `boolean`
-
-### ignorePattern
-
-type: `string`
-
-### line
+#### block
 
 type: `object`
 
-#### line.ignoreConsecutiveComments
+Configuration options specific to block comments.
+
+##### block.ignoreConsecutiveComments
 
 type: `boolean`
 
-#### line.ignoreInlineComments
+If true, consecutive comments will be ignored after the first comment.
+
+##### block.ignoreInlineComments
 
 type: `boolean`
 
-#### line.ignorePattern
+If true, inline comments (comments in the middle of code) will be ignored.
+
+##### block.ignorePattern
 
 type: `string`
+
+A regex pattern. Comments that match the pattern will not cause violations.
+
+#### ignoreConsecutiveComments
+
+type: `boolean`
+
+If true, consecutive comments will be ignored after the first comment.
+
+#### ignoreInlineComments
+
+type: `boolean`
+
+If true, inline comments (comments in the middle of code) will be ignored.
+
+#### ignorePattern
+
+type: `string`
+
+A regex pattern. Comments that match the pattern will not cause violations.
+
+#### line
+
+type: `object`
+
+Configuration options specific to line comments.
+
+##### line.ignoreConsecutiveComments
+
+type: `boolean`
+
+If true, consecutive comments will be ignored after the first comment.
+
+##### line.ignoreInlineComments
+
+type: `boolean`
+
+If true, inline comments (comments in the middle of code) will be ignored.
+
+##### line.ignorePattern
+
+type: `string`
+
+A regex pattern. Comments that match the pattern will not cause violations.
 
 ## How to use
 
@@ -6000,28 +6034,39 @@ if (foo) {
 
 ## Configuration
 
-This rule accepts a configuration object with the following properties:
+Configuration for the curly rule, specified as an array of one or two elements.
 
-### consistent
+Examples:
 
-type: `boolean`
+* `["all"]` - Require braces in all cases (default)
+* `["multi"]` - Require braces only for multi-statement blocks
+* `["multi-line"]` - Require braces for multi-line blocks
+* `["multi-or-nest"]` - Require braces for nested or multi-line blocks
+* `["multi", "consistent"]` - Multi mode with consistent braces in if-else chains
 
-default: `false`
-
-Whether to enforce consistent use of curly braces in if-else chains.
-
-### curlyType
+### The 1st option
 
 type: `"all" | "multi" | "multi-line" | "multi-or-nest"`
 
-default: `"all"`
+The enforcement type for the curly rule.
 
-Which type of curly brace enforcement to use.
+#### `"all"`
 
-* `"all"`: require braces in all cases
-* `"multi"`: require braces only for multi-statement blocks
-* `"multi-line"`: require braces only for multi-line blocks
-* `"multi-or-nest"`: require braces for multi-line blocks or when nested
+Require braces in all cases (default)
+
+#### `"multi"`
+
+Require braces only when there are multiple statements in the block
+
+#### `"multi-line"`
+
+Require braces when the block spans multiple lines
+
+#### `"multi-or-nest"`
+
+Require braces when the block is nested or spans multiple lines
+
+### The 2nd option
 
 ## How to use
 
@@ -15074,7 +15119,7 @@ and provide a higher maintenance cost of two dependencies when one would suffice
 Examples of **incorrect** code for this rule:
 
 ```js
-/*eslint no-restricted-imports: ["error", "disallowed-import"]"*/
+/* no-restricted-imports: ["error", "disallowed-import"] */
 
 import foo from "disallowed-import";
 export * from "disallowed-import";
@@ -15083,7 +15128,7 @@ export * from "disallowed-import";
 Examples of **correct** code for this rule:
 
 ```js
-/*eslint no-restricted-imports: ["error", "fs"]*/
+/* no-restricted-imports: ["error", "fs"] */
 
 import crypto from "crypto";
 export * from "bar";
@@ -15098,10 +15143,10 @@ The custom message will be displayed as a help text for the user.
 Examples of **incorrect** code for this rule:
 
 ```js
-/*eslint no-restricted-imports: ["error", {
+/* no-restricted-imports: ["error", {
   "name": "disallowed-import",
   "message": "Please use 'allowed-import' instead"
-}]*/
+}] */
 
 import foo from "disallowed-import";
 ```
@@ -15117,7 +15162,7 @@ This is an object option whose value is an array containing the names of the mod
 Examples of **incorrect** code for `paths`:
 
 ```js
-/*eslint no-restricted-imports: ["error", { "paths": ["cluster"] }]*/
+/* no-restricted-imports: ["error", { "paths": ["cluster"] }] */
 
 import cluster from "cluster";
 ```
@@ -15147,13 +15192,13 @@ Specifying `"default"` string inside the `importNames` array will restrict the d
 Examples of **incorrect** code for this rule:
 
 ```js
-/*eslint no-restricted-imports: ["error", { paths: [{
+/* no-restricted-imports: ["error", { paths: [{
   "name": "foo",
   "importNames": ["default"]
 }, {
   "name": "bar",
   "importNames": ["Baz"]
-}]}]*/
+}]}] */
 
 import DisallowedObject from "foo";
 import { Baz } from "far";
@@ -15169,11 +15214,11 @@ Note: `allowImportNames` cannot be used in combination with `importNames`.
 Examples of **incorrect** code for this rule:
 
 ```js
-/*eslint no-restricted-imports: ["error", { paths: [{
+/* no-restricted-imports: ["error", { paths: [{
   "name": "foo",
   "allowImportNames": ["AllowedObject"],
   "message": "Please use only 'AllowedObject' from 'foo'."
-}]}]*/
+}]}] */
 
 import { DisallowedObject } from "foo";
 ```
@@ -15185,10 +15230,10 @@ Whether to allow type-only imports for a path. Default: `false`.
 Examples of **incorrect** code for this rule:
 
 ```typescript
-/*eslint no-restricted-imports: ["error", { paths: [{
+/* no-restricted-imports: ["error", { paths: [{
   "name": "foo",
   "allowTypeImports": true
-}]}]*/
+}]}] */
 
 import foo from "import-foo";
 export { Foo } from "import-foo";
@@ -15197,10 +15242,10 @@ export { Foo } from "import-foo";
 Examples of **correct** code for this rule:
 
 ```typescript
-/*eslint no-restricted-imports: ["error", { paths: [{
+/* no-restricted-imports: ["error", { paths: [{
   "name": "foo",
   "allowTypeImports": true
-}]}]*/
+}]}] */
 
 import type foo from "import-foo";
 export type { Foo } from "import-foo";
@@ -15244,7 +15289,7 @@ You can also use regular expressions to restrict modules (see the `regex` option
 Examples of **incorrect** code for `patterns` option:
 
 ```js
-/*eslint no-restricted-imports: ["error", { "patterns": ["lodash/*"] }]*/
+/* no-restricted-imports: ["error", { "patterns": ["lodash/*"] }] */
 
 import pick from "lodash/pick";
 ```
@@ -15252,7 +15297,7 @@ import pick from "lodash/pick";
 Examples of **correct** code for `patterns` option:
 
 ```js
-/*eslint no-restricted-imports: ["error", { "patterns": ["crypto/*"] }]*/
+/* no-restricted-imports: ["error", { "patterns": ["crypto/*"] }] */
 
 import crypto from "crypto";
 ```
@@ -15267,10 +15312,10 @@ Either of the `group` or `regex` properties is required when using the `patterns
 Examples of **incorrect** code for `group` option:
 
 ```js
-/*eslint no-restricted-imports: ["error", { patterns: [{
+/* no-restricted-imports: ["error", { patterns: [{
   group: ["lodash/*"],
   message: "Please use the default import from 'lodash' instead."
-}]}]*/
+}]}] */
 
 import pick from "lodash/pick";
 ```
@@ -15287,9 +15332,9 @@ like Lookahead and Lookbehinds.
 Examples of **incorrect** code for `regex` option:
 
 ```js
-/*eslint no-restricted-imports: ["error", { patterns: [{
+/* no-restricted-imports: ["error", { patterns: [{
   regex: "@app/(api|enums).*",
-}]}]*/
+}]}] */
 
 import Foo from "@app/api";
 import Bar from "@app/api/bar";
@@ -15311,11 +15356,11 @@ In this case, the specified names apply only to the associated `group` or `regex
 Examples of **incorrect** code for `importNames` in `patterns`:
 
 ```js
-/*eslint no-restricted-imports: ["error", { patterns: [{
+/* no-restricted-imports: ["error", { patterns: [{
   group: ["utils/*"],
   importNames: ['isEmpty'],
   message: "Use 'isEmpty' from lodash instead."
-}]}]*/
+}]}] */
 
 import { isEmpty } from "utils/collection-utils";
 ```
@@ -15334,11 +15379,11 @@ This option allows you to use regex patterns to restrict import names.
 Examples of **incorrect** code for `importNamePattern` option:
 
 ```js
-/*eslint no-restricted-imports: ["error", { patterns: [{
+/* no-restricted-imports: ["error", { patterns: [{
   group: ["foo/*"],
   importNamePattern: '^(is|has)',
   message: "Use 'is*' and 'has*' functions from baz/bar instead"
-}]}]*/
+}]}] */
 
 import { isSomething, hasSomething } from "foo/bar";
 ```
@@ -15362,10 +15407,10 @@ Note: `allowImportNamePattern` cannot be used in combination with `importNames`,
 Examples of **incorrect** code for `allowImportNamePattern` option:
 
 ```js
-/*eslint no-restricted-imports: ["error", { patterns: [{
+/* no-restricted-imports: ["error", { patterns: [{
   group: ["utils/*"],
   allowImportNamePattern: '^has'
-}]}]*/
+}]}] */
 
 import { isEmpty } from "utils/collection-utils";
 ```
@@ -15373,10 +15418,10 @@ import { isEmpty } from "utils/collection-utils";
 Examples of **correct** code for `allowImportNamePattern` option:
 
 ```js
-/*eslint no-restricted-imports: ["error", { patterns: [{
+/* no-restricted-imports: ["error", { patterns: [{
   group: ["utils/*"],
   allowImportNamePattern: '^is'
-}]}]*/
+}]}] */
 
 import { isEmpty } from "utils/collection-utils";
 ```
@@ -18741,6 +18786,105 @@ To **enable** this rule using the config file or in the CLI, you can use:
 
 ```bash [CLI]
 oxlint --deny operator-assignment
+```
+
+:::
+
+## References
+
+* Rule Source
+
+---
+
+---
+url: /docs/guide/usage/linter/rules/eslint/prefer-const.md
+---
+
+### What it does
+
+Requires `const` declarations for variables that are never
+reassigned after their initial declaration.
+
+### Why is this bad?
+
+If a variable is never reassigned, using the `const` declaration is better.
+`const` declaration tells readers, "this variable is never reassigned," reducing cognitive load and improving maintainability.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```js
+let a = 3;
+console.log(a);
+
+let b;
+b = 0;
+console.log(b);
+
+for (let i in [1, 2, 3]) {
+  console.log(i);
+}
+```
+
+Examples of **correct** code for this rule:
+
+```js
+const a = 0;
+
+let a;
+a = 0;
+a = 1;
+
+let a;
+if (true) {
+  a = 0;
+}
+
+for (const i in [1, 2, 3]) {
+  console.log(i);
+}
+```
+
+## Configuration
+
+### destructuring
+
+type: `"any" | "all"`
+
+#### `"any"`
+
+Warn if any of the variables in a destructuring assignment should be `const`.
+
+#### `"all"`
+
+Only warn if all variables in a destructuring assignment should be `const`. Otherwise, ignore them.
+
+### ignoreReadBeforeAssign
+
+type: `boolean`
+
+default: `false`
+
+If `true`, the rule will not report variables that are read before their initial assignment.
+This is mainly useful for preventing conflicts with the `typescript/no-use-before-define` rule.
+
+## How to use
+
+To **enable** this rule using the config file or in the CLI, you can use:
+
+::: code-group
+
+```json [Config (.oxlintrc.json)]
+{
+  "rules": {
+    "prefer-const": "error"
+  }
+}
+```
+
+```bash [CLI]
+oxlint --deny prefer-const
 ```
 
 :::
@@ -23472,6 +23616,23 @@ import type { d } from "foo"; // `prefer-inline` is true
 
 This rule accepts a configuration object with the following properties:
 
+### considerQueryString
+
+type: `boolean`
+
+default: `false`
+
+When set to `true`, the rule will consider the query string part of the import path
+when determining if imports are duplicates. This is useful when using loaders like
+webpack that use query strings to configure how a module should be loaded.
+
+Examples of **correct** code with this option set to `true`:
+
+```javascript
+import x from "./bar?optionX";
+import y from "./bar?optionY";
+```
+
 ### preferInline
 
 type: `boolean`
@@ -24049,6 +24210,144 @@ oxlint --deny import/no-namespace --import-plugin
 ---
 
 ---
+url: /docs/guide/usage/linter/rules/import/no-nodejs-modules.md
+---
+
+### What it does
+
+Forbid the use of Node.js builtin modules. Can be useful for client-side web projects that do not have access to those modules.
+
+### Why is this bad?
+
+Node.js builtins (e.g. `fs`, `path`, `crypto`) are not available in browsers, so importing them in client bundles causes runtime failures or forces bundlers to inject heavy polyfills/shims.
+This increases bundle size, can leak server-only logic to the client, and may hide environment mismatches until production.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```js
+import fs from "fs";
+import path from "path";
+
+var fs = require("fs");
+var path = require("path");
+```
+
+Examples of **correct** code for this rule:
+
+```js
+import _ from "lodash";
+import foo from "foo";
+import foo from "./foo";
+
+var _ = require("lodash");
+var foo = require("foo");
+var foo = require("./foo");
+
+/* eslint import/no-nodejs-modules: ["error", {"allow": ["path"]}] */
+import path from "path";
+```
+
+## Configuration
+
+This rule accepts a configuration object with the following properties:
+
+### allow
+
+type: `string[]`
+
+Array of names of allowed modules. Defaults to an empty array.
+
+## How to use
+
+To **enable** this rule using the config file or in the CLI, you can use:
+
+::: code-group
+
+```json [Config (.oxlintrc.json)]
+{
+  "plugins": ["import"],
+  "rules": {
+    "import/no-nodejs-modules": "error"
+  }
+}
+```
+
+```bash [CLI]
+oxlint --deny import/no-nodejs-modules --import-plugin
+```
+
+:::
+
+## References
+
+* Rule Source
+
+---
+
+---
+url: /docs/guide/usage/linter/rules/import/no-relative-parent-imports.md
+---
+
+### What it does
+
+Forbids importing modules from parent directories using relative paths.
+
+### Why is this bad?
+
+This restriction enforces tree-like folder structures instead of complex
+graph-like structures, making large codebases easier to maintain.
+Dependencies flow in one direction (parent to child), which clarifies
+module relationships.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```javascript
+import foo from "../bar";
+import foo from "../../utils/helper";
+const baz = require("../config");
+export { qux } from "../shared";
+```
+
+Examples of **correct** code for this rule:
+
+```javascript
+import foo from "lodash";
+import a from "./lib/a";
+import b from "./b";
+```
+
+## How to use
+
+To **enable** this rule using the config file or in the CLI, you can use:
+
+::: code-group
+
+```json [Config (.oxlintrc.json)]
+{
+  "plugins": ["import"],
+  "rules": {
+    "import/no-relative-parent-imports": "error"
+  }
+}
+```
+
+```bash [CLI]
+oxlint --deny import/no-relative-parent-imports --import-plugin
+```
+
+:::
+
+## References
+
+* Rule Source
+
+---
+
+---
 url: /docs/guide/usage/linter/rules/import/no-self-import.md
 ---
 
@@ -24159,7 +24458,7 @@ default: `[]`
 
 A list of glob patterns to allow unassigned imports for specific modules.
 For example:
-`{ "allow": ["*.css"] }` will allow unassigned imports for any module ending with `.css`.
+`{ "allow": ["**/*.css"] }` will allow unassigned imports for any module ending with `.css`.
 
 ## How to use
 
@@ -27096,6 +27395,76 @@ To **enable** this rule using the config file or in the CLI, you can use:
 
 ```bash [CLI]
 oxlint --deny jest/no-test-return-statement --jest-plugin
+```
+
+:::
+
+## References
+
+* Rule Source
+
+---
+
+---
+url: /docs/guide/usage/linter/rules/jest/no-unneeded-async-expect-function.md
+---
+
+### What it does
+
+Disallows unnecessary async function wrapper for expected promises.
+
+### Why is this bad?
+
+When the only statement inside an async wrapper is `await someCall()`,
+the call should be passed directly to `expect` instead. This makes the
+test code more concise and easier to read.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```js
+await expect(async () => {
+  await doSomethingAsync();
+}).rejects.toThrow();
+
+await expect(async () => await doSomethingAsync()).rejects.toThrow();
+```
+
+Examples of **correct** code for this rule:
+
+```js
+await expect(doSomethingAsync()).rejects.toThrow();
+```
+
+This rule is compatible with [eslint-plugin-vitest](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/no-unneeded-async-expect-function.md),
+to use it, add the following configuration to your `.oxlintrc.json`:
+
+```json
+{
+  "rules": {
+    "vitest/no-unneeded-async-expect-function": "error"
+  }
+}
+```
+
+## How to use
+
+To **enable** this rule using the config file or in the CLI, you can use:
+
+::: code-group
+
+```json [Config (.oxlintrc.json)]
+{
+  "plugins": ["jest"],
+  "rules": {
+    "jest/no-unneeded-async-expect-function": "error"
+  }
+}
+```
+
+```bash [CLI]
+oxlint --deny jest/no-unneeded-async-expect-function --jest-plugin
 ```
 
 :::
@@ -40600,6 +40969,70 @@ Test results are stored in snapshot files for tracking changes:
 ---
 
 ---
+url: /docs/guide/usage/parser.md
+---
+
+# Parser
+
+This is production ready.
+
+## Features
+
+* 3x faster than swc parser ([benchmark][url-benchmark]).
+* Parses `.js(x)` and `.ts(x)`.
+* Passes all parser tests from Test262 and 99% from Babel and TypeScript.
+* Returns ESM information directly, no need for [`es-module-lexer`](https://github.com/guybedford/es-module-lexer).
+* [✅ works with checker.ts](https://x.com/robpalmer2/status/1805502964435505559)
+
+## Installation
+
+### Node.js
+
+* Use the node binding [oxc-parser][url-oxc-parser-npm].
+* Try on [stackblitz](https://stackblitz.com/edit/oxc-parser).
+
+### Rust
+
+Use the umbrella crate [oxc][url-oxc-crate] or the individual [oxc\_ast][url-oxc-ast-crate] and [oxc\_parser][url-oxc-parser-crate] crates.
+
+Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_parser/examples/parser.rs).
+
+## Print
+
+After parsing and transforming, you can print code.
+
+Here's a direct example using [esrap](https://www.npmjs.com/package/esrap) *(`parse` in reverse!)*:
+
+```js
+import { print } from "esrap";
+import ts from "esrap/languages/ts";
+import { parseSync } from "oxc-parser";
+
+const { program } = parseSync("test.js", 'alert("hello oxc & esrap");');
+const { code } = print(program, ts());
+
+console.log(code); // alert("hello oxc & esrap");
+```
+
+:::info
+Today, comments are not printed. *It will be supported thanks to [oxc-parser #13285](https://github.com/oxc-project/oxc/pull/13285).*
+:::
+
+[url-swc]: https://swc.rs
+
+[url-benchmark]: https://github.com/oxc-project/bench-javascript-parser-written-in-rust
+
+[url-oxc-crate]: https://docs.rs/oxc
+
+[url-oxc-ast-crate]: https://docs.rs/oxc_ast
+
+[url-oxc-parser-crate]: https://docs.rs/oxc_parser
+
+[url-oxc-parser-npm]: https://www.npmjs.com/package/oxc-parser
+
+---
+
+---
 url: /docs/learn/architecture/parser.md
 ---
 
@@ -40775,70 +41208,6 @@ The parser provides:
 * **Zero-copy parsing**: Eliminate unnecessary string copies
 
 [estree]: https://github.com/estree/estree
-
----
-
----
-url: /docs/guide/usage/parser.md
----
-
-# Parser
-
-This is production ready.
-
-## Features
-
-* 3x faster than swc parser ([benchmark][url-benchmark]).
-* Parses `.js(x)` and `.ts(x)`.
-* Passes all parser tests from Test262 and 99% from Babel and TypeScript.
-* Returns ESM information directly, no need for [`es-module-lexer`](https://github.com/guybedford/es-module-lexer).
-* [✅ works with checker.ts](https://x.com/robpalmer2/status/1805502964435505559)
-
-## Installation
-
-### Node.js
-
-* Use the node binding [oxc-parser][url-oxc-parser-npm].
-* Try on [stackblitz](https://stackblitz.com/edit/oxc-parser).
-
-### Rust
-
-Use the umbrella crate [oxc][url-oxc-crate] or the individual [oxc\_ast][url-oxc-ast-crate] and [oxc\_parser][url-oxc-parser-crate] crates.
-
-Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_parser/examples/parser.rs).
-
-## Print
-
-After parsing and transforming, you can print code.
-
-Here's a direct example using [esrap](https://www.npmjs.com/package/esrap) *(`parse` in reverse!)*:
-
-```js
-import { print } from "esrap";
-import ts from "esrap/languages/ts";
-import { parseSync } from "oxc-parser";
-
-const { program } = parseSync("test.js", 'alert("hello oxc & esrap");');
-const { code } = print(program, ts());
-
-console.log(code); // alert("hello oxc & esrap");
-```
-
-:::info
-Today, comments are not printed. *It will be supported thanks to [oxc-parser #13285](https://github.com/oxc-project/oxc/pull/13285).*
-:::
-
-[url-swc]: https://swc.rs
-
-[url-benchmark]: https://github.com/oxc-project/bench-javascript-parser-written-in-rust
-
-[url-oxc-crate]: https://docs.rs/oxc
-
-[url-oxc-ast-crate]: https://docs.rs/oxc_ast
-
-[url-oxc-parser-crate]: https://docs.rs/oxc_parser
-
-[url-oxc-parser-npm]: https://www.npmjs.com/package/oxc-parser
 
 ---
 
@@ -43487,146 +43856,6 @@ oxlint --deny promise/valid-params --promise-plugin
 ---
 
 ---
-url: /docs/guide/usage/formatter/quickstart.md
-description: Install Oxfmt and learn the common workflows.
----
-
-# Quickstart
-
-Recommended setup and common workflows.
-
-## Install
-
-Install `oxfmt` as a dev dependency:
-
-::: code-group
-
-```sh [npm]
-$ npm add -D oxfmt
-```
-
-```sh [pnpm]
-$ pnpm add -D oxfmt
-```
-
-```sh [yarn]
-$ yarn add -D oxfmt
-```
-
-```sh [bun]
-$ bun add -D oxfmt
-```
-
-:::
-
-Add scripts to `package.json`:
-
-```json [package.json]
-{
-  "scripts": {
-    "fmt": "oxfmt",
-    "fmt:check": "oxfmt --check"
-  }
-}
-```
-
-Format files:
-
-```sh
-pnpm run fmt
-```
-
-Check formatting without writing files:
-
-```sh
-pnpm run fmt:check
-```
-
-## Usage
-
-```sh
-oxfmt [OPTIONS] [PATH]...
-```
-
-Running `oxfmt` without arguments formats the current directory (equivalent to `prettier --write .`).
-
-CLI options like `--no-semi` are not supported. Use the configuration file instead to ensure consistent settings across CLI and editor integrations.
-
-Globs in positional paths are not expanded (rely on your shell). However, `!`-prefixed exclude paths support glob expansion.
-
-For the complete list of options, see the [CLI reference](/docs/guide/usage/formatter/cli.html).
-
-## Common workflows
-
-### Pre-commit with lint-staged
-
-```json [package.json]
-{
-  "lint-staged": {
-    "*": "oxfmt --no-error-on-unmatched-pattern"
-  }
-}
-```
-
-`--no-error-on-unmatched-pattern` prevents errors when no files match the pattern.
-
-### Create a config file
-
-Initialize `.oxfmtrc.json` with defaults:
-
-```sh
-oxfmt --init
-```
-
-### Migrate from Prettier
-
-```sh
-oxfmt --migrate prettier
-```
-
-See [migrate from prettier](./migrate-from-prettier) for details.
-
-### List files that differ
-
-```sh
-oxfmt --list-different
-```
-
-This is useful for configuring [files to ignore](./ignore-files).
-
-### Piping file contents
-
-```sh
-echo 'const   x   =   1' | oxfmt --stdin-filepath test.ts
-```
-
-Prints `const x = 1;`
-
-### Node.js API
-
-```ts
-import { format, type FormatOptions } from "oxfmt";
-
-const input = `let a=42;`;
-const options: FormatOptions = {
-  semi: false,
-};
-
-const { code } = await format("a.js", input, options);
-console.log(code); // "let a = 42"
-```
-
-## Next steps
-
-* [Change configuration](./config)
-* [Setup editors](./editors)
-* [Setup CI](./ci)
-* Learn advanced features: [sorting](./sorting), [embedded formatting](./embedded-formatting)
-* Check [CLI reference](./cli)
-
----
-
----
 url: /docs/guide/usage/linter/quickstart.md
 description: Install Oxlint and learn the common workflows.
 ---
@@ -43824,6 +44053,146 @@ The full list is in the [Rules reference](/docs/guide/usage/linter/rules).
 * Learn advanced features: [Multi-file analysis](/docs/guide/usage/linter/multi-file-analysis), [Type-aware linting](/docs/guide/usage/linter/type-aware), [JS plugins](/docs/guide/usage/linter/js-plugins)
 * Migrate: [From ESLint](/docs/guide/usage/linter/migrate-from-eslint)&#x20;
 * [CLI reference](/docs/guide/usage/linter/cli)
+
+---
+
+---
+url: /docs/guide/usage/formatter/quickstart.md
+description: Install Oxfmt and learn the common workflows.
+---
+
+# Quickstart
+
+Recommended setup and common workflows.
+
+## Install
+
+Install `oxfmt` as a dev dependency:
+
+::: code-group
+
+```sh [npm]
+$ npm add -D oxfmt
+```
+
+```sh [pnpm]
+$ pnpm add -D oxfmt
+```
+
+```sh [yarn]
+$ yarn add -D oxfmt
+```
+
+```sh [bun]
+$ bun add -D oxfmt
+```
+
+:::
+
+Add scripts to `package.json`:
+
+```json [package.json]
+{
+  "scripts": {
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check"
+  }
+}
+```
+
+Format files:
+
+```sh
+pnpm run fmt
+```
+
+Check formatting without writing files:
+
+```sh
+pnpm run fmt:check
+```
+
+## Usage
+
+```sh
+oxfmt [OPTIONS] [PATH]...
+```
+
+Running `oxfmt` without arguments formats the current directory (equivalent to `prettier --write .`).
+
+CLI options like `--no-semi` are not supported. Use the configuration file instead to ensure consistent settings across CLI and editor integrations.
+
+Globs in positional paths are not expanded (rely on your shell). However, `!`-prefixed exclude paths support glob expansion.
+
+For the complete list of options, see the [CLI reference](/docs/guide/usage/formatter/cli.html).
+
+## Common workflows
+
+### Pre-commit with lint-staged
+
+```json [package.json]
+{
+  "lint-staged": {
+    "*": "oxfmt --no-error-on-unmatched-pattern"
+  }
+}
+```
+
+`--no-error-on-unmatched-pattern` prevents errors when no files match the pattern.
+
+### Create a config file
+
+Initialize `.oxfmtrc.json` with defaults:
+
+```sh
+oxfmt --init
+```
+
+### Migrate from Prettier
+
+```sh
+oxfmt --migrate prettier
+```
+
+See [migrate from prettier](./migrate-from-prettier) for details.
+
+### List files that differ
+
+```sh
+oxfmt --list-different
+```
+
+This is useful for configuring [files to ignore](./ignore-files).
+
+### Piping file contents
+
+```sh
+echo 'const   x   =   1' | oxfmt --stdin-filepath test.ts
+```
+
+Prints `const x = 1;`
+
+### Node.js API
+
+```ts
+import { format, type FormatOptions } from "oxfmt";
+
+const input = `let a=42;`;
+const options: FormatOptions = {
+  semi: false,
+};
+
+const { code } = await format("a.js", input, options);
+console.log(code); // "let a = 42"
+```
+
+## Next steps
+
+* [Change configuration](./config)
+* [Setup editors](./editors)
+* [Setup CI](./ci)
+* Learn advanced features: [sorting](./sorting), [embedded formatting](./embedded-formatting)
+* Check [CLI reference](./cli)
 
 ---
 
@@ -44721,49 +45090,89 @@ Enforce a consistent boolean attribute style in your code.
 
 ### Why is this bad?
 
-In JSX, you can set a boolean attribute to `true` or omit it. This rule will enforce a consistent style for boolean attributes.
+In JSX, you can set a boolean attribute to `true` or omit it.
+This rule will enforce a consistent style for boolean attributes.
 
 ### Examples
 
-Examples of **incorrect** code for this rule:
+Examples of **incorrect** code for this rule with default `"never"` mode:
 
 ```jsx
 const Hello = <Hello personal={true} />;
 ```
 
-Examples of **correct** code for this rule:
+Examples of **correct** code for this rule with default `"never"` mode:
+
+```jsx
+const Hello = <Hello personal />;
+
+const Foo = <Foo isSomething={false} />;
+```
+
+Examples of **incorrect** code for this rule with `"always"` mode:
 
 ```jsx
 const Hello = <Hello personal />;
 ```
 
+Examples of **correct** code for this rule with `"always"` mode:
+
+```jsx
+const Hello = <Hello personal={true} />;
+```
+
 ## Configuration
 
-This rule accepts a configuration object with the following properties:
-
-### assumeUndefinedIsFalse
-
-type: `boolean`
-
-default: `false`
-
-If true, treats `prop={false}` as equivalent to the prop being undefined
-
-### enforceBooleanAttribute
+### The 1st option
 
 type: `"always" | "never"`
 
-default: `"never"`
+#### `"always"`
 
-Enforce boolean attributes to always or never have a value.
+All boolean attributes must have explicit values.
 
-### exceptions
+#### `"never"`
+
+All boolean attributes must omit values that are set to `true`.
+
+### The 2nd option
+
+This option is an object with the following properties:
+
+#### always
 
 type: `string[]`
 
 default: `[]`
 
-List of attribute names to exclude from the rule.
+List of attribute names that should always have explicit boolean values.
+Only necessary when main mode is `"never"`.
+
+#### assumeUndefinedIsFalse
+
+type: `boolean`
+
+default: `false`
+
+If `true`, treats `prop={false}` as equivalent to the prop being `undefined`.
+When combined with `"never"` mode, this will enforce that the attribute is omitted entirely.
+
+```jsx
+// With "assumeUndefinedIsFalse": true
+<App foo={false} />; // Incorrect
+<App />; // Correct
+```
+
+This option does nothing in `"always"` mode.
+
+#### never
+
+type: `string[]`
+
+default: `[]`
+
+List of attribute names that should never have explicit boolean values.
+Only necessary when main mode is `"always"`.
 
 ## How to use
 
@@ -45872,7 +46281,10 @@ url: /docs/guide/usage/linter/rules/react/jsx-no-undef.md
 
 ### What it does
 
-Disallow undeclared variables in JSX
+Disallow undeclared variables in JSX.
+
+Note that this rule is generally unnecessary if you are using TypeScript, as
+TypeScript will catch undeclared variables for you.
 
 ### Why is this bad?
 
@@ -46752,12 +47164,12 @@ url: /docs/guide/usage/linter/rules/react/no-is-mounted.md
 
 ### What it does
 
-This rule prevents using `isMounted` in classes.
+This rule prevents using `isMounted` in class components.
 
 ### Why is this bad?
 
-`isMounted` is an anti-pattern, is not available when using classes,
-and it is on its way to being officially deprecated.
+`isMounted` is an anti-pattern, and is not available
+when using classes or function components.
 
 ### Examples
 
@@ -46793,6 +47205,84 @@ To **enable** this rule using the config file or in the CLI, you can use:
 
 ```bash [CLI]
 oxlint --deny react/no-is-mounted --react-plugin
+```
+
+:::
+
+## References
+
+* Rule Source
+
+---
+
+---
+url: /docs/guide/usage/linter/rules/react/no-multi-comp.md
+---
+
+### What it does
+
+Prevents multiple React components from being defined in the same file.
+
+### Why is this bad?
+
+Declaring multiple components in a single file can make it harder to navigate
+and maintain the codebase. Each component should ideally be in its own file
+for better organization and reusability.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```jsx
+function Foo({ name }) {
+  return <div>Hello {name}</div>;
+}
+
+function Bar({ name }) {
+  return <div>Hello again {name}</div>;
+}
+```
+
+Examples of **correct** code for this rule:
+
+```jsx
+function Foo({ name }) {
+  return <div>Hello {name}</div>;
+}
+```
+
+## Configuration
+
+### ignoreStateless
+
+type: `boolean`
+
+default: `false`
+
+When `true`, the rule will ignore stateless components and will allow you to have multiple
+stateless components in the same file. Or one stateful component and one-or-more stateless
+components in the same file.
+
+Stateless basically just means function components, including those created via
+`memo` and `forwardRef`.
+
+## How to use
+
+To **enable** this rule using the config file or in the CLI, you can use:
+
+::: code-group
+
+```json [Config (.oxlintrc.json)]
+{
+  "plugins": ["react"],
+  "rules": {
+    "react/no-multi-comp": "error"
+  }
+}
+```
+
+```bash [CLI]
+oxlint --deny react/no-multi-comp --react-plugin
 ```
 
 :::
@@ -47093,11 +47583,14 @@ url: /docs/guide/usage/linter/rules/react/no-string-refs.md
 
 ### What it does
 
-This rule prevents using string literals in ref attributes.
+This rule prevents using the deprecated behavior of string literals in ref attributes.
 
 ### Why is this bad?
 
-Using string literals in ref attributes is deprecated in React.
+Using string literals in ref attributes has been deprecated since React 16.3.0.
+
+String refs are [removed entirely in React 19](https://react.dev/blog/2024/04/25/react-19-upgrade-guide#removed-string-refs),
+and so this rule can be disabled if on React 19+.
 
 ### Examples
 
@@ -47718,8 +48211,11 @@ url: /docs/guide/usage/linter/rules/react/prefer-es6-class.md
 
 ### What it does
 
-React offers you two ways to create traditional components: using the ES5
-create-react-class module or the new ES2015 class system.
+React offers you two ways to create traditional components: using the
+`create-react-class` package or the newer ES2015 class system.
+
+Note that function components are preferred over class components in modern React,
+and it is *especially* discouraged to use `createReactClass` in modern React.
 
 ### Why is this bad?
 
@@ -47727,7 +48223,7 @@ This rule enforces a consistent React class style.
 
 ### Examples
 
-Examples of **incorrect** code for this rule:
+Examples of **incorrect** code for this rule by default:
 
 ```jsx
 var Hello = createReactClass({
@@ -47743,11 +48239,11 @@ This rule accepts one of the following string values:
 
 ### `"always"`
 
-Always prefer ES6 class-style components
+Always prefer ES2015 class-style components.
 
 ### `"never"`
 
-Do not allow ES6 class-style
+Do not allow ES2015 class-style, prefer `createReactClass`.
 
 ## How to use
 
@@ -48756,152 +49252,6 @@ Upon visit, we can call `enter_scope` and `leave_scope` accordingly to build the
 ---
 
 ---
-url: /docs/guide/usage/linter/ci.md
-description: Run Oxlint in CI or as a git hook.
----
-
-# Setup CI and other integrations
-
-You can - and should - setup your CI pipeline to run Oxlint and fail the build on lint errors.
-
-This page also covers other integrations you may want to include, like git pre-commit hooks.
-
-## CI
-
-These instructions assume you have already set up Oxlint in your project by adding `oxlint` to your devDependencies in your `package.json`, and already have an oxlint configuration file in the repo.
-
-### GitHub Actions
-
-First, add a `lint` script to your `package.json` if you don't have one already:
-
-```json [package.json]
-{
-  "scripts": {
-    "lint": "oxlint"
-  }
-}
-```
-
-Then create `.github/workflows/oxlint.yml`:
-
-```yaml [.github/workflows/oxlint.yml]
-name: Lint
-
-on:
-  pull_request:
-  push:
-    branches: [main]
-
-permissions: {}
-
-jobs:
-  oxlint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version: lts/*
-          cache: pnpm
-
-      # alternatively use npm install / yarn install here
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm run lint
-```
-
-You can, alternatively, output using the github format option, for [better warning/error annotations](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#setting-an-error-message):
-
-```json [package.json]
-{
-  "scripts": {
-    "lint:github": "oxlint --format=github"
-  }
-}
-```
-
-### GitLab CI
-
-If you use GitLab CI, you can set up Oxlint with `--format=gitlab` and [GitLab's Code Quality feature](https://docs.gitlab.com/ci/testing/code_quality/#code-quality-report-format) to get inline annotations for lint violations in merge requests.
-
-To set this up, you can add a script to your `package.json` to output the gitlab format and save it to a file, like so:
-
-```json [package.json]
-{
-  "scripts": {
-    "lint:gitlab": "oxlint --format=gitlab > gitlab-oxlint-report.json"
-  }
-}
-```
-
-And then add a job to your `.gitlab-ci.yml`, to run the script and upload the report as a Code Quality artifact:
-
-```yml [.gitlab-ci.yml]
-oxlint:
-  image: node:lts
-  stage: test
-  before_script:
-    # alternatively use pnpm install / yarn install here
-    - npm install
-  script:
-    - npm run lint:gitlab
-  artifacts:
-    reports:
-      codequality:
-        # This is relative to your repository root, so adjust if your repo has a different structure or you put the report in a different location
-        - gitlab-oxlint-report.json
-```
-
-If you do not want to use the Code Quality feature, you can simply run oxlint without `--format=gitlab` in the CI job instead.
-
-You should ensure type-aware rules are enabled if you want to use them, and consider caching `node_modules` to speed up the installation of dependencies.
-
-## Git hooks
-
-### lint-staged
-
-For JS/TS projects using [lint-staged](https://github.com/lint-staged/lint-staged), you can set up oxlint to run as a pre-commit hook as follows:
-
-```json [package.json]
-{
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,mjs,cjs}": "pnpm run lint"
-  }
-}
-```
-
-To automatically install the git hook when installing dependencies, considering also using [husky](https://typicode.github.io/husky/get-started.html).
-
-### pre-commit
-
-If you use [pre-commit](https://pre-commit.com/) to manage git hooks, you can set up Oxlint as follows:
-
-```yaml [.pre-commit-config.yaml]
-repos:
-  - repo: https://github.com/oxc-project/mirrors-oxlint
-    rev: v0.0.0
-    hooks:
-      - id: oxlint
-        verbose: true
-```
-
-Replace `v0.0.0` with the latest version.
-
-## Other integrations
-
-### Unplugin
-
-Unplugin is supported via a [third-party package](https://www.npmjs.com/package/unplugin-oxlint)
-
-### Vite plugin
-
-A Vite plugin is supported via a [third-party package](https://www.npmjs.com/package/vite-plugin-oxlint)
-
----
-
----
 url: /docs/guide/usage/formatter/ci.md
 description: Run Oxfmt in CI or as a git hook.
 ---
@@ -49045,6 +49395,152 @@ For [lint-staged](https://github.com/lint-staged/lint-staged), add to `package.j
 ```
 
 To automatically install the git hook when installing dependencies, considering also using [husky](https://typicode.github.io/husky/get-started.html).
+
+---
+
+---
+url: /docs/guide/usage/linter/ci.md
+description: Run Oxlint in CI or as a git hook.
+---
+
+# Setup CI and other integrations
+
+You can - and should - setup your CI pipeline to run Oxlint and fail the build on lint errors.
+
+This page also covers other integrations you may want to include, like git pre-commit hooks.
+
+## CI
+
+These instructions assume you have already set up Oxlint in your project by adding `oxlint` to your devDependencies in your `package.json`, and already have an oxlint configuration file in the repo.
+
+### GitHub Actions
+
+First, add a `lint` script to your `package.json` if you don't have one already:
+
+```json [package.json]
+{
+  "scripts": {
+    "lint": "oxlint"
+  }
+}
+```
+
+Then create `.github/workflows/oxlint.yml`:
+
+```yaml [.github/workflows/oxlint.yml]
+name: Lint
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  oxlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: pnpm
+
+      # alternatively use npm install / yarn install here
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run lint
+```
+
+You can, alternatively, output using the github format option, for [better warning/error annotations](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#setting-an-error-message):
+
+```json [package.json]
+{
+  "scripts": {
+    "lint:github": "oxlint --format=github"
+  }
+}
+```
+
+### GitLab CI
+
+If you use GitLab CI, you can set up Oxlint with `--format=gitlab` and [GitLab's Code Quality feature](https://docs.gitlab.com/ci/testing/code_quality/#code-quality-report-format) to get inline annotations for lint violations in merge requests.
+
+To set this up, you can add a script to your `package.json` to output the gitlab format and save it to a file, like so:
+
+```json [package.json]
+{
+  "scripts": {
+    "lint:gitlab": "oxlint --format=gitlab > gitlab-oxlint-report.json"
+  }
+}
+```
+
+And then add a job to your `.gitlab-ci.yml`, to run the script and upload the report as a Code Quality artifact:
+
+```yml [.gitlab-ci.yml]
+oxlint:
+  image: node:lts
+  stage: test
+  before_script:
+    # alternatively use pnpm install / yarn install here
+    - npm install
+  script:
+    - npm run lint:gitlab
+  artifacts:
+    reports:
+      codequality:
+        # This is relative to your repository root, so adjust if your repo has a different structure or you put the report in a different location
+        - gitlab-oxlint-report.json
+```
+
+If you do not want to use the Code Quality feature, you can simply run oxlint without `--format=gitlab` in the CI job instead.
+
+You should ensure type-aware rules are enabled if you want to use them, and consider caching `node_modules` to speed up the installation of dependencies.
+
+## Git hooks
+
+### lint-staged
+
+For JS/TS projects using [lint-staged](https://github.com/lint-staged/lint-staged), you can set up oxlint to run as a pre-commit hook as follows:
+
+```json [package.json]
+{
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs}": "pnpm run lint"
+  }
+}
+```
+
+To automatically install the git hook when installing dependencies, considering also using [husky](https://typicode.github.io/husky/get-started.html).
+
+### pre-commit
+
+If you use [pre-commit](https://pre-commit.com/) to manage git hooks, you can set up Oxlint as follows:
+
+```yaml [.pre-commit-config.yaml]
+repos:
+  - repo: https://github.com/oxc-project/mirrors-oxlint
+    rev: v0.0.0
+    hooks:
+      - id: oxlint
+        verbose: true
+```
+
+Replace `v0.0.0` with the latest version.
+
+## Other integrations
+
+### Unplugin
+
+Unplugin is supported via a [third-party package](https://www.npmjs.com/package/unplugin-oxlint)
+
+### Vite plugin
+
+A Vite plugin is supported via a [third-party package](https://www.npmjs.com/package/vite-plugin-oxlint)
 
 ---
 
@@ -67032,7 +67528,7 @@ url: /docs/guide/usage/formatter/generated-cli.md
 * **`    --init`** —
   Initialize `.oxfmtrc.json` with default values
 * **`    --migrate`**=*`SOURCE`* —
-  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier
+  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
 * **`    --lsp`** —
   Start language server protocol (LSP) server
 * **`    --stdin-filepath`**=*`PATH`* —
@@ -67783,65 +68279,6 @@ To **enable** this rule using the config file or in the CLI, you can use:
 
 ```bash [CLI]
 oxlint --deny vitest/no-import-node-test --vitest-plugin
-```
-
-:::
-
-## References
-
-* Rule Source
-
----
-
----
-url: /docs/guide/usage/linter/rules/vitest/no-unneeded-async-expect-function.md
----
-
-### What it does
-
-Disallows unnecessary async function wrapper for expected promises.
-
-### Why is this bad?
-
-When the only statement inside an async wrapper is `await someCall()`,
-the call should be passed directly to `expect` instead. This makes the
-test code more concise and easier to read.
-
-### Examples
-
-Examples of **incorrect** code for this rule:
-
-```js
-await expect(async () => {
-  await doSomethingAsync();
-}).rejects.toThrow();
-
-await expect(async () => await doSomethingAsync()).rejects.toThrow();
-```
-
-Examples of **correct** code for this rule:
-
-```js
-await expect(doSomethingAsync()).rejects.toThrow();
-```
-
-## How to use
-
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["vitest"],
-  "rules": {
-    "vitest/no-unneeded-async-expect-function": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny vitest/no-unneeded-async-expect-function --vitest-plugin
 ```
 
 :::

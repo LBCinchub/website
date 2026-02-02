@@ -13,12 +13,12 @@
 - [Automatic fixes](/docs/guide/usage/linter/automatic-fixes.md): Apply safe, suggested, and dangerous fixes with Oxlint.
 - [Built-in Plugins](/docs/guide/usage/linter/plugins.md): Enable built in plugin rule sets and extend Oxlint with ESLint compatible JavaScript plugins.
 - [Built-in Plugins](/docs/guide/usage/transformer/plugins.md)
-- [Command-line Interface](/docs/guide/usage/linter/cli.md)
 - [Command-line Interface](/docs/guide/usage/formatter/cli.md)
-- [Configuration](/docs/guide/usage/linter/config.md): Configure Oxlint using a .oxlintrc.json file.
+- [Command-line Interface](/docs/guide/usage/linter/cli.md)
 - [Configuration](/docs/guide/usage/formatter/config.md): Configure Oxfmt using a .oxfmtrc.json file.
-- [Configuration options for the Oxfmt.](/docs/guide/usage/formatter/generated-config.md)
+- [Configuration](/docs/guide/usage/linter/config.md): Configure Oxlint using a .oxlintrc.json file.
 - [Configuration options for the Oxfmt.](/docs/guide/usage/formatter/config-file-reference.md)
+- [Configuration options for the Oxfmt.](/docs/guide/usage/formatter/generated-config.md)
 - [Dead Code Elimination](/docs/guide/usage/minifier/dead-code-elimination.md)
 - [Dealing with Errors](/docs/learn/parser_in_rust/errors.md)
 - [Debugging](/docs/contribute/debugging.md)
@@ -168,6 +168,7 @@
 - [eslint/no-warning-comments](/docs/guide/usage/linter/rules/eslint/no-warning-comments.md)
 - [eslint/no-with](/docs/guide/usage/linter/rules/eslint/no-with.md)
 - [eslint/operator-assignment](/docs/guide/usage/linter/rules/eslint/operator-assignment.md)
+- [eslint/prefer-const](/docs/guide/usage/linter/rules/eslint/prefer-const.md)
 - [eslint/prefer-destructuring](/docs/guide/usage/linter/rules/eslint/prefer-destructuring.md)
 - [eslint/prefer-exponentiation-operator](/docs/guide/usage/linter/rules/eslint/prefer-exponentiation-operator.md)
 - [eslint/prefer-numeric-literals](/docs/guide/usage/linter/rules/eslint/prefer-numeric-literals.md)
@@ -224,6 +225,8 @@
 - [import/no-named-default](/docs/guide/usage/linter/rules/import/no-named-default.md)
 - [import/no-named-export](/docs/guide/usage/linter/rules/import/no-named-export.md)
 - [import/no-namespace](/docs/guide/usage/linter/rules/import/no-namespace.md)
+- [import/no-nodejs-modules](/docs/guide/usage/linter/rules/import/no-nodejs-modules.md)
+- [import/no-relative-parent-imports](/docs/guide/usage/linter/rules/import/no-relative-parent-imports.md)
 - [import/no-self-import](/docs/guide/usage/linter/rules/import/no-self-import.md)
 - [import/no-unassigned-import](/docs/guide/usage/linter/rules/import/no-unassigned-import.md)
 - [import/no-webpack-loader-syntax](/docs/guide/usage/linter/rules/import/no-webpack-loader-syntax.md)
@@ -260,6 +263,7 @@
 - [jest/no-standalone-expect](/docs/guide/usage/linter/rules/jest/no-standalone-expect.md)
 - [jest/no-test-prefixes](/docs/guide/usage/linter/rules/jest/no-test-prefixes.md)
 - [jest/no-test-return-statement](/docs/guide/usage/linter/rules/jest/no-test-return-statement.md)
+- [jest/no-unneeded-async-expect-function](/docs/guide/usage/linter/rules/jest/no-unneeded-async-expect-function.md)
 - [jest/no-untyped-mock-factory](/docs/guide/usage/linter/rules/jest/no-untyped-mock-factory.md)
 - [jest/padding-around-test-blocks](/docs/guide/usage/linter/rules/jest/padding-around-test-blocks.md)
 - [jest/prefer-called-with](/docs/guide/usage/linter/rules/jest/prefer-called-with.md)
@@ -406,8 +410,8 @@
 - [Oxlint Configuration File](/docs/guide/usage/linter/config-file-reference.md)
 - [Oxlint Configuration File](/docs/guide/usage/linter/generated-config.md)
 - [Parser](/docs/contribute/parser.md)
-- [Parser](/docs/learn/architecture/parser.md)
 - [Parser](/docs/guide/usage/parser.md)
+- [Parser](/docs/learn/architecture/parser.md)
 - [Parser](/docs/learn/parser_in_rust/parser.md)
 - [Performance](/docs/learn/performance.md)
 - [Profiling](/docs/contribute/profiling.md)
@@ -428,8 +432,8 @@
 - [promise/prefer-catch](/docs/guide/usage/linter/rules/promise/prefer-catch.md)
 - [promise/spec-only](/docs/guide/usage/linter/rules/promise/spec-only.md)
 - [promise/valid-params](/docs/guide/usage/linter/rules/promise/valid-params.md)
-- [Quickstart](/docs/guide/usage/formatter/quickstart.md): Install Oxfmt and learn the common workflows.
 - [Quickstart](/docs/guide/usage/linter/quickstart.md): Install Oxlint and learn the common workflows.
+- [Quickstart](/docs/guide/usage/formatter/quickstart.md): Install Oxfmt and learn the common workflows.
 - [react-perf/jsx-no-jsx-as-prop](/docs/guide/usage/linter/rules/react_perf/jsx-no-jsx-as-prop.md)
 - [react-perf/jsx-no-new-array-as-prop](/docs/guide/usage/linter/rules/react_perf/jsx-no-new-array-as-prop.md)
 - [react-perf/jsx-no-new-function-as-prop](/docs/guide/usage/linter/rules/react_perf/jsx-no-new-function-as-prop.md)
@@ -466,6 +470,7 @@
 - [react/no-direct-mutation-state](/docs/guide/usage/linter/rules/react/no-direct-mutation-state.md)
 - [react/no-find-dom-node](/docs/guide/usage/linter/rules/react/no-find-dom-node.md)
 - [react/no-is-mounted](/docs/guide/usage/linter/rules/react/no-is-mounted.md)
+- [react/no-multi-comp](/docs/guide/usage/linter/rules/react/no-multi-comp.md)
 - [react/no-namespace](/docs/guide/usage/linter/rules/react/no-namespace.md)
 - [react/no-redundant-should-component-update](/docs/guide/usage/linter/rules/react/no-redundant-should-component-update.md)
 - [react/no-render-return-value](/docs/guide/usage/linter/rules/react/no-render-return-value.md)
@@ -492,8 +497,8 @@
 - [Rules and Policy](/docs/contribute/rules.md)
 - [Security Policy](/docs/contribute/security.md)
 - [Semantic Analysis](/docs/learn/parser_in_rust/semantic_analysis.md)
-- [Setup CI and other integrations](/docs/guide/usage/linter/ci.md): Run Oxlint in CI or as a git hook.
 - [Setup CI and other integrations](/docs/guide/usage/formatter/ci.md): Run Oxfmt in CI or as a git hook.
+- [Setup CI and other integrations](/docs/guide/usage/linter/ci.md): Run Oxlint in CI or as a git hook.
 - [Setup editors](/docs/guide/usage/linter/editors.md): Configure Oxlint in VS Code, Zed, JetBrains, and other editors.
 - [Setup editors](/docs/guide/usage/formatter/editors.md): Configure Oxfmt in VS Code, Zed, JetBrains, and other editors.
 - [Sorting](/docs/guide/usage/formatter/sorting.md)
@@ -727,7 +732,6 @@
 - [vitest/hoisted-apis-on-top](/docs/guide/usage/linter/rules/vitest/hoisted-apis-on-top.md)
 - [vitest/no-conditional-tests](/docs/guide/usage/linter/rules/vitest/no-conditional-tests.md)
 - [vitest/no-import-node-test](/docs/guide/usage/linter/rules/vitest/no-import-node-test.md)
-- [vitest/no-unneeded-async-expect-function](/docs/guide/usage/linter/rules/vitest/no-unneeded-async-expect-function.md)
 - [vitest/prefer-called-once](/docs/guide/usage/linter/rules/vitest/prefer-called-once.md)
 - [vitest/prefer-called-times](/docs/guide/usage/linter/rules/vitest/prefer-called-times.md)
 - [vitest/prefer-describe-function-title](/docs/guide/usage/linter/rules/vitest/prefer-describe-function-title.md)

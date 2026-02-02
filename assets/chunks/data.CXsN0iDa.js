@@ -1,0 +1,1 @@
+import{p as e}from"./client.C_01QCjo.js";const t=e;export{t};
