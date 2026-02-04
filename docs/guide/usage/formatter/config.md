@@ -84,6 +84,39 @@ Oxfmt uses only the nearest `.editorconfig` from the current directory:
 * `root = true` is not respected
 * Nested `.editorconfig` files are not merged
 
+## Overrides
+
+Use the `overrides` field to apply different formatting options to specific files:
+
+```json [.oxfmtrc.json]
+{
+  "printWidth": 100,
+  "overrides": [
+    {
+      "files": ["*.test.js", "*.spec.ts"],
+      "options": {
+        "printWidth": 120
+      }
+    },
+    {
+      "files": ["*.md", "*.html"],
+      "excludeFiles": ["*.min.js"],
+      "options": {
+        "tabWidth": 4
+      }
+    }
+  ]
+}
+```
+
+Each override entry has:
+
+* `files` (required): Glob patterns to match files
+* `excludeFiles` (optional): Glob patterns to exclude from this override
+* `options`: Formatting options to apply
+
+Glob patterns are resolved relative to the directory containing the Oxfmt config file.
+
 ## Precedence
 
 Options are applied in order (lowest to highest priority):
