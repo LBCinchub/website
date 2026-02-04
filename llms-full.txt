@@ -1498,6 +1498,69 @@ import styled from "styled-components/primitives";
 ---
 
 ---
+url: /docs/guide/usage/formatter/cli.md
+---
+
+# Command-line Interface
+
+## Usage
+
+**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
+
+## Mode Options:
+
+* **`    --init`** —
+  Initialize `.oxfmtrc.json` with default values
+* **`    --migrate`**=*`SOURCE`* —
+  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
+* **`    --lsp`** —
+  Start language server protocol (LSP) server
+* **`    --stdin-filepath`**=*`PATH`* —
+  Specify the file name to use to infer which parser to use
+
+## Output Options:
+
+* **`    --write`** —
+  Format and write files in place (default)
+* **`    --check`** —
+  Check if files are formatted, also show statistics
+* **`    --list-different`** —
+  List files that would be changed
+
+## Config Options
+
+* **`-c`**, **`--config`**=*`PATH`* —
+  Path to the configuration file
+
+## Ignore Options
+
+* **`    --ignore-path`**=*`PATH`* —
+  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
+* **`    --with-node-modules`** —
+  Format code in node\_modules directory (skipped by default)
+
+## Runtime Options
+
+* **`    --no-error-on-unmatched-pattern`** —
+  Do not exit with error when pattern is unmatched
+* **`    --threads`**=*`INT`* —
+  Number of threads to use. Set to 1 for using only 1 CPU core.
+
+## Available positional items:
+
+* *`PATH`* —
+  Single file, single path or list of paths. If not provided, current working directory is used. Glob is supported only for exclude patterns like `'!**/fixtures/*.js'`.
+
+## Available options:
+
+* **`-h`**, **`--help`** —
+  Prints help information
+* **`-V`**, **`--version`** —
+  Prints version information
+
+---
+
+---
 url: /docs/guide/usage/linter/cli.md
 ---
 
@@ -1656,65 +1719,164 @@ Arguments:
 ---
 
 ---
-url: /docs/guide/usage/formatter/cli.md
+url: /docs/guide/usage/formatter/config.md
+description: Configure Oxfmt using a .oxfmtrc.json file.
 ---
 
-# Command-line Interface
+# Configuration
 
-## Usage
+Oxfmt works out of the box, but most teams commit a configuration file to keep formatting consistent across local runs, editors, and CI.
 
-**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
+This page focuses on project configuration: formatting options, ignore patterns, and experimental features.
 
-## Mode Options:
+## Create a config file
 
-* **`    --init`** —
-  Initialize `.oxfmtrc.json` with default values
-* **`    --migrate`**=*`SOURCE`* —
-  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
-* **`    --lsp`** —
-  Start language server protocol (LSP) server
-* **`    --stdin-filepath`**=*`PATH`* —
-  Specify the file name to use to infer which parser to use
+To generate a starter config in the current directory:
 
-## Output Options:
+```sh
+oxfmt --init
+```
 
-* **`    --write`** —
-  Format and write files in place (default)
-* **`    --check`** —
-  Check if files are formatted, also show statistics
-* **`    --list-different`** —
-  List files that would be changed
+Oxfmt automatically looks for `.oxfmtrc.json` or `.oxfmtrc.jsonc` starting from the current directory and walking up the tree. You can also pass a config explicitly:
 
-## Config Options
+```sh
+oxfmt -c path/to/yourconfig.json
+```
 
-* **`-c`**, **`--config`**=*`PATH`* —
-  Path to the configuration file
+A minimal configuration looks like this:
 
-## Ignore Options
+```json [.oxfmtrc.json]
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 80
+}
+```
 
-* **`    --ignore-path`**=*`PATH`* —
-  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
-* **`    --with-node-modules`** —
-  Format code in node\_modules directory (skipped by default)
+## Configuration file format
 
-## Runtime Options
+A configuration file is a JSON object. The most common top-level fields are:
 
-* **`    --no-error-on-unmatched-pattern`** —
-  Do not exit with error when pattern is unmatched
-* **`    --threads`**=*`INT`* —
-  Number of threads to use. Set to 1 for using only 1 CPU core.
+* `printWidth`: Line width limit (default: 100)
+* `tabWidth`: Spaces per indentation level (default: 2)
+* `useTabs`: Use tabs instead of spaces (default: false)
+* `semi`: Add semicolons (default: true)
+* `singleQuote`: Use single quotes (default: false)
+* `trailingComma`: Trailing commas in multi-line structures (default: "all")
+* `ignorePatterns`: Glob patterns to exclude from formatting
+* `experimentalSortImports`: Configure import sorting (disabled by default)
+* `experimentalSortPackageJson`: Configure package.json sorting (enabled by default)
+* `experimentalTailwindcss`: Configure Tailwind class sorting (disabled by default)
 
-## Available positional items:
+For a complete list of fields, see the [Config file reference](./config-file-reference).
 
-* *`PATH`* —
-  Single file, single path or list of paths. If not provided, current working directory is used. Glob is supported only for exclude patterns like `'!**/fixtures/*.js'`.
+## JSON schema
 
-## Available options:
+Add a `$schema` field for editor validation and autocomplete:
 
-* **`-h`**, **`--help`** —
-  Prints help information
-* **`-V`**, **`--version`** —
-  Prints version information
+```json [.oxfmtrc.json]
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json"
+}
+```
+
+## `.editorconfig`
+
+Oxfmt reads these `.editorconfig` properties:
+
+* `end_of_line` → `endOfLine`
+* `indent_style` → `useTabs`
+* `indent_size` → `tabWidth`
+* `max_line_length` → `printWidth`
+* `insert_final_newline` → `insertFinalNewline`
+
+Both root section and glob-based overrides are supported.
+
+```
+[*]
+indent_size = 4
+
+[*.{js,ts}]
+indent_size = 2
+```
+
+Oxfmt uses only the nearest `.editorconfig` from the current directory:
+
+* `root = true` is not respected
+* Nested `.editorconfig` files are not merged
+
+## Overrides
+
+Use the `overrides` field to apply different formatting options to specific files:
+
+```json [.oxfmtrc.json]
+{
+  "printWidth": 100,
+  "overrides": [
+    {
+      "files": ["*.test.js", "*.spec.ts"],
+      "options": {
+        "printWidth": 120
+      }
+    },
+    {
+      "files": ["*.md", "*.html"],
+      "excludeFiles": ["*.min.js"],
+      "options": {
+        "tabWidth": 4
+      }
+    }
+  ]
+}
+```
+
+Each override entry has:
+
+* `files` (required): Glob patterns to match files
+* `excludeFiles` (optional): Glob patterns to exclude from this override
+* `options`: Formatting options to apply
+
+Glob patterns are resolved relative to the directory containing the Oxfmt config file.
+
+## Precedence
+
+Options are applied in order (lowest to highest priority):
+
+1. Defaults
+2. `.oxfmtrc.json(c)` root options
+3. `.oxfmtrc.json(c)` `overrides` options
+4. fallback to options supported by `.editorconfig` for unset fields
+
+## Oxfmt-specific options
+
+### `insertFinalNewline`
+
+Controls whether a final newline is added to formatted files. Defaults to `true`.
+
+This is a [frequently requested Prettier feature](https://github.com/prettier/prettier/issues/6360), as some environments (e.g., Salesforce) strip trailing newlines.
+
+### `printWidth`
+
+Oxfmt defaults to `printWidth: 100` (Prettier uses 80). Reasons:
+
+* TypeScript code is longer due to type annotations
+* Import statements often have many specifiers
+* Modern screens are wider
+* Fewer line breaks mean fewer LLM tokens
+
+To match Prettier's default:
+
+```json [.oxfmtrc.json]
+{
+  "printWidth": 80
+}
+```
+
+## Next steps
+
+* [Ignore files](./ignore-files): Ignore files and patterns, `.gitignore` and `.prettierignore` workflows.
+* [Inline ignore comments](./ignore-comments): Inline suppressions for specific code.
+* [Config file reference](./config-file-reference): Full schema and field documentation.
+* [CLI reference](./cli): Complete list of flags.
 
 ---
 
@@ -2039,169 +2201,7 @@ Example (monorepo + React + jsx-a11y):
 ---
 
 ---
-url: /docs/guide/usage/formatter/config.md
-description: Configure Oxfmt using a .oxfmtrc.json file.
----
-
-# Configuration
-
-Oxfmt works out of the box, but most teams commit a configuration file to keep formatting consistent across local runs, editors, and CI.
-
-This page focuses on project configuration: formatting options, ignore patterns, and experimental features.
-
-## Create a config file
-
-To generate a starter config in the current directory:
-
-```sh
-oxfmt --init
-```
-
-Oxfmt automatically looks for `.oxfmtrc.json` or `.oxfmtrc.jsonc` starting from the current directory and walking up the tree. You can also pass a config explicitly:
-
-```sh
-oxfmt -c path/to/yourconfig.json
-```
-
-A minimal configuration looks like this:
-
-```json [.oxfmtrc.json]
-{
-  "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "printWidth": 80
-}
-```
-
-## Configuration file format
-
-A configuration file is a JSON object. The most common top-level fields are:
-
-* `printWidth`: Line width limit (default: 100)
-* `tabWidth`: Spaces per indentation level (default: 2)
-* `useTabs`: Use tabs instead of spaces (default: false)
-* `semi`: Add semicolons (default: true)
-* `singleQuote`: Use single quotes (default: false)
-* `trailingComma`: Trailing commas in multi-line structures (default: "all")
-* `ignorePatterns`: Glob patterns to exclude from formatting
-* `experimentalSortImports`: Configure import sorting (disabled by default)
-* `experimentalSortPackageJson`: Configure package.json sorting (enabled by default)
-* `experimentalTailwindcss`: Configure Tailwind class sorting (disabled by default)
-
-For a complete list of fields, see the [Config file reference](./config-file-reference).
-
-## JSON schema
-
-Add a `$schema` field for editor validation and autocomplete:
-
-```json [.oxfmtrc.json]
-{
-  "$schema": "./node_modules/oxfmt/configuration_schema.json"
-}
-```
-
-## `.editorconfig`
-
-Oxfmt reads these `.editorconfig` properties:
-
-* `end_of_line` → `endOfLine`
-* `indent_style` → `useTabs`
-* `indent_size` → `tabWidth`
-* `max_line_length` → `printWidth`
-* `insert_final_newline` → `insertFinalNewline`
-
-Both root section and glob-based overrides are supported.
-
-```
-[*]
-indent_size = 4
-
-[*.{js,ts}]
-indent_size = 2
-```
-
-Oxfmt uses only the nearest `.editorconfig` from the current directory:
-
-* `root = true` is not respected
-* Nested `.editorconfig` files are not merged
-
-## Overrides
-
-Use the `overrides` field to apply different formatting options to specific files:
-
-```json [.oxfmtrc.json]
-{
-  "printWidth": 100,
-  "overrides": [
-    {
-      "files": ["*.test.js", "*.spec.ts"],
-      "options": {
-        "printWidth": 120
-      }
-    },
-    {
-      "files": ["*.md", "*.html"],
-      "excludeFiles": ["*.min.js"],
-      "options": {
-        "tabWidth": 4
-      }
-    }
-  ]
-}
-```
-
-Each override entry has:
-
-* `files` (required): Glob patterns to match files
-* `excludeFiles` (optional): Glob patterns to exclude from this override
-* `options`: Formatting options to apply
-
-Glob patterns are resolved relative to the directory containing the Oxfmt config file.
-
-## Precedence
-
-Options are applied in order (lowest to highest priority):
-
-1. Defaults
-2. `.oxfmtrc.json(c)` root options
-3. `.oxfmtrc.json(c)` `overrides` options
-4. fallback to options supported by `.editorconfig` for unset fields
-
-## Oxfmt-specific options
-
-### `insertFinalNewline`
-
-Controls whether a final newline is added to formatted files. Defaults to `true`.
-
-This is a [frequently requested Prettier feature](https://github.com/prettier/prettier/issues/6360), as some environments (e.g., Salesforce) strip trailing newlines.
-
-### `printWidth`
-
-Oxfmt defaults to `printWidth: 100` (Prettier uses 80). Reasons:
-
-* TypeScript code is longer due to type annotations
-* Import statements often have many specifiers
-* Modern screens are wider
-* Fewer line breaks mean fewer LLM tokens
-
-To match Prettier's default:
-
-```json [.oxfmtrc.json]
-{
-  "printWidth": 80
-}
-```
-
-## Next steps
-
-* [Ignore files](./ignore-files): Ignore files and patterns, `.gitignore` and `.prettierignore` workflows.
-* [Inline ignore comments](./ignore-comments): Inline suppressions for specific code.
-* [Config file reference](./config-file-reference): Full schema and field documentation.
-* [CLI reference](./cli): Complete list of flags.
-
----
-
----
-url: /docs/guide/usage/formatter/generated-config.md
+url: /docs/guide/usage/formatter/config-file-reference.md
 ---
 
 # Configuration options for the Oxfmt.
@@ -3171,7 +3171,7 @@ Whether or not to indent the code inside `<script>` and `<style>` tags in Vue fi
 ---
 
 ---
-url: /docs/guide/usage/formatter/config-file-reference.md
+url: /docs/guide/usage/formatter/generated-config.md
 ---
 
 # Configuration options for the Oxfmt.
@@ -24857,71 +24857,6 @@ Currently, TOML files do not support ignore comments.
 ---
 
 ---
-url: /docs/learn/parser_in_rust/intro.md
----
-
-# Introduction
-
-We are in [The Third Age of JavaScript](https://www.swyx.io/js-third-age/),
-the common trend right now is to author JavaScript tools in Rust or Go for their performance gains.
-
-But authoring JavaScript tools are challenging, let alone writing them in Rust.
-I have struggled a lot when learning these technologies,
-and I wish fewer people to take the same struggling journey.
-
-I want to make my own contribution to the community by writing this guide,
-so you don't have to take the same journey as I had.
-
-There are only a handful of developers on the Rust side, and I would like to see you here and join us,
-so we can build better and faster tools for everyone to enjoy.
-
-## Overview
-
-For this guide, the standard compiler frontend phases will be applied:
-
-```
-Source Text --> Lexer --> Token --> Parser --> AST
-```
-
-Writing a JavaScript parser is fairly easy,
-it is 10% architectural decisions and 90% hard work on the fine-grained details.
-
-The architectural decisions will mostly affect two categories:
-
-* the performance of our parser
-* how nice it is to consume our AST
-
-Knowing all the options and trade-offs before building a parser in Rust will make our whole journey much smoother.
-
-## Performance
-
-The key to a performant Rust program is to **allocate less memory** and **use fewer CPU cycles**.
-
-It is mostly transparent where memory allocations are made just by looking for heap-allocated objects such as a `Vec`, `Box` or `String`.
-Reasoning about their usage will give us a sense of how fast our program will be - the more we allocate, the slower our program will be.
-
-Rust gives us the power of zero-cost abstractions, we don't need to worry too much about abstractions causing slower performance.
-Be careful with our algorithmic complexities and we will be all good to go.
-
-:::info
-You should also read [The Rust Performance Book](https://nnethercote.github.io/perf-book/introduction.html).
-:::
-
-## Rust Source Code
-
-Whenever the performance of a function call cannot be deduced,
-do not be afraid to click the "source" button on the Rust documentation and read the source code,
-they are easy to understand most of the time.
-
-:::info
-When navigating the Rust source code, searching for a definition is simply looking for
-`fn function_name`, `struct struct_name`, `enum enum_name`, etc.
-This is one advantage of having constant grammar in Rust (compared to JavaScript 😉).
-:::
-
----
-
----
 url: /docs/contribute/introduction.md
 ---
 
@@ -25023,6 +24958,71 @@ Ready to contribute? Here are some great places to start:
 * 🛠️ **Pick a Tool**: Dive into [parser](./parser.md), [linter](./linter.md), [transformer](./transformer.md), or [other tools](./formatter.md)
 
 We can't wait to see what you'll build with us! 🚀
+
+---
+
+---
+url: /docs/learn/parser_in_rust/intro.md
+---
+
+# Introduction
+
+We are in [The Third Age of JavaScript](https://www.swyx.io/js-third-age/),
+the common trend right now is to author JavaScript tools in Rust or Go for their performance gains.
+
+But authoring JavaScript tools are challenging, let alone writing them in Rust.
+I have struggled a lot when learning these technologies,
+and I wish fewer people to take the same struggling journey.
+
+I want to make my own contribution to the community by writing this guide,
+so you don't have to take the same journey as I had.
+
+There are only a handful of developers on the Rust side, and I would like to see you here and join us,
+so we can build better and faster tools for everyone to enjoy.
+
+## Overview
+
+For this guide, the standard compiler frontend phases will be applied:
+
+```
+Source Text --> Lexer --> Token --> Parser --> AST
+```
+
+Writing a JavaScript parser is fairly easy,
+it is 10% architectural decisions and 90% hard work on the fine-grained details.
+
+The architectural decisions will mostly affect two categories:
+
+* the performance of our parser
+* how nice it is to consume our AST
+
+Knowing all the options and trade-offs before building a parser in Rust will make our whole journey much smoother.
+
+## Performance
+
+The key to a performant Rust program is to **allocate less memory** and **use fewer CPU cycles**.
+
+It is mostly transparent where memory allocations are made just by looking for heap-allocated objects such as a `Vec`, `Box` or `String`.
+Reasoning about their usage will give us a sense of how fast our program will be - the more we allocate, the slower our program will be.
+
+Rust gives us the power of zero-cost abstractions, we don't need to worry too much about abstractions causing slower performance.
+Be careful with our algorithmic complexities and we will be all good to go.
+
+:::info
+You should also read [The Rust Performance Book](https://nnethercote.github.io/perf-book/introduction.html).
+:::
+
+## Rust Source Code
+
+Whenever the performance of a function call cannot be deduced,
+do not be afraid to click the "source" button on the Rust documentation and read the source code,
+they are easy to understand most of the time.
+
+:::info
+When navigating the Rust source code, searching for a definition is simply looking for
+`fn function_name`, `struct struct_name`, `enum enum_name`, etc.
+This is one advantage of having constant grammar in Rust (compared to JavaScript 😉).
+:::
 
 ---
 
@@ -34415,6 +34415,63 @@ and string comparison becomes `matches!(value, TokenValue::String(atom!("string"
 ---
 
 ---
+url: /docs/contribute/linter.md
+---
+
+# Linter
+
+## Contributing New Rules
+
+See the [adding rules](./linter/adding-rules.md) guide for how to add new rules to Oxlint.
+
+## Development
+
+Create a `./test.ts` and then
+
+```bash
+just watch "cargo run --bin oxlint -- test.ts"
+```
+
+Or test and filter against the rule:
+
+```bash
+just watch "cargo test -p oxc_linter -- rule-name"
+```
+
+### Testing oxlint against a full codebase
+
+To test oxlint on a full codebase, for example to test your changes with a large JavaScript/TypeScript project, you can build the `oxlint` CLI and run it against that codebase.
+
+```bash
+# build the oxlint cli in the oxc repo
+just oxlint-node
+# and then in the directory of the codebase you want to test with, run oxlint with node:
+node <path-to-oxc-repo>/apps/oxlint/dist/cli.js
+# You can also pass flags to it, like -D to enable a specific rule, and --disable-x-plugin to turn off default plugins:
+node <path-to-oxc-repo>/apps/oxlint/dist/cli.js -D rulename --disable-unicorn-plugin --disable-oxc-plugin --disable-typescript-plugin
+```
+
+### Snapshot Testing
+
+[`cargo insta`](https://insta.rs/docs) is used for snapshot testing.
+
+After running `cargo test -p oxc_linter` and the line `Tester::new(RULE::NAME, pass, fail).test_and_snapshot()` is called, a new `rule.snap.new` file will be generated.
+
+Use `cargo insta accept` to accept all snapshot changes.
+
+## Rule Category
+
+* **correctness** - code that is outright wrong or useless
+* **suspicious** - code that is most likely wrong or useless
+* **pedantic** - lints which are rather strict or have occasional false positives
+* **perf** - code that can be written to run faster
+* **style** - code that should be written in a more idiomatic way
+* **restriction** - lints should be considered on a case-by-case basis before enabling.
+* **nursery** - new lints that are still under development
+
+---
+
+---
 url: /docs/learn/architecture/linter.md
 ---
 
@@ -34515,63 +34572,6 @@ For adding new rules, remember to update this list.
 The repository provides the minimum code configuration for creating a linter.
 
 > [Minimal Linter Code](https://github.com/oxc-project/oxc/blob/main/crates/oxc_linter/examples/linter.rs)
-
----
-
----
-url: /docs/contribute/linter.md
----
-
-# Linter
-
-## Contributing New Rules
-
-See the [adding rules](./linter/adding-rules.md) guide for how to add new rules to Oxlint.
-
-## Development
-
-Create a `./test.ts` and then
-
-```bash
-just watch "cargo run --bin oxlint -- test.ts"
-```
-
-Or test and filter against the rule:
-
-```bash
-just watch "cargo test -p oxc_linter -- rule-name"
-```
-
-### Testing oxlint against a full codebase
-
-To test oxlint on a full codebase, for example to test your changes with a large JavaScript/TypeScript project, you can build the `oxlint` CLI and run it against that codebase.
-
-```bash
-# build the oxlint cli in the oxc repo
-just oxlint-node
-# and then in the directory of the codebase you want to test with, run oxlint with node:
-node <path-to-oxc-repo>/apps/oxlint/dist/cli.js
-# You can also pass flags to it, like -D to enable a specific rule, and --disable-x-plugin to turn off default plugins:
-node <path-to-oxc-repo>/apps/oxlint/dist/cli.js -D rulename --disable-unicorn-plugin --disable-oxc-plugin --disable-typescript-plugin
-```
-
-### Snapshot Testing
-
-[`cargo insta`](https://insta.rs/docs) is used for snapshot testing.
-
-After running `cargo test -p oxc_linter` and the line `Tester::new(RULE::NAME, pass, fail).test_and_snapshot()` is called, a new `rule.snap.new` file will be generated.
-
-Use `cargo insta accept` to accept all snapshot changes.
-
-## Rule Category
-
-* **correctness** - code that is outright wrong or useless
-* **suspicious** - code that is most likely wrong or useless
-* **pedantic** - lints which are rather strict or have occasional false positives
-* **perf** - code that can be written to run faster
-* **style** - code that should be written in a more idiomatic way
-* **restriction** - lints should be considered on a case-by-case basis before enabling.
-* **nursery** - new lints that are still under development
 
 ---
 
@@ -35020,60 +35020,6 @@ If you no longer use Prettier, you can optionally move its contents from `.prett
 ---
 
 ---
-url: /docs/guide/usage/minifier.md
----
-# Minifier
-
-::: tip
-`oxc-minify` is currently in alpha and may still have bugs.
-We recommend thoroughly testing its output before deploying to production environments.
-:::
-
-## Features
-
-* [Eliminate dead code.](./minifier/dead-code-elimination)
-* [Transforms syntaxes to make the output shorter and repetitive.](./minifier/syntax-normalization)
-* [Mangle variable names.](./minifier/mangling)
-* [Remove whitespace and comments.](./minifier/whitespace-stripping)
-
-## Assumptions
-
-To allow better optimizations, Oxc minifier makes some assumptions about your code. See [Assumptions document](https://github.com/oxc-project/oxc/blob/main/crates/oxc_minifier/docs/ASSUMPTIONS.md) for more information.
-
-## FAQ
-
-See [FAQ](./minifier/faq) for common questions.
-
-## Installation
-
-### With Rolldown
-
-If you are using [Rolldown][url-rolldown], `oxc-minify` will be used for minification by default. No extra installation is required.
-
-### Node.js
-
-* Use the node binding [oxc-minify][url-oxc-minify-npm].
-* Try on [stackblitz](https://stackblitz.com/edit/oxc-minify).
-
-### Rust
-
-Use the umbrella crate [oxc][url-oxc-crate] with the `minifier` feature.
-
-Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_minifier/examples/minifier.rs).
-
-## Integrations
-
-* [`unplugin-oxc`](https://github.com/unplugin/unplugin-oxc)
-
-[url-oxc-crate]: https://docs.rs/oxc
-
-[url-oxc-minify-npm]: https://www.npmjs.com/package/oxc-minify
-
-[url-rolldown]: https://rolldown.rs
-
----
-
----
 url: /docs/contribute/minifier.md
 ---
 
@@ -35162,6 +35108,60 @@ Key strategies for maintaining performance:
 [esbuild]: https://github.com/evanw/esbuild
 
 [tdewolff-minify]: https://github.com/tdewolff/minify
+
+---
+
+---
+url: /docs/guide/usage/minifier.md
+---
+# Minifier
+
+::: tip
+`oxc-minify` is currently in alpha and may still have bugs.
+We recommend thoroughly testing its output before deploying to production environments.
+:::
+
+## Features
+
+* [Eliminate dead code.](./minifier/dead-code-elimination)
+* [Transforms syntaxes to make the output shorter and repetitive.](./minifier/syntax-normalization)
+* [Mangle variable names.](./minifier/mangling)
+* [Remove whitespace and comments.](./minifier/whitespace-stripping)
+
+## Assumptions
+
+To allow better optimizations, Oxc minifier makes some assumptions about your code. See [Assumptions document](https://github.com/oxc-project/oxc/blob/main/crates/oxc_minifier/docs/ASSUMPTIONS.md) for more information.
+
+## FAQ
+
+See [FAQ](./minifier/faq) for common questions.
+
+## Installation
+
+### With Rolldown
+
+If you are using [Rolldown][url-rolldown], `oxc-minify` will be used for minification by default. No extra installation is required.
+
+### Node.js
+
+* Use the node binding [oxc-minify][url-oxc-minify-npm].
+* Try on [stackblitz](https://stackblitz.com/edit/oxc-minify).
+
+### Rust
+
+Use the umbrella crate [oxc][url-oxc-crate] with the `minifier` feature.
+
+Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_minifier/examples/minifier.rs).
+
+## Integrations
+
+* [`unplugin-oxc`](https://github.com/unplugin/unplugin-oxc)
+
+[url-oxc-crate]: https://docs.rs/oxc
+
+[url-oxc-minify-npm]: https://www.npmjs.com/package/oxc-minify
+
+[url-rolldown]: https://rolldown.rs
 
 ---
 
@@ -35263,7 +35263,7 @@ Command line options override configuration files, regardless of whether they co
 
 Passing an explicit config file location using `-c` or `--config` disables nested config lookup, and Oxlint will only use that single configuration file.
 
-You can also disable nested configs with the `--disable-nested-configs` flag.
+You can also disable nested configs with the `--disable-nested-config` flag.
 
 ## Monorepo pattern: share a base config with extends
 
@@ -39599,653 +39599,6 @@ Oxlint is used in production by popular projects such as:
 ---
 
 ---
-url: /docs/guide/usage/linter/generated-config.md
----
-
-# Oxlint Configuration File
-
-This configuration is aligned with ESLint v8's configuration schema (`eslintrc.json`).
-
-Usage: `oxlint -c oxlintrc.json --import-plugin`
-
-::: danger NOTE
-
-Only the `.json` format is supported. You can use comments in configuration files.
-
-:::
-
-Example
-
-`.oxlintrc.json`
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["import", "typescript", "unicorn"],
-  "env": {
-    "browser": true
-  },
-  "globals": {
-    "foo": "readonly"
-  },
-  "settings": {},
-  "rules": {
-    "eqeqeq": "warn",
-    "import/no-cycle": "error",
-    "react/self-closing-comp": [
-      "error",
-      {
-        "html": false
-      }
-    ]
-  },
-  "overrides": [
-    {
-      "files": ["*.test.ts", "*.spec.ts"],
-      "rules": {
-        "@typescript-eslint/no-explicit-any": "off"
-      }
-    }
-  ]
-}
-```
-
-## $schema
-
-type: `string`
-
-Schema URI for editor tooling.
-
-## categories
-
-type: `object`
-
-Configure an entire category of rules all at once.
-
-Rules enabled or disabled this way will be overwritten by individual rules in the `rules` field.
-
-Example
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "categories": {
-    "correctness": "warn"
-  },
-  "rules": {
-    "eslint/no-unused-vars": "error"
-  }
-}
-```
-
-### categories.correctness
-
-### categories.nursery
-
-### categories.pedantic
-
-### categories.perf
-
-### categories.restriction
-
-### categories.style
-
-### categories.suspicious
-
-## env
-
-type: `Record<string, boolean>`
-
-Predefine global variables.
-
-Environments specify what global variables are predefined.
-See [ESLint's list of environments](https://eslint.org/docs/v8.x/use/configure/language-options#specifying-environments)
-for what environments are available and what each one provides.
-
-## extends
-
-type: `string[]`
-
-Paths of configuration files that this configuration file extends (inherits from). The files
-are resolved relative to the location of the configuration file that contains the `extends`
-property. The configuration files are merged from the first to the last, with the last file
-overriding the previous ones.
-
-## globals
-
-type: `Record<string, string>`
-
-Add or remove global variables.
-
-For each global variable, set the corresponding value equal to `"writable"`
-to allow the variable to be overwritten or `"readonly"` to disallow overwriting.
-
-Globals can be disabled by setting their value to `"off"`. For example, in
-an environment where most Es2015 globals are available but `Promise` is unavailable,
-you might use this config:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "env": {
-    "es6": true
-  },
-  "globals": {
-    "Promise": "off"
-  }
-}
-```
-
-You may also use `"readable"` or `false` to represent `"readonly"`, and
-`"writeable"` or `true` to represent `"writable"`.
-
-## ignorePatterns
-
-type: `string[]`
-
-default: `[]`
-
-Globs to ignore during linting. These are resolved from the configuration file path.
-
-## jsPlugins
-
-type: `array`
-
-JS plugins, allows usage of ESLint plugins with Oxlint.
-
-Read more about JS plugins in
-[the docs](https://oxc.rs/docs/guide/usage/linter/js-plugins.html).
-
-Note: JS plugins are experimental and not subject to semver.
-They are not supported in the language server (and thus editor integrations) at present.
-
-### jsPlugins\[n]
-
-type: `object | string`
-
-#### jsPlugins\[n].name
-
-type: `string`
-
-Custom name/alias for the plugin.
-
-Note: The following plugin names are reserved because they are implemented natively in Rust within oxlint and cannot be used for JS plugins:
-
-* react (includes react-hooks)
-* unicorn
-* typescript (includes @typescript-eslint)
-* oxc
-* import (includes import-x)
-* jsdoc
-* jest
-* vitest
-* jsx-a11y
-* nextjs
-* react-perf
-* promise
-* node
-* vue
-* eslint
-
-If you need to use the JavaScript version of any of these plugins, provide a custom alias to avoid conflicts.
-
-#### jsPlugins\[n].specifier
-
-type: `string`
-
-Path or package name of the plugin
-
-## overrides
-
-type: `array`
-
-### overrides\[n]
-
-type: `object`
-
-#### overrides\[n].env
-
-type: `object`
-
-Environments enable and disable collections of global variables.
-
-#### overrides\[n].files
-
-type: `string[]`
-
-A set of glob patterns.
-
-#### overrides\[n].globals
-
-type: `object`
-
-Enabled or disabled specific global variables.
-
-#### overrides\[n].jsPlugins
-
-type: `array`
-
-JS plugins for this override, allows usage of ESLint plugins with Oxlint.
-
-Read more about JS plugins in
-[the docs](https://oxc.rs/docs/guide/usage/linter/js-plugins.html).
-
-Note: JS plugins are experimental and not subject to semver.
-They are not supported in the language server (and thus editor integrations) at present.
-
-##### overrides\[n].jsPlugins\[n]
-
-type: `object | string`
-
-###### overrides\[n].jsPlugins\[n].name
-
-type: `string`
-
-Custom name/alias for the plugin.
-
-Note: The following plugin names are reserved because they are implemented natively in Rust within oxlint and cannot be used for JS plugins:
-
-* react (includes react-hooks)
-* unicorn
-* typescript (includes @typescript-eslint)
-* oxc
-* import (includes import-x)
-* jsdoc
-* jest
-* vitest
-* jsx-a11y
-* nextjs
-* react-perf
-* promise
-* node
-* vue
-* eslint
-
-If you need to use the JavaScript version of any of these plugins, provide a custom alias to avoid conflicts.
-
-###### overrides\[n].jsPlugins\[n].specifier
-
-type: `string`
-
-Path or package name of the plugin
-
-#### overrides\[n].plugins
-
-type: `array`
-
-default: `null`
-
-Optionally change what plugins are enabled for this override. When
-omitted, the base config's plugins are used.
-
-##### overrides\[n].plugins\[n]
-
-type: `"eslint" | "react" | "unicorn" | "typescript" | "oxc" | "import" | "jsdoc" | "jest" | "vitest" | "jsx-a11y" | "nextjs" | "react-perf" | "promise" | "node" | "vue"`
-
-#### overrides\[n].rules
-
-type: `object`
-
-See [Oxlint Rules](https://oxc.rs/docs/guide/usage/linter/rules.html)
-
-## plugins
-
-type: `array`
-
-default: `null`
-
-Enabled built-in plugins for Oxlint.
-You can view the list of available plugins on
-[the website](https://oxc.rs/docs/guide/usage/linter/plugins.html#supported-plugins).
-
-NOTE: Setting the `plugins` field will overwrite the base set of plugins.
-The `plugins` array should reflect all of the plugins you want to use.
-
-### plugins\[n]
-
-type: `"eslint" | "react" | "unicorn" | "typescript" | "oxc" | "import" | "jsdoc" | "jest" | "vitest" | "jsx-a11y" | "nextjs" | "react-perf" | "promise" | "node" | "vue"`
-
-## rules
-
-type: `object`
-
-See [Oxlint Rules](https://oxc.rs/docs/guide/usage/linter/rules.html)
-
-## settings
-
-type: `object`
-
-Configure the behavior of linter plugins.
-
-Here's an example if you're using Next.js in a monorepo:
-
-```json
-{
-  "settings": {
-    "next": {
-      "rootDir": "apps/dashboard/"
-    },
-    "react": {
-      "linkComponents": [
-        {
-          "name": "Link",
-          "linkAttribute": "to"
-        }
-      ]
-    },
-    "jsx-a11y": {
-      "components": {
-        "Link": "a",
-        "Button": "button"
-      }
-    }
-  }
-}
-```
-
-### settings.jsdoc
-
-type: `object`
-
-#### settings.jsdoc.augmentsExtendsReplacesDocs
-
-type: `boolean`
-
-default: `false`
-
-Only for `require-(yields|returns|description|example|param|throws)` rule
-
-#### settings.jsdoc.exemptDestructuredRootsFromChecks
-
-type: `boolean`
-
-default: `false`
-
-Only for `require-param-type` and `require-param-description` rule
-
-#### settings.jsdoc.ignoreInternal
-
-type: `boolean`
-
-default: `false`
-
-For all rules but NOT apply to `empty-tags` rule
-
-#### settings.jsdoc.ignorePrivate
-
-type: `boolean`
-
-default: `false`
-
-For all rules but NOT apply to `check-access` and `empty-tags` rule
-
-#### settings.jsdoc.ignoreReplacesDocs
-
-type: `boolean`
-
-default: `true`
-
-Only for `require-(yields|returns|description|example|param|throws)` rule
-
-#### settings.jsdoc.implementsReplacesDocs
-
-type: `boolean`
-
-default: `false`
-
-Only for `require-(yields|returns|description|example|param|throws)` rule
-
-#### settings.jsdoc.overrideReplacesDocs
-
-type: `boolean`
-
-default: `true`
-
-Only for `require-(yields|returns|description|example|param|throws)` rule
-
-#### settings.jsdoc.tagNamePreference
-
-type: `object`
-
-default: `{}`
-
-### settings.jsx-a11y
-
-type: `object`
-
-Configure JSX A11y plugin rules.
-
-See
-[eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#configurations)'s
-configuration for a full reference.
-
-#### settings.jsx-a11y.attributes
-
-type: `Record<string, array>`
-
-default: `{}`
-
-Map of attribute names to their DOM equivalents.
-This is useful for non-React frameworks that use different attribute names.
-
-Example:
-
-```json
-{
-  "settings": {
-    "jsx-a11y": {
-      "attributes": {
-        "for": ["htmlFor", "for"]
-      }
-    }
-  }
-}
-```
-
-#### settings.jsx-a11y.components
-
-type: `Record<string, string>`
-
-default: `{}`
-
-To have your custom components be checked as DOM elements, you can
-provide a mapping of your component names to the DOM element name.
-
-Example:
-
-```json
-{
-  "settings": {
-    "jsx-a11y": {
-      "components": {
-        "Link": "a",
-        "IconButton": "button"
-      }
-    }
-  }
-}
-```
-
-#### settings.jsx-a11y.polymorphicPropName
-
-type: `string`
-
-An optional setting that define the prop your code uses to create polymorphic components.
-This setting will be used to determine the element type in rules that
-require semantic context.
-
-For example, if you set the `polymorphicPropName` to `as`, then this element:
-
-```jsx
-<Box as="h3">Hello</Box>
-```
-
-Will be treated as an `h3`. If not set, this component will be treated
-as a `Box`.
-
-### settings.next
-
-type: `object`
-
-Configure Next.js plugin rules.
-
-#### settings.next.rootDir
-
-type: `array | string`
-
-##### settings.next.rootDir\[n]
-
-type: `string`
-
-### settings.react
-
-type: `object`
-
-Configure React plugin rules.
-
-Derived from [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react#configuration-legacy-eslintrc-)
-
-#### settings.react.componentWrapperFunctions
-
-type: `string[]`
-
-default: `[]`
-
-Functions that wrap React components and should be treated as HOCs.
-
-Example:
-
-```jsonc
-{
-  "settings": {
-    "react": {
-      "componentWrapperFunctions": ["observer", "withRouter"],
-    },
-  },
-}
-```
-
-#### settings.react.formComponents
-
-type: `array`
-
-default: `[]`
-
-Components used as alternatives to `<form>` for forms, such as `<Formik>`.
-
-Example:
-
-```jsonc
-{
-  "settings": {
-    "react": {
-      "formComponents": [
-        "CustomForm",
-        // OtherForm is considered a form component and has an endpoint attribute
-        { "name": "OtherForm", "formAttribute": "endpoint" },
-        // allows specifying multiple properties if necessary
-        { "name": "Form", "formAttribute": ["registerEndpoint", "loginEndpoint"] },
-      ],
-    },
-  },
-}
-```
-
-##### settings.react.formComponents\[n]
-
-type: `object | string`
-
-###### settings.react.formComponents\[n].attribute
-
-type: `string`
-
-###### settings.react.formComponents\[n].name
-
-type: `string`
-
-#### settings.react.linkComponents
-
-type: `array`
-
-default: `[]`
-
-Components used as alternatives to `<a>` for linking, such as `<Link>`.
-
-Example:
-
-```jsonc
-{
-  "settings": {
-    "react": {
-      "linkComponents": [
-        "HyperLink",
-        // Use `linkAttribute` for components that use a different prop name
-        // than `href`.
-        { "name": "MyLink", "linkAttribute": "to" },
-        // allows specifying multiple properties if necessary
-        { "name": "Link", "linkAttribute": ["to", "href"] },
-      ],
-    },
-  },
-}
-```
-
-##### settings.react.linkComponents\[n]
-
-type: `object | string`
-
-###### settings.react.linkComponents\[n].attribute
-
-type: `string`
-
-###### settings.react.linkComponents\[n].name
-
-type: `string`
-
-#### settings.react.version
-
-type: `string`
-
-default: `null`
-
-React version to use for version-specific rules.
-
-Accepts semver versions (e.g., "18.2.0", "17.0").
-
-Example:
-
-```jsonc
-{
-  "settings": {
-    "react": {
-      "version": "18.2.0",
-    },
-  },
-}
-```
-
-### settings.vitest
-
-type: `object`
-
-Configure Vitest plugin rules.
-
-See [eslint-plugin-vitest](https://github.com/vitest-dev/eslint-plugin-vitest)'s
-configuration for a full reference.
-
-#### settings.vitest.typecheck
-
-type: `boolean`
-
-default: `false`
-
-Whether to enable typecheck mode for Vitest rules.
-When enabled, some rules will skip certain checks for describe blocks
-to accommodate TypeScript type checking scenarios.
-
----
-
----
 url: /docs/guide/usage/linter/config-file-reference.md
 ---
 
@@ -40893,66 +40246,758 @@ to accommodate TypeScript type checking scenarios.
 ---
 
 ---
-url: /docs/guide/usage/parser.md
+url: /docs/guide/usage/linter/generated-config.md
+---
+
+# Oxlint Configuration File
+
+This configuration is aligned with ESLint v8's configuration schema (`eslintrc.json`).
+
+Usage: `oxlint -c oxlintrc.json --import-plugin`
+
+::: danger NOTE
+
+Only the `.json` format is supported. You can use comments in configuration files.
+
+:::
+
+Example
+
+`.oxlintrc.json`
+
+```json
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["import", "typescript", "unicorn"],
+  "env": {
+    "browser": true
+  },
+  "globals": {
+    "foo": "readonly"
+  },
+  "settings": {},
+  "rules": {
+    "eqeqeq": "warn",
+    "import/no-cycle": "error",
+    "react/self-closing-comp": [
+      "error",
+      {
+        "html": false
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["*.test.ts", "*.spec.ts"],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
+    }
+  ]
+}
+```
+
+## $schema
+
+type: `string`
+
+Schema URI for editor tooling.
+
+## categories
+
+type: `object`
+
+Configure an entire category of rules all at once.
+
+Rules enabled or disabled this way will be overwritten by individual rules in the `rules` field.
+
+Example
+
+```json
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "categories": {
+    "correctness": "warn"
+  },
+  "rules": {
+    "eslint/no-unused-vars": "error"
+  }
+}
+```
+
+### categories.correctness
+
+### categories.nursery
+
+### categories.pedantic
+
+### categories.perf
+
+### categories.restriction
+
+### categories.style
+
+### categories.suspicious
+
+## env
+
+type: `Record<string, boolean>`
+
+Predefine global variables.
+
+Environments specify what global variables are predefined.
+See [ESLint's list of environments](https://eslint.org/docs/v8.x/use/configure/language-options#specifying-environments)
+for what environments are available and what each one provides.
+
+## extends
+
+type: `string[]`
+
+Paths of configuration files that this configuration file extends (inherits from). The files
+are resolved relative to the location of the configuration file that contains the `extends`
+property. The configuration files are merged from the first to the last, with the last file
+overriding the previous ones.
+
+## globals
+
+type: `Record<string, string>`
+
+Add or remove global variables.
+
+For each global variable, set the corresponding value equal to `"writable"`
+to allow the variable to be overwritten or `"readonly"` to disallow overwriting.
+
+Globals can be disabled by setting their value to `"off"`. For example, in
+an environment where most Es2015 globals are available but `Promise` is unavailable,
+you might use this config:
+
+```json
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "env": {
+    "es6": true
+  },
+  "globals": {
+    "Promise": "off"
+  }
+}
+```
+
+You may also use `"readable"` or `false` to represent `"readonly"`, and
+`"writeable"` or `true` to represent `"writable"`.
+
+## ignorePatterns
+
+type: `string[]`
+
+default: `[]`
+
+Globs to ignore during linting. These are resolved from the configuration file path.
+
+## jsPlugins
+
+type: `array`
+
+JS plugins, allows usage of ESLint plugins with Oxlint.
+
+Read more about JS plugins in
+[the docs](https://oxc.rs/docs/guide/usage/linter/js-plugins.html).
+
+Note: JS plugins are experimental and not subject to semver.
+They are not supported in the language server (and thus editor integrations) at present.
+
+### jsPlugins\[n]
+
+type: `object | string`
+
+#### jsPlugins\[n].name
+
+type: `string`
+
+Custom name/alias for the plugin.
+
+Note: The following plugin names are reserved because they are implemented natively in Rust within oxlint and cannot be used for JS plugins:
+
+* react (includes react-hooks)
+* unicorn
+* typescript (includes @typescript-eslint)
+* oxc
+* import (includes import-x)
+* jsdoc
+* jest
+* vitest
+* jsx-a11y
+* nextjs
+* react-perf
+* promise
+* node
+* vue
+* eslint
+
+If you need to use the JavaScript version of any of these plugins, provide a custom alias to avoid conflicts.
+
+#### jsPlugins\[n].specifier
+
+type: `string`
+
+Path or package name of the plugin
+
+## overrides
+
+type: `array`
+
+### overrides\[n]
+
+type: `object`
+
+#### overrides\[n].env
+
+type: `object`
+
+Environments enable and disable collections of global variables.
+
+#### overrides\[n].files
+
+type: `string[]`
+
+A set of glob patterns.
+
+#### overrides\[n].globals
+
+type: `object`
+
+Enabled or disabled specific global variables.
+
+#### overrides\[n].jsPlugins
+
+type: `array`
+
+JS plugins for this override, allows usage of ESLint plugins with Oxlint.
+
+Read more about JS plugins in
+[the docs](https://oxc.rs/docs/guide/usage/linter/js-plugins.html).
+
+Note: JS plugins are experimental and not subject to semver.
+They are not supported in the language server (and thus editor integrations) at present.
+
+##### overrides\[n].jsPlugins\[n]
+
+type: `object | string`
+
+###### overrides\[n].jsPlugins\[n].name
+
+type: `string`
+
+Custom name/alias for the plugin.
+
+Note: The following plugin names are reserved because they are implemented natively in Rust within oxlint and cannot be used for JS plugins:
+
+* react (includes react-hooks)
+* unicorn
+* typescript (includes @typescript-eslint)
+* oxc
+* import (includes import-x)
+* jsdoc
+* jest
+* vitest
+* jsx-a11y
+* nextjs
+* react-perf
+* promise
+* node
+* vue
+* eslint
+
+If you need to use the JavaScript version of any of these plugins, provide a custom alias to avoid conflicts.
+
+###### overrides\[n].jsPlugins\[n].specifier
+
+type: `string`
+
+Path or package name of the plugin
+
+#### overrides\[n].plugins
+
+type: `array`
+
+default: `null`
+
+Optionally change what plugins are enabled for this override. When
+omitted, the base config's plugins are used.
+
+##### overrides\[n].plugins\[n]
+
+type: `"eslint" | "react" | "unicorn" | "typescript" | "oxc" | "import" | "jsdoc" | "jest" | "vitest" | "jsx-a11y" | "nextjs" | "react-perf" | "promise" | "node" | "vue"`
+
+#### overrides\[n].rules
+
+type: `object`
+
+See [Oxlint Rules](https://oxc.rs/docs/guide/usage/linter/rules.html)
+
+## plugins
+
+type: `array`
+
+default: `null`
+
+Enabled built-in plugins for Oxlint.
+You can view the list of available plugins on
+[the website](https://oxc.rs/docs/guide/usage/linter/plugins.html#supported-plugins).
+
+NOTE: Setting the `plugins` field will overwrite the base set of plugins.
+The `plugins` array should reflect all of the plugins you want to use.
+
+### plugins\[n]
+
+type: `"eslint" | "react" | "unicorn" | "typescript" | "oxc" | "import" | "jsdoc" | "jest" | "vitest" | "jsx-a11y" | "nextjs" | "react-perf" | "promise" | "node" | "vue"`
+
+## rules
+
+type: `object`
+
+See [Oxlint Rules](https://oxc.rs/docs/guide/usage/linter/rules.html)
+
+## settings
+
+type: `object`
+
+Configure the behavior of linter plugins.
+
+Here's an example if you're using Next.js in a monorepo:
+
+```json
+{
+  "settings": {
+    "next": {
+      "rootDir": "apps/dashboard/"
+    },
+    "react": {
+      "linkComponents": [
+        {
+          "name": "Link",
+          "linkAttribute": "to"
+        }
+      ]
+    },
+    "jsx-a11y": {
+      "components": {
+        "Link": "a",
+        "Button": "button"
+      }
+    }
+  }
+}
+```
+
+### settings.jsdoc
+
+type: `object`
+
+#### settings.jsdoc.augmentsExtendsReplacesDocs
+
+type: `boolean`
+
+default: `false`
+
+Only for `require-(yields|returns|description|example|param|throws)` rule
+
+#### settings.jsdoc.exemptDestructuredRootsFromChecks
+
+type: `boolean`
+
+default: `false`
+
+Only for `require-param-type` and `require-param-description` rule
+
+#### settings.jsdoc.ignoreInternal
+
+type: `boolean`
+
+default: `false`
+
+For all rules but NOT apply to `empty-tags` rule
+
+#### settings.jsdoc.ignorePrivate
+
+type: `boolean`
+
+default: `false`
+
+For all rules but NOT apply to `check-access` and `empty-tags` rule
+
+#### settings.jsdoc.ignoreReplacesDocs
+
+type: `boolean`
+
+default: `true`
+
+Only for `require-(yields|returns|description|example|param|throws)` rule
+
+#### settings.jsdoc.implementsReplacesDocs
+
+type: `boolean`
+
+default: `false`
+
+Only for `require-(yields|returns|description|example|param|throws)` rule
+
+#### settings.jsdoc.overrideReplacesDocs
+
+type: `boolean`
+
+default: `true`
+
+Only for `require-(yields|returns|description|example|param|throws)` rule
+
+#### settings.jsdoc.tagNamePreference
+
+type: `object`
+
+default: `{}`
+
+### settings.jsx-a11y
+
+type: `object`
+
+Configure JSX A11y plugin rules.
+
+See
+[eslint-plugin-jsx-a11y](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#configurations)'s
+configuration for a full reference.
+
+#### settings.jsx-a11y.attributes
+
+type: `Record<string, array>`
+
+default: `{}`
+
+Map of attribute names to their DOM equivalents.
+This is useful for non-React frameworks that use different attribute names.
+
+Example:
+
+```json
+{
+  "settings": {
+    "jsx-a11y": {
+      "attributes": {
+        "for": ["htmlFor", "for"]
+      }
+    }
+  }
+}
+```
+
+#### settings.jsx-a11y.components
+
+type: `Record<string, string>`
+
+default: `{}`
+
+To have your custom components be checked as DOM elements, you can
+provide a mapping of your component names to the DOM element name.
+
+Example:
+
+```json
+{
+  "settings": {
+    "jsx-a11y": {
+      "components": {
+        "Link": "a",
+        "IconButton": "button"
+      }
+    }
+  }
+}
+```
+
+#### settings.jsx-a11y.polymorphicPropName
+
+type: `string`
+
+An optional setting that define the prop your code uses to create polymorphic components.
+This setting will be used to determine the element type in rules that
+require semantic context.
+
+For example, if you set the `polymorphicPropName` to `as`, then this element:
+
+```jsx
+<Box as="h3">Hello</Box>
+```
+
+Will be treated as an `h3`. If not set, this component will be treated
+as a `Box`.
+
+### settings.next
+
+type: `object`
+
+Configure Next.js plugin rules.
+
+#### settings.next.rootDir
+
+type: `array | string`
+
+##### settings.next.rootDir\[n]
+
+type: `string`
+
+### settings.react
+
+type: `object`
+
+Configure React plugin rules.
+
+Derived from [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react#configuration-legacy-eslintrc-)
+
+#### settings.react.componentWrapperFunctions
+
+type: `string[]`
+
+default: `[]`
+
+Functions that wrap React components and should be treated as HOCs.
+
+Example:
+
+```jsonc
+{
+  "settings": {
+    "react": {
+      "componentWrapperFunctions": ["observer", "withRouter"],
+    },
+  },
+}
+```
+
+#### settings.react.formComponents
+
+type: `array`
+
+default: `[]`
+
+Components used as alternatives to `<form>` for forms, such as `<Formik>`.
+
+Example:
+
+```jsonc
+{
+  "settings": {
+    "react": {
+      "formComponents": [
+        "CustomForm",
+        // OtherForm is considered a form component and has an endpoint attribute
+        { "name": "OtherForm", "formAttribute": "endpoint" },
+        // allows specifying multiple properties if necessary
+        { "name": "Form", "formAttribute": ["registerEndpoint", "loginEndpoint"] },
+      ],
+    },
+  },
+}
+```
+
+##### settings.react.formComponents\[n]
+
+type: `object | string`
+
+###### settings.react.formComponents\[n].attribute
+
+type: `string`
+
+###### settings.react.formComponents\[n].name
+
+type: `string`
+
+#### settings.react.linkComponents
+
+type: `array`
+
+default: `[]`
+
+Components used as alternatives to `<a>` for linking, such as `<Link>`.
+
+Example:
+
+```jsonc
+{
+  "settings": {
+    "react": {
+      "linkComponents": [
+        "HyperLink",
+        // Use `linkAttribute` for components that use a different prop name
+        // than `href`.
+        { "name": "MyLink", "linkAttribute": "to" },
+        // allows specifying multiple properties if necessary
+        { "name": "Link", "linkAttribute": ["to", "href"] },
+      ],
+    },
+  },
+}
+```
+
+##### settings.react.linkComponents\[n]
+
+type: `object | string`
+
+###### settings.react.linkComponents\[n].attribute
+
+type: `string`
+
+###### settings.react.linkComponents\[n].name
+
+type: `string`
+
+#### settings.react.version
+
+type: `string`
+
+default: `null`
+
+React version to use for version-specific rules.
+
+Accepts semver versions (e.g., "18.2.0", "17.0").
+
+Example:
+
+```jsonc
+{
+  "settings": {
+    "react": {
+      "version": "18.2.0",
+    },
+  },
+}
+```
+
+### settings.vitest
+
+type: `object`
+
+Configure Vitest plugin rules.
+
+See [eslint-plugin-vitest](https://github.com/vitest-dev/eslint-plugin-vitest)'s
+configuration for a full reference.
+
+#### settings.vitest.typecheck
+
+type: `boolean`
+
+default: `false`
+
+Whether to enable typecheck mode for Vitest rules.
+When enabled, some rules will skip certain checks for describe blocks
+to accommodate TypeScript type checking scenarios.
+
+---
+
+---
+url: /docs/contribute/parser.md
 ---
 
 # Parser
 
-This is production ready.
+The Oxc parser is designed to be the fastest and most conformant JavaScript and TypeScript parser available. Contributing to the parser requires understanding both the implementation details and the extensive test infrastructure.
 
-## Features
+## Architecture Overview
 
-* 3x faster than swc parser ([benchmark][url-benchmark]).
-* Parses `.js(x)` and `.ts(x)`.
-* Passes all parser tests from Test262 and 99% from Babel and TypeScript.
-* Returns ESM information directly, no need for [`es-module-lexer`](https://github.com/guybedford/es-module-lexer).
-* [✅ works with checker.ts](https://x.com/robpalmer2/status/1805502964435505559)
+The parser follows a traditional compiler frontend architecture:
 
-## Installation
-
-### Node.js
-
-* Use the node binding [oxc-parser][url-oxc-parser-npm].
-* Try on [stackblitz](https://stackblitz.com/edit/oxc-parser).
-
-### Rust
-
-Use the umbrella crate [oxc][url-oxc-crate] or the individual [oxc\_ast][url-oxc-ast-crate] and [oxc\_parser][url-oxc-parser-crate] crates.
-
-Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_parser/examples/parser.rs).
-
-## Print
-
-After parsing and transforming, you can print code.
-
-Here's a direct example using [esrap](https://www.npmjs.com/package/esrap) *(`parse` in reverse!)*:
-
-```js
-import { print } from "esrap";
-import ts from "esrap/languages/ts";
-import { parseSync } from "oxc-parser";
-
-const { program } = parseSync("test.js", 'alert("hello oxc & esrap");');
-const { code } = print(program, ts());
-
-console.log(code); // alert("hello oxc & esrap");
+```
+Source Text → Lexer → Tokens → Parser → AST
 ```
 
-:::info
-Today, comments are not printed. *It will be supported thanks to [oxc-parser #13285](https://github.com/oxc-project/oxc/pull/13285).*
-:::
+### Key Components
 
-[url-swc]: https://swc.rs
+* **Lexer**: Tokenizes source text into structured tokens
+* **Parser**: Recursive descent parser that builds the AST
+* **AST**: Memory-efficient abstract syntax tree
+* **Error Recovery**: Advanced error handling and recovery
+* **Semantic Analysis**: Symbol resolution and scope management
 
-[url-benchmark]: https://github.com/oxc-project/bench-javascript-parser-written-in-rust
+### Design Goals
 
-[url-oxc-crate]: https://docs.rs/oxc
+We aim to be the fastest Rust-based ready-for-production parser with:
 
-[url-oxc-ast-crate]: https://docs.rs/oxc_ast
+* **Speed**: 3x faster than SWC, 5x faster than Biome
+* **Conformance**: 100% Test262 compliance, 99%+ Babel/TypeScript compatibility
+* **Memory Efficiency**: Arena-based allocation, minimal heap usage
+* **Error Quality**: Helpful error messages with recovery
 
-[url-oxc-parser-crate]: https://docs.rs/oxc_parser
+## Development Workflow
 
-[url-oxc-parser-npm]: https://www.npmjs.com/package/oxc-parser
+### Setting Up
+
+```bash
+# Run parser tests
+cargo test -p oxc_parser
+
+# Run conformance tests
+just c  # or `just coverage`
+```
+
+### Project Structure
+
+```
+crates/oxc_parser/
+├── src/
+│   ├── lib.rs              # Public API
+│   ├── lexer/              # Tokenization
+│   ├── parser/             # Parsing logic
+│   ├── cursor.rs           # Token stream management
+│   └── diagnostics.rs      # Error handling
+├── tests/                  # Unit tests
+└── examples/               # Usage examples
+```
+
+### Core Parser Files
+
+* **`parser/mod.rs`**: Main parser entry point
+* **`parser/statement.rs`**: Statement parsing
+* **`parser/expression.rs`**: Expression parsing
+* **`parser/typescript.rs`**: TypeScript-specific parsing
+* **`parser/jsx.rs`**: JSX parsing logic
+
+## Conformance Testing
+
+### Running Conformance Tests
+
+```bash
+just c
+```
+
+This runs conformance test suites using the runner in [tasks/coverage](https://github.com/oxc-project/oxc/tree/main/tasks/coverage):
+
+### Test262 - ECMAScript Conformance
+
+JavaScript has the [ECMAScript Test Suite](https://github.com/tc39/test262) called Test262.
+The goal of Test262 is to provide test material that covers every observable behavior specified in the specification.
+
+Parser conformance uses the [parse phase tests](https://github.com/tc39/test262/blob/main/INTERPRETING.md#negative).
+
+**Current Status**: `43765/43765 (100.00%)`
+
+### Babel Parser Tests
+
+When new language features are added to JavaScript, Babel implements them first.
+Babel has comprehensive [parser tests](https://github.com/babel/babel/tree/main/packages/babel-parser/test) for cutting-edge features.
+
+**Current Status**: `2093/2101 (99.62%)`
+
+### TypeScript Conformance
+
+The TypeScript conformance tests can be found [here](https://github.com/microsoft/TypeScript/tree/main/tests/cases/conformance).
+
+**Current Status**: `6470/6479 (99.86%)`
+
+### Viewing Results
+
+Test results are stored in snapshot files for tracking changes:
+
+* [`parser_test262.snap`](https://github.com/oxc-project/oxc/blob/main/tasks/coverage/snapshots/parser_test262.snap)
+* [`parser_babel.snap`](https://github.com/oxc-project/oxc/blob/main/tasks/coverage/snapshots/parser_babel.snap)
+* [`parser_typescript.snap`](https://github.com/oxc-project/oxc/blob/main/tasks/coverage/snapshots/parser_typescript.snap)
 
 ---
 
@@ -41132,6 +41177,70 @@ The parser provides:
 * **Zero-copy parsing**: Eliminate unnecessary string copies
 
 [estree]: https://github.com/estree/estree
+
+---
+
+---
+url: /docs/guide/usage/parser.md
+---
+
+# Parser
+
+This is production ready.
+
+## Features
+
+* 3x faster than swc parser ([benchmark][url-benchmark]).
+* Parses `.js(x)` and `.ts(x)`.
+* Passes all parser tests from Test262 and 99% from Babel and TypeScript.
+* Returns ESM information directly, no need for [`es-module-lexer`](https://github.com/guybedford/es-module-lexer).
+* [✅ works with checker.ts](https://x.com/robpalmer2/status/1805502964435505559)
+
+## Installation
+
+### Node.js
+
+* Use the node binding [oxc-parser][url-oxc-parser-npm].
+* Try on [stackblitz](https://stackblitz.com/edit/oxc-parser).
+
+### Rust
+
+Use the umbrella crate [oxc][url-oxc-crate] or the individual [oxc\_ast][url-oxc-ast-crate] and [oxc\_parser][url-oxc-parser-crate] crates.
+
+Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_parser/examples/parser.rs).
+
+## Print
+
+After parsing and transforming, you can print code.
+
+Here's a direct example using [esrap](https://www.npmjs.com/package/esrap) *(`parse` in reverse!)*:
+
+```js
+import { print } from "esrap";
+import ts from "esrap/languages/ts";
+import { parseSync } from "oxc-parser";
+
+const { program } = parseSync("test.js", 'alert("hello oxc & esrap");');
+const { code } = print(program, ts());
+
+console.log(code); // alert("hello oxc & esrap");
+```
+
+:::info
+Today, comments are not printed. *It will be supported thanks to [oxc-parser #13285](https://github.com/oxc-project/oxc/pull/13285).*
+:::
+
+[url-swc]: https://swc.rs
+
+[url-benchmark]: https://github.com/oxc-project/bench-javascript-parser-written-in-rust
+
+[url-oxc-crate]: https://docs.rs/oxc
+
+[url-oxc-ast-crate]: https://docs.rs/oxc_ast
+
+[url-oxc-parser-crate]: https://docs.rs/oxc_parser
+
+[url-oxc-parser-npm]: https://www.npmjs.com/package/oxc-parser
 
 ---
 
@@ -41542,115 +41651,6 @@ function isParenthesizedArrowFunctionExpression(): Tristate {
 ```
 
 In summary, the TypeScript parser uses a combination of lookahead (fast path) and backtracking to parse arrow functions.
-
----
-
----
-url: /docs/contribute/parser.md
----
-
-# Parser
-
-The Oxc parser is designed to be the fastest and most conformant JavaScript and TypeScript parser available. Contributing to the parser requires understanding both the implementation details and the extensive test infrastructure.
-
-## Architecture Overview
-
-The parser follows a traditional compiler frontend architecture:
-
-```
-Source Text → Lexer → Tokens → Parser → AST
-```
-
-### Key Components
-
-* **Lexer**: Tokenizes source text into structured tokens
-* **Parser**: Recursive descent parser that builds the AST
-* **AST**: Memory-efficient abstract syntax tree
-* **Error Recovery**: Advanced error handling and recovery
-* **Semantic Analysis**: Symbol resolution and scope management
-
-### Design Goals
-
-We aim to be the fastest Rust-based ready-for-production parser with:
-
-* **Speed**: 3x faster than SWC, 5x faster than Biome
-* **Conformance**: 100% Test262 compliance, 99%+ Babel/TypeScript compatibility
-* **Memory Efficiency**: Arena-based allocation, minimal heap usage
-* **Error Quality**: Helpful error messages with recovery
-
-## Development Workflow
-
-### Setting Up
-
-```bash
-# Run parser tests
-cargo test -p oxc_parser
-
-# Run conformance tests
-just c  # or `just coverage`
-```
-
-### Project Structure
-
-```
-crates/oxc_parser/
-├── src/
-│   ├── lib.rs              # Public API
-│   ├── lexer/              # Tokenization
-│   ├── parser/             # Parsing logic
-│   ├── cursor.rs           # Token stream management
-│   └── diagnostics.rs      # Error handling
-├── tests/                  # Unit tests
-└── examples/               # Usage examples
-```
-
-### Core Parser Files
-
-* **`parser/mod.rs`**: Main parser entry point
-* **`parser/statement.rs`**: Statement parsing
-* **`parser/expression.rs`**: Expression parsing
-* **`parser/typescript.rs`**: TypeScript-specific parsing
-* **`parser/jsx.rs`**: JSX parsing logic
-
-## Conformance Testing
-
-### Running Conformance Tests
-
-```bash
-just c
-```
-
-This runs conformance test suites using the runner in [tasks/coverage](https://github.com/oxc-project/oxc/tree/main/tasks/coverage):
-
-### Test262 - ECMAScript Conformance
-
-JavaScript has the [ECMAScript Test Suite](https://github.com/tc39/test262) called Test262.
-The goal of Test262 is to provide test material that covers every observable behavior specified in the specification.
-
-Parser conformance uses the [parse phase tests](https://github.com/tc39/test262/blob/main/INTERPRETING.md#negative).
-
-**Current Status**: `43765/43765 (100.00%)`
-
-### Babel Parser Tests
-
-When new language features are added to JavaScript, Babel implements them first.
-Babel has comprehensive [parser tests](https://github.com/babel/babel/tree/main/packages/babel-parser/test) for cutting-edge features.
-
-**Current Status**: `2093/2101 (99.62%)`
-
-### TypeScript Conformance
-
-The TypeScript conformance tests can be found [here](https://github.com/microsoft/TypeScript/tree/main/tests/cases/conformance).
-
-**Current Status**: `6470/6479 (99.86%)`
-
-### Viewing Results
-
-Test results are stored in snapshot files for tracking changes:
-
-* [`parser_test262.snap`](https://github.com/oxc-project/oxc/blob/main/tasks/coverage/snapshots/parser_test262.snap)
-* [`parser_babel.snap`](https://github.com/oxc-project/oxc/blob/main/tasks/coverage/snapshots/parser_babel.snap)
-* [`parser_typescript.snap`](https://github.com/oxc-project/oxc/blob/main/tasks/coverage/snapshots/parser_typescript.snap)
 
 ---
 
@@ -43889,146 +43889,6 @@ oxlint --deny promise/valid-params --promise-plugin
 ---
 
 ---
-url: /docs/guide/usage/formatter/quickstart.md
-description: Install Oxfmt and learn the common workflows.
----
-
-# Quickstart
-
-Recommended setup and common workflows.
-
-## Install
-
-Install `oxfmt` as a dev dependency:
-
-::: code-group
-
-```sh [npm]
-$ npm add -D oxfmt
-```
-
-```sh [pnpm]
-$ pnpm add -D oxfmt
-```
-
-```sh [yarn]
-$ yarn add -D oxfmt
-```
-
-```sh [bun]
-$ bun add -D oxfmt
-```
-
-:::
-
-Add scripts to `package.json`:
-
-```json [package.json]
-{
-  "scripts": {
-    "fmt": "oxfmt",
-    "fmt:check": "oxfmt --check"
-  }
-}
-```
-
-Format files:
-
-```sh
-pnpm run fmt
-```
-
-Check formatting without writing files:
-
-```sh
-pnpm run fmt:check
-```
-
-## Usage
-
-```sh
-oxfmt [OPTIONS] [PATH]...
-```
-
-Running `oxfmt` without arguments formats the current directory (equivalent to `prettier --write .`).
-
-CLI options like `--no-semi` are not supported. Use the configuration file instead to ensure consistent settings across CLI and editor integrations.
-
-Globs in positional paths are not expanded (rely on your shell). However, `!`-prefixed exclude paths support glob expansion.
-
-For the complete list of options, see the [CLI reference](/docs/guide/usage/formatter/cli.html).
-
-## Common workflows
-
-### Pre-commit with lint-staged
-
-```json [package.json]
-{
-  "lint-staged": {
-    "*": "oxfmt --no-error-on-unmatched-pattern"
-  }
-}
-```
-
-`--no-error-on-unmatched-pattern` prevents errors when no files match the pattern.
-
-### Create a config file
-
-Initialize `.oxfmtrc.json` with defaults:
-
-```sh
-oxfmt --init
-```
-
-### Migrate from Prettier
-
-```sh
-oxfmt --migrate prettier
-```
-
-See [migrate from prettier](./migrate-from-prettier) for details.
-
-### List files that differ
-
-```sh
-oxfmt --list-different
-```
-
-This is useful for configuring [files to ignore](./ignore-files).
-
-### Piping file contents
-
-```sh
-echo 'const   x   =   1' | oxfmt --stdin-filepath test.ts
-```
-
-Prints `const x = 1;`
-
-### Node.js API
-
-```ts
-import { format, type FormatOptions } from "oxfmt";
-
-const input = `let a=42;`;
-const options: FormatOptions = {
-  semi: false,
-};
-
-const { code } = await format("a.js", input, options);
-console.log(code); // "let a = 42"
-```
-
-## Next steps
-
-* [Change configuration](./config)
-* [Setup editors](./editors)
-* [Setup CI](./ci)
-* Learn advanced features: [sorting](./sorting), [embedded formatting](./embedded-formatting)
-* Check [CLI reference](./cli)
-
----
-
----
 url: /docs/guide/usage/linter/quickstart.md
 description: Install Oxlint and learn the common workflows.
 ---
@@ -44226,6 +44086,146 @@ The full list is in the [Rules reference](/docs/guide/usage/linter/rules).
 * Learn advanced features: [Multi-file analysis](/docs/guide/usage/linter/multi-file-analysis), [Type-aware linting](/docs/guide/usage/linter/type-aware), [JS plugins](/docs/guide/usage/linter/js-plugins)
 * Migrate: [From ESLint](/docs/guide/usage/linter/migrate-from-eslint)&#x20;
 * [CLI reference](/docs/guide/usage/linter/cli)
+
+---
+
+---
+url: /docs/guide/usage/formatter/quickstart.md
+description: Install Oxfmt and learn the common workflows.
+---
+
+# Quickstart
+
+Recommended setup and common workflows.
+
+## Install
+
+Install `oxfmt` as a dev dependency:
+
+::: code-group
+
+```sh [npm]
+$ npm add -D oxfmt
+```
+
+```sh [pnpm]
+$ pnpm add -D oxfmt
+```
+
+```sh [yarn]
+$ yarn add -D oxfmt
+```
+
+```sh [bun]
+$ bun add -D oxfmt
+```
+
+:::
+
+Add scripts to `package.json`:
+
+```json [package.json]
+{
+  "scripts": {
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check"
+  }
+}
+```
+
+Format files:
+
+```sh
+pnpm run fmt
+```
+
+Check formatting without writing files:
+
+```sh
+pnpm run fmt:check
+```
+
+## Usage
+
+```sh
+oxfmt [OPTIONS] [PATH]...
+```
+
+Running `oxfmt` without arguments formats the current directory (equivalent to `prettier --write .`).
+
+CLI options like `--no-semi` are not supported. Use the configuration file instead to ensure consistent settings across CLI and editor integrations.
+
+Globs in positional paths are not expanded (rely on your shell). However, `!`-prefixed exclude paths support glob expansion.
+
+For the complete list of options, see the [CLI reference](/docs/guide/usage/formatter/cli.html).
+
+## Common workflows
+
+### Pre-commit with lint-staged
+
+```json [package.json]
+{
+  "lint-staged": {
+    "*": "oxfmt --no-error-on-unmatched-pattern"
+  }
+}
+```
+
+`--no-error-on-unmatched-pattern` prevents errors when no files match the pattern.
+
+### Create a config file
+
+Initialize `.oxfmtrc.json` with defaults:
+
+```sh
+oxfmt --init
+```
+
+### Migrate from Prettier
+
+```sh
+oxfmt --migrate prettier
+```
+
+See [migrate from prettier](./migrate-from-prettier) for details.
+
+### List files that differ
+
+```sh
+oxfmt --list-different
+```
+
+This is useful for configuring [files to ignore](./ignore-files).
+
+### Piping file contents
+
+```sh
+echo 'const   x   =   1' | oxfmt --stdin-filepath test.ts
+```
+
+Prints `const x = 1;`
+
+### Node.js API
+
+```ts
+import { format, type FormatOptions } from "oxfmt";
+
+const input = `let a=42;`;
+const options: FormatOptions = {
+  semi: false,
+};
+
+const { code } = await format("a.js", input, options);
+console.log(code); // "let a = 42"
+```
+
+## Next steps
+
+* [Change configuration](./config)
+* [Setup editors](./editors)
+* [Setup CI](./ci)
+* Learn advanced features: [sorting](./sorting), [embedded formatting](./embedded-formatting)
+* Check [CLI reference](./cli)
 
 ---
 
@@ -48923,6 +48923,25 @@ url: /docs/learn/references.md
 ---
 
 ---
+url: /docs/contribute/resolver.md
+---
+
+# Resolver
+
+The Oxc resolver is a high-performance Node.js module resolution implementation that's compatible with webpack's enhanced-resolve. It's maintained in [its own GitHub repository](https://github.com/oxc-project/oxc_resolver).
+
+## Architecture
+
+The resolver is designed as a direct port of [enhanced-resolve](https://github.com/webpack/enhanced-resolve) with significant performance improvements:
+
+* **28x faster** than enhanced-resolve
+* **Zero-copy string operations** where possible
+* **Optimized path traversal** algorithms
+* **Efficient caching** strategies
+
+---
+
+---
 url: /docs/guide/usage/resolver.md
 ---
 
@@ -48954,25 +48973,6 @@ See [https://crates.io/crates/oxc\_resolver][url-oxc-resolver-crate] and its doc
 [url-oxc-resolver-npm]: https://www.npmjs.com/package/oxc-resolver
 
 [url-enhanced-resolve]: https://github.com/webpack/enhanced-resolve
-
----
-
----
-url: /docs/contribute/resolver.md
----
-
-# Resolver
-
-The Oxc resolver is a high-performance Node.js module resolution implementation that's compatible with webpack's enhanced-resolve. It's maintained in [its own GitHub repository](https://github.com/oxc-project/oxc_resolver).
-
-## Architecture
-
-The resolver is designed as a direct port of [enhanced-resolve](https://github.com/webpack/enhanced-resolve) with significant performance improvements:
-
-* **28x faster** than enhanced-resolve
-* **Zero-copy string operations** where possible
-* **Optimized path traversal** algorithms
-* **Efficient caching** strategies
 
 ---
 
@@ -50496,6 +50496,33 @@ feel free to contact us on [Discord][discord-url].
 ---
 
 ---
+url: /docs/contribute/transformer.md
+---
+
+# Transformer
+
+The Oxc transformer is responsible for converting higher versions of ECMAScript and TypeScript to lower versions that can run in older browsers and environments.
+
+### Repository Structure
+
+```
+crates/oxc_transformer/
+├── src/
+│   ├── lib.rs                    # Main transformer interface
+│   ├── transformer.rs            # Core transformation logic
+│   ├── typescript/               # TypeScript transformations
+│   ├── jsx/                      # JSX transformations
+│   ├── es2015/                   # ES2015+ transformations
+│   ├── isolated_declarations/    # .d.ts generation
+│   └── helpers/                  # Utility functions
+├── tests/                        # Integration tests
+├── examples/                     # Usage examples
+└── benches/                      # Performance benchmarks
+```
+
+---
+
+---
 url: /docs/guide/usage/transformer.md
 ---
 # Transformer
@@ -50530,33 +50557,6 @@ Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/m
 [url-oxc-crate]: https://docs.rs/oxc
 
 [url-oxc-transform-npm]: https://www.npmjs.com/package/oxc-transform
-
----
-
----
-url: /docs/contribute/transformer.md
----
-
-# Transformer
-
-The Oxc transformer is responsible for converting higher versions of ECMAScript and TypeScript to lower versions that can run in older browsers and environments.
-
-### Repository Structure
-
-```
-crates/oxc_transformer/
-├── src/
-│   ├── lib.rs                    # Main transformer interface
-│   ├── transformer.rs            # Core transformation logic
-│   ├── typescript/               # TypeScript transformations
-│   ├── jsx/                      # JSX transformations
-│   ├── es2015/                   # ES2015+ transformations
-│   ├── isolated_declarations/    # .d.ts generation
-│   └── helpers/                  # Utility functions
-├── tests/                        # Integration tests
-├── examples/                     # Usage examples
-└── benches/                      # Performance benchmarks
-```
 
 ---
 
