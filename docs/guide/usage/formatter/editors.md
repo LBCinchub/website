@@ -67,7 +67,7 @@ To set per language:
 
 ### Reference
 
-* [oxc-project/oxc/editors/vscode](https://github.com/oxc-project/oxc/tree/main/editors/vscode)
+* [oxc-project/oxc-vscode](https://github.com/oxc-project/oxc-vscode)
 
 ## Zed
 

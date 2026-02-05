@@ -62,7 +62,7 @@ You also need to ensure `oxlint-tsgolint` is installed in your project. See [the
 
 ### Reference
 
-* [oxc-project/oxc/editors/vscode](https://github.com/oxc-project/oxc/tree/main/editors/vscode)
+* [oxc-project/oxc-vscode](https://github.com/oxc-project/oxc-vscode)
 
 ## Zed
 
