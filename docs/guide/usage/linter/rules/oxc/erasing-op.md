@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/oxc/erasing-op.md
 
 ### What it does
 
-Checks for erasing operations, e.g., \`x \* 0\`\`.
+Checks for erasing operations, e.g., `x * 0`.
 
 Based on https://rust-lang.github.io/rust-clippy/master/#/erasing\_op
 

@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-iterator.md
 
 ### What it does
 
-Disallow the use of the `__iterator__` property
+Disallow the use of the `__iterator__` property.
 
 ### Why is this bad?
 
