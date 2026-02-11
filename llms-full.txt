@@ -1882,24 +1882,24 @@ To match Prettier's default:
 
 ---
 url: /docs/guide/usage/linter/config.md
-description: Configure Oxlint using a .oxlintrc.json file.
+description: Configure Oxlint using .oxlintrc.json or oxlint.config.ts.
 ---
 
 # Configuration
 
-Oxlint works out of the box, but most teams commit a configuration file to keep linting consistent across local runs, editors, and CI.
+Oxlint works out of the box, but most teams commit a configuration file (`.oxlintrc.json` or `oxlint.config.ts`) to keep linting consistent across local runs, editors, and CI.
 
 This page focuses on project configuration: rules, categories, plugins, overrides, and shared settings.
 
 ## Create a config file
 
-To generate a starter config in the current directory:
+To generate a starter config in the current directory (JSON):
 
 ```sh
 oxlint --init
 ```
 
-Oxlint automatically looks for a `.oxlintrc.json` in the current working directory. You can also pass a config explicitly (note that this will disable nested config lookup):
+Oxlint automatically looks for a `.oxlintrc.json` or `oxlint.config.ts` in the current working directory. You can also pass a config explicitly (note that this will disable nested config lookup):
 
 ```sh
 oxlint -c ./oxlintrc.json
@@ -1909,8 +1909,9 @@ oxlint --config ./oxlintrc.json
 
 Notes:
 
-* Only `.json` config files are supported, but oxlint configuration files support comments (like jsonc).
+* `.oxlintrc.json` supports comments (like jsonc).
 * The configuration format aims to be compatible with ESLint v8's format (`eslintrc.json`).
+* You can use either `.oxlintrc.json` or `oxlint.config.ts` in a directory, but not both.
 
 A minimal configuration looks like this:
 
@@ -1926,9 +1927,33 @@ A minimal configuration looks like this:
 }
 ```
 
+### TypeScript config file (`oxlint.config.ts`)
+
+Oxlint also supports a TypeScript configuration file named `oxlint.config.ts`.
+
+```ts [oxlint.config.ts]
+import { defineConfig } from "oxlint";
+
+export default defineConfig({
+  categories: {
+    correctness: "warn",
+  },
+  rules: {
+    "eslint/no-unused-vars": "error",
+  },
+});
+```
+
+Notes:
+
+* The file must be named `oxlint.config.ts` (including when passed via `--config`).
+* The default export must be an object and should be wrapped with `defineConfig` for typing.
+* TypeScript configs require the Node-based `oxlint` package (JS runtime). If you're using a standalone binary, use `.oxlintrc.json` instead.
+* TypeScript configs require a Node runtime that can execute TypeScript.
+
 ## Configuration file format
 
-A configuration file is a JSON object. The most common top-level fields are:
+A configuration file is either a JSON object (`.oxlintrc.json`) or a TypeScript module that default-exports a config object (`oxlint.config.ts`). The most common top-level fields are:
 
 * `rules`: Enable or disable rules, set severity, and configure rule options.
 * `categories`: Enable groups of rules with similar intent.
@@ -2139,6 +2164,16 @@ Paths in `extends` are resolved relative to the configuration file that declares
 {
   "extends": ["./configs/base.json", "./configs/frontend.json"]
 }
+```
+
+```ts [oxlint.config.ts]
+import baseConfig from "./configs/base.ts";
+import frontendConfig from "./configs/frontend.ts";
+import { defineConfig } from "oxlint";
+
+export default defineConfig({
+  extends: [baseConfig, frontendConfig],
+});
 ```
 
 ## Configure environments and globals
@@ -20848,44 +20883,6 @@ The Oxc formatter is built around the same core concepts as Prettier but with si
 ---
 
 ---
-url: /docs/guide/introduction.md
----
-
-# Getting Started
-
-[What is Oxc?](/docs/guide/what-is-oxc)
-
-## Lint or format a codebase
-
-* Lint: [Oxlint](/docs/guide/usage/linter)
-* Format: [Oxfmt](/docs/guide/usage/formatter)
-
-## Build tooling on top of Oxc
-
-* Parse JavaScript and TypeScript: [Parser](/docs/guide/usage/parser)
-* Transform TypeScript, JSX, and modern JavaScript: [Transformer](/docs/guide/usage/transformer)
-* Minify JavaScript for production builds: [Minifier](/docs/guide/usage/minifier)
-* Resolve modules for JavaScript and TypeScript: [Resolver](/docs/guide/usage/resolver)
-
-## Contribute or learn
-
-* [Contribute](/docs/contribute/introduction)
-* [Learn](/docs/learn/parser_in_rust/intro.html)
-
-## Other resources
-
-* [Troubleshooting](/docs/guide/troubleshooting)
-* [Benchmarks](/docs/guide/benchmarks)
-* [Projects using Oxc](/docs/guide/projects)
-* [Talks and media](/docs/guide/media)
-* [Team](/team)
-* [Endorsements](/endorsements)
-* [Release Blog](/blog/)
-* [Releases](https://github.com/oxc-project/oxc/releases)
-
----
-
----
 url: /docs/contribute/development.md
 ---
 
@@ -20966,6 +20963,44 @@ macOS has an antivirus feature called XProtect that scans executables for malwar
 **Note:** This disables an OS security feature. Only do this if you're comfortable with the trade-off.
 
 More details: https://nnethercote.github.io/2025/09/04/faster-rust-builds-on-mac.html
+
+---
+
+---
+url: /docs/guide/introduction.md
+---
+
+# Getting Started
+
+[What is Oxc?](/docs/guide/what-is-oxc)
+
+## Lint or format a codebase
+
+* Lint: [Oxlint](/docs/guide/usage/linter)
+* Format: [Oxfmt](/docs/guide/usage/formatter)
+
+## Build tooling on top of Oxc
+
+* Parse JavaScript and TypeScript: [Parser](/docs/guide/usage/parser)
+* Transform TypeScript, JSX, and modern JavaScript: [Transformer](/docs/guide/usage/transformer)
+* Minify JavaScript for production builds: [Minifier](/docs/guide/usage/minifier)
+* Resolve modules for JavaScript and TypeScript: [Resolver](/docs/guide/usage/resolver)
+
+## Contribute or learn
+
+* [Contribute](/docs/contribute/introduction)
+* [Learn](/docs/learn/parser_in_rust/intro.html)
+
+## Other resources
+
+* [Troubleshooting](/docs/guide/troubleshooting)
+* [Benchmarks](/docs/guide/benchmarks)
+* [Projects using Oxc](/docs/guide/projects)
+* [Talks and media](/docs/guide/media)
+* [Team](/team)
+* [Endorsements](/endorsements)
+* [Release Blog](/blog/)
+* [Releases](https://github.com/oxc-project/oxc/releases)
 
 ---
 
@@ -21867,7 +21902,7 @@ description: Control which files Oxlint lints.
 Large repositories contain files that should not be linted, such as build output, vendored code, snapshots, or generated artifacts. Oxlint provides a predictable ignore model that works well in monorepos and CI.
 
 > \[!TIP]
-> It is strongly recommended to use `"ignorePatterns"` in `.oxlintrc.json` for ignoring files rather than a separate ignore file. This ensures that every developer will have the same ignores across all tools and commands running oxlint, especially IDE/editor integrations. It also keeps your configuration centralized to one file.
+> It is strongly recommended to use `"ignorePatterns"` in your Oxlint config file (`.oxlintrc.json` or `oxlint.config.ts`) for ignoring files rather than a separate ignore file. This ensures that every developer will have the same ignores across all tools and commands running Oxlint, especially IDE/editor integrations. It also keeps your configuration centralized to one file.
 
 ## Default ignores
 
@@ -21881,7 +21916,7 @@ Hidden files are not automatically ignored.
 
 ## `ignorePatterns`
 
-The recommended approach is to define ignores in `.oxlintrc.json` using `ignorePatterns`. This keeps ignores close to the configuration they belong to and works naturally with nested configs.
+The recommended approach is to define ignores in your config file using `ignorePatterns`. This keeps ignores close to the configuration they belong to and works naturally with nested configs.
 
 Patterns are resolved relative to the configuration file.
 
@@ -21898,7 +21933,7 @@ In monorepos, nested configs can ignore package specific output without affectin
 
 Oxlint also supports `.eslintignore` for compatibility with existing ESLint setups. Existing `.eslintignore` files can remain in place during migration. The syntax is compatible with `.gitignore`, including comments and negation patterns.
 
-New projects should prefer `"ignorePatterns"` in `.oxlintrc.json`, and we strongly recommend moving over to `"ignorePatterns"` soon after migrating, if not during migration.
+New projects should prefer `"ignorePatterns"` in their config file, and we strongly recommend moving over to `"ignorePatterns"` soon after migrating, if not during migration.
 
 ## Ignore from the command line
 
@@ -35251,13 +35286,13 @@ to resolve TypeScript path aliases such as `compilerOptions.paths`.
 ---
 url: /docs/guide/usage/linter/nested-config.md
 description: >-
-  Use multiple .oxlintrc.json files to apply different Oxlint settings to
+  Use multiple configuration files to apply different Oxlint settings to
   different parts of a repository.
 ---
 
 # Nested configuration files
 
-Oxlint can use multiple configuration files in the same repository. It automatically detects configuration files named `.oxlintrc.json` and applies them based on where files live in the directory tree.
+Oxlint can use multiple configuration files in the same repository. It automatically detects configuration files named `.oxlintrc.json` or `oxlint.config.ts` and applies them based on where files live in the directory tree.
 
 This is useful in monorepos where packages need their own settings, while still keeping a shared baseline.
 
@@ -35265,7 +35300,7 @@ If you only need to exclude files or folders, use [Ignores](./ignore-files) inst
 
 ## How it works
 
-For each file being linted, Oxlint uses the nearest `.oxlintrc.json` relative to that file.
+For each file being linted, Oxlint uses the nearest config file (`.oxlintrc.json` or `oxlint.config.ts`) relative to that file.
 
 Given the following structure:
 
@@ -35275,7 +35310,7 @@ my-project/
 ├── src/
 │   ├── index.js
 ├── package1/
-│   ├── .oxlintrc.json
+│   ├── oxlint.config.ts
 │   └── index.js
 └── package2/
     ├── .oxlintrc.json
@@ -35285,7 +35320,7 @@ my-project/
 Configuration resolution works as follows:
 
 * `src/index.js` uses `my-project/.oxlintrc.json`
-* `package1/index.js` uses `my-project/package1/.oxlintrc.json`
+* `package1/index.js` uses `my-project/package1/oxlint.config.ts`
 * `package2/index.js` uses `my-project/package2/.oxlintrc.json`
 
 ## What to expect
@@ -39632,7 +39667,7 @@ Oxlint is used in production by popular projects such as:
 ---
 
 ---
-url: /docs/guide/usage/linter/config-file-reference.md
+url: /docs/guide/usage/linter/generated-config.md
 ---
 
 # Oxlint Configuration File
@@ -40311,7 +40346,7 @@ to accommodate TypeScript type checking scenarios.
 ---
 
 ---
-url: /docs/guide/usage/linter/generated-config.md
+url: /docs/guide/usage/linter/config-file-reference.md
 ---
 
 # Oxlint Configuration File
@@ -41099,70 +41134,6 @@ Test results are stored in snapshot files for tracking changes:
 ---
 
 ---
-url: /docs/guide/usage/parser.md
----
-
-# Parser
-
-This is production ready.
-
-## Features
-
-* 3x faster than swc parser ([benchmark][url-benchmark]).
-* Parses `.js(x)` and `.ts(x)`.
-* Passes all parser tests from Test262 and 99% from Babel and TypeScript.
-* Returns ESM information directly, no need for [`es-module-lexer`](https://github.com/guybedford/es-module-lexer).
-* [✅ works with checker.ts](https://x.com/robpalmer2/status/1805502964435505559)
-
-## Installation
-
-### Node.js
-
-* Use the node binding [oxc-parser][url-oxc-parser-npm].
-* Try on [stackblitz](https://stackblitz.com/edit/oxc-parser).
-
-### Rust
-
-Use the umbrella crate [oxc][url-oxc-crate] or the individual [oxc\_ast][url-oxc-ast-crate] and [oxc\_parser][url-oxc-parser-crate] crates.
-
-Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_parser/examples/parser.rs).
-
-## Print
-
-After parsing and transforming, you can print code.
-
-Here's a direct example using [esrap](https://www.npmjs.com/package/esrap) *(`parse` in reverse!)*:
-
-```js
-import { print } from "esrap";
-import ts from "esrap/languages/ts";
-import { parseSync } from "oxc-parser";
-
-const { program } = parseSync("test.js", 'alert("hello oxc & esrap");');
-const { code } = print(program, ts());
-
-console.log(code); // alert("hello oxc & esrap");
-```
-
-:::info
-Today, comments are not printed. *It will be supported thanks to [oxc-parser #13285](https://github.com/oxc-project/oxc/pull/13285).*
-:::
-
-[url-swc]: https://swc.rs
-
-[url-benchmark]: https://github.com/oxc-project/bench-javascript-parser-written-in-rust
-
-[url-oxc-crate]: https://docs.rs/oxc
-
-[url-oxc-ast-crate]: https://docs.rs/oxc_ast
-
-[url-oxc-parser-crate]: https://docs.rs/oxc_parser
-
-[url-oxc-parser-npm]: https://www.npmjs.com/package/oxc-parser
-
----
-
----
 url: /docs/learn/architecture/parser.md
 ---
 
@@ -41748,6 +41719,70 @@ function isParenthesizedArrowFunctionExpression(): Tristate {
 ```
 
 In summary, the TypeScript parser uses a combination of lookahead (fast path) and backtracking to parse arrow functions.
+
+---
+
+---
+url: /docs/guide/usage/parser.md
+---
+
+# Parser
+
+This is production ready.
+
+## Features
+
+* 3x faster than swc parser ([benchmark][url-benchmark]).
+* Parses `.js(x)` and `.ts(x)`.
+* Passes all parser tests from Test262 and 99% from Babel and TypeScript.
+* Returns ESM information directly, no need for [`es-module-lexer`](https://github.com/guybedford/es-module-lexer).
+* [✅ works with checker.ts](https://x.com/robpalmer2/status/1805502964435505559)
+
+## Installation
+
+### Node.js
+
+* Use the node binding [oxc-parser][url-oxc-parser-npm].
+* Try on [stackblitz](https://stackblitz.com/edit/oxc-parser).
+
+### Rust
+
+Use the umbrella crate [oxc][url-oxc-crate] or the individual [oxc\_ast][url-oxc-ast-crate] and [oxc\_parser][url-oxc-parser-crate] crates.
+
+Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_parser/examples/parser.rs).
+
+## Print
+
+After parsing and transforming, you can print code.
+
+Here's a direct example using [esrap](https://www.npmjs.com/package/esrap) *(`parse` in reverse!)*:
+
+```js
+import { print } from "esrap";
+import ts from "esrap/languages/ts";
+import { parseSync } from "oxc-parser";
+
+const { program } = parseSync("test.js", 'alert("hello oxc & esrap");');
+const { code } = print(program, ts());
+
+console.log(code); // alert("hello oxc & esrap");
+```
+
+:::info
+Today, comments are not printed. *It will be supported thanks to [oxc-parser #13285](https://github.com/oxc-project/oxc/pull/13285).*
+:::
+
+[url-swc]: https://swc.rs
+
+[url-benchmark]: https://github.com/oxc-project/bench-javascript-parser-written-in-rust
+
+[url-oxc-crate]: https://docs.rs/oxc
+
+[url-oxc-ast-crate]: https://docs.rs/oxc_ast
+
+[url-oxc-parser-crate]: https://docs.rs/oxc_parser
+
+[url-oxc-parser-npm]: https://www.npmjs.com/package/oxc-parser
 
 ---
 
@@ -43986,6 +44021,211 @@ oxlint --deny promise/valid-params --promise-plugin
 ---
 
 ---
+url: /docs/guide/usage/linter/quickstart.md
+description: Install Oxlint and learn the common workflows.
+---
+
+# Quickstart
+
+This page shows the recommended setup for Oxlint and the most common workflows, with copy-paste commands.
+
+## Install
+
+Install `oxlint` as a dev dependency:
+
+::: code-group
+
+```sh [npm]
+$ npm add -D oxlint
+```
+
+```sh [pnpm]
+$ pnpm add -D oxlint
+```
+
+```sh [yarn]
+$ yarn add -D oxlint
+```
+
+```sh [bun]
+$ bun add -D oxlint
+```
+
+:::
+
+Add lint commands to `package.json`:
+
+```json [package.json]
+{
+  "scripts": {
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix"
+  }
+}
+```
+
+Run it:
+
+```sh
+pnpm run lint
+```
+
+Apply fixes:
+
+```sh
+pnpm run lint:fix
+```
+
+## Usage
+
+For the complete list of options, see the [CLI reference](/docs/guide/usage/linter/cli.html).
+
+```sh
+oxlint [OPTIONS] [PATH]...
+```
+
+If `PATH` is omitted, Oxlint lints the current working directory.
+
+## Common workflows
+
+### Pre-commit with [lint-staged](https://github.com/lint-staged/lint-staged)
+
+```json [package.json]
+{
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs}": "pnpm run lint"
+  }
+}
+```
+
+### Create a config file
+
+Initialize the `.oxlintrc.json` config with default values:
+
+```sh
+oxlint --init
+```
+
+Then customize `.oxlintrc.json` as needed. See [Configuration](/docs/guide/usage/linter/config).
+
+Alternatively, Oxlint supports a TypeScript config file named `oxlint.config.ts`. See [Configuration](/docs/guide/usage/linter/config#typescript-config) for details.
+
+Then run Oxlint:
+
+```sh
+oxlint
+```
+
+::: tip
+If you are migrating from ESLint, see [the "Migrate from ESLint" page](/docs/guide/usage/linter/migrate-from-eslint) for detailed guidance on migrating.
+:::
+
+### Fix problems
+
+Apply safe fixes:
+
+```sh
+oxlint --fix
+```
+
+Apply suggestions (may change program behavior):
+
+```sh
+oxlint --fix-suggestions
+```
+
+Apply dangerous fixes and suggestions:
+
+```sh
+oxlint --fix-dangerously
+```
+
+See [Automatic fixes](/docs/guide/usage/linter/automatic-fixes) for guidance on when to use each mode.
+
+### Ignore files
+
+Use an explicit ignore file:
+
+```sh
+oxlint --ignore-path .oxlintignore
+```
+
+Add ignore patterns from the command line:
+
+```sh
+oxlint --ignore-pattern "dist/**" --ignore-pattern "*.min.js"
+```
+
+Disable ignore handling:
+
+```sh
+oxlint --no-ignore
+```
+
+See [Ignore files](/docs/guide/usage/linter/ignore-files).
+
+### Fail CI reliably
+
+Only report errors:
+
+```sh
+oxlint --quiet
+```
+
+Fail if any warnings are found:
+
+```sh
+oxlint --deny-warnings
+```
+
+Fail if warnings exceed a threshold:
+
+```sh
+oxlint --max-warnings 0
+```
+
+See [CI setup](/docs/guide/usage/linter/ci).
+
+### Use machine-readable output
+
+Select an output format:
+
+```sh
+oxlint -f json
+```
+
+Available formats include: `default`, `json`, `unix`, `checkstyle`, `github`, `gitlab`, `junit`, `stylish`.
+
+### Inspect the effective configuration
+
+Print the configuration that would be used for a file:
+
+```sh
+oxlint --print-config path/to/file.ts
+```
+
+### List available rules
+
+List registered rules, including those enabled by your current oxlint config:
+
+```sh
+oxlint --rules
+```
+
+The full list is in the [Rules reference](/docs/guide/usage/linter/rules).
+
+## Next steps
+
+* Configure rules, plugins, and ignores: [Configuration](/docs/guide/usage/linter/config)
+* [Setup editors](/docs/guide/usage/linter/editors)
+* [Setup CI](/docs/guide/usage/linter/ci)
+* Learn advanced features: [Multi-file analysis](/docs/guide/usage/linter/multi-file-analysis), [Type-aware linting](/docs/guide/usage/linter/type-aware), [JS plugins](/docs/guide/usage/linter/js-plugins)
+* Migrate: [From ESLint](/docs/guide/usage/linter/migrate-from-eslint)&#x20;
+* [CLI reference](/docs/guide/usage/linter/cli)
+
+---
+
+---
 url: /docs/guide/usage/formatter/quickstart.md
 description: Install Oxfmt and learn the common workflows.
 ---
@@ -44122,207 +44362,6 @@ console.log(code); // "let a = 42"
 * [Setup CI](./ci)
 * Learn advanced features: [sorting](./sorting), [embedded formatting](./embedded-formatting)
 * Check [CLI reference](./cli)
-
----
-
----
-url: /docs/guide/usage/linter/quickstart.md
-description: Install Oxlint and learn the common workflows.
----
-
-# Quickstart
-
-This page shows the recommended setup for Oxlint and the most common workflows, with copy-paste commands.
-
-## Install
-
-Install `oxlint` as a dev dependency:
-
-::: code-group
-
-```sh [npm]
-$ npm add -D oxlint
-```
-
-```sh [pnpm]
-$ pnpm add -D oxlint
-```
-
-```sh [yarn]
-$ yarn add -D oxlint
-```
-
-```sh [bun]
-$ bun add -D oxlint
-```
-
-:::
-
-Add lint commands to `package.json`:
-
-```json [package.json]
-{
-  "scripts": {
-    "lint": "oxlint",
-    "lint:fix": "oxlint --fix"
-  }
-}
-```
-
-Run it:
-
-```sh
-pnpm run lint
-```
-
-Apply fixes:
-
-```sh
-pnpm run lint:fix
-```
-
-## Usage
-
-For the complete list of options, see the [CLI reference](/docs/guide/usage/linter/cli.html).
-
-```sh
-oxlint [OPTIONS] [PATH]...
-```
-
-If `PATH` is omitted, Oxlint lints the current working directory.
-
-## Common workflows
-
-### Pre-commit with [lint-staged](https://github.com/lint-staged/lint-staged)
-
-```json [package.json]
-{
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,mjs,cjs}": "pnpm run lint"
-  }
-}
-```
-
-### Create a config file
-
-Initialize the `.oxlintrc.json` config with default values:
-
-```sh
-oxlint --init
-```
-
-Then run Oxlint:
-
-```sh
-oxlint
-```
-
-::: tip
-If you are migrating from ESLint, see [the "Migrate from ESLint" page](/docs/guide/usage/linter/migrate-from-eslint) for detailed guidance on migrating.
-:::
-
-### Fix problems
-
-Apply safe fixes:
-
-```sh
-oxlint --fix
-```
-
-Apply suggestions (may change program behavior):
-
-```sh
-oxlint --fix-suggestions
-```
-
-Apply dangerous fixes and suggestions:
-
-```sh
-oxlint --fix-dangerously
-```
-
-See [Automatic fixes](/docs/guide/usage/linter/automatic-fixes) for guidance on when to use each mode.
-
-### Ignore files
-
-Use an explicit ignore file:
-
-```sh
-oxlint --ignore-path .oxlintignore
-```
-
-Add ignore patterns from the command line:
-
-```sh
-oxlint --ignore-pattern "dist/**" --ignore-pattern "*.min.js"
-```
-
-Disable ignore handling:
-
-```sh
-oxlint --no-ignore
-```
-
-See [Ignore files](/docs/guide/usage/linter/ignore-files).
-
-### Fail CI reliably
-
-Only report errors:
-
-```sh
-oxlint --quiet
-```
-
-Fail if any warnings are found:
-
-```sh
-oxlint --deny-warnings
-```
-
-Fail if warnings exceed a threshold:
-
-```sh
-oxlint --max-warnings 0
-```
-
-See [CI setup](/docs/guide/usage/linter/ci).
-
-### Use machine-readable output
-
-Select an output format:
-
-```sh
-oxlint -f json
-```
-
-Available formats include: `default`, `json`, `unix`, `checkstyle`, `github`, `gitlab`, `junit`, `stylish`.
-
-### Inspect the effective configuration
-
-Print the configuration that would be used for a file:
-
-```sh
-oxlint --print-config path/to/file.ts
-```
-
-### List available rules
-
-List registered rules, including those enabled by your current oxlint config:
-
-```sh
-oxlint --rules
-```
-
-The full list is in the [Rules reference](/docs/guide/usage/linter/rules).
-
-## Next steps
-
-* Configure rules, plugins, and ignores: [Configuration](/docs/guide/usage/linter/config)
-* [Setup editors](/docs/guide/usage/linter/editors)
-* [Setup CI](/docs/guide/usage/linter/ci)
-* Learn advanced features: [Multi-file analysis](/docs/guide/usage/linter/multi-file-analysis), [Type-aware linting](/docs/guide/usage/linter/type-aware), [JS plugins](/docs/guide/usage/linter/js-plugins)
-* Migrate: [From ESLint](/docs/guide/usage/linter/migrate-from-eslint)&#x20;
-* [CLI reference](/docs/guide/usage/linter/cli)
 
 ---
 
