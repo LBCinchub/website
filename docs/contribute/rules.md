@@ -2,7 +2,7 @@
 url: /docs/contribute/rules.md
 ---
 
-# Introduction
+# PR Rules and Policies
 
 ## PR Rules
 
