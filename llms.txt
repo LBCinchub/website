@@ -193,8 +193,8 @@
 - [eslint/yoda](/docs/guide/usage/linter/rules/eslint/yoda.md)
 - [FAQ](/docs/guide/usage/minifier/faq.md)
 - [Formatter](/docs/contribute/formatter.md)
-- [Getting Started](/docs/guide/introduction.md)
 - [Getting Started](/docs/contribute/development.md)
+- [Getting Started](/docs/guide/introduction.md)
 - [Global Variable Replacement](/docs/guide/usage/transformer/global-variable-replacement.md)
 - [Grammar](/docs/learn/ecmascript/grammar.md)
 - [Ignore files](/docs/guide/usage/formatter/ignore-files.md)
@@ -411,8 +411,8 @@
 - [Oxlint Configuration File](/docs/guide/usage/linter/config-file-reference.md)
 - [Parser](/docs/contribute/parser.md)
 - [Parser](/docs/learn/parser_in_rust/parser.md)
-- [Parser](/docs/learn/architecture/parser.md)
 - [Parser](/docs/guide/usage/parser.md)
+- [Parser](/docs/learn/architecture/parser.md)
 - [Performance](/docs/learn/performance.md)
 - [PR Rules and Policies](/docs/contribute/rules.md)
 - [Profiling](/docs/contribute/profiling.md)
@@ -433,8 +433,8 @@
 - [promise/prefer-catch](/docs/guide/usage/linter/rules/promise/prefer-catch.md)
 - [promise/spec-only](/docs/guide/usage/linter/rules/promise/spec-only.md)
 - [promise/valid-params](/docs/guide/usage/linter/rules/promise/valid-params.md)
-- [Quickstart](/docs/guide/usage/formatter/quickstart.md): Install Oxfmt and learn the common workflows.
 - [Quickstart](/docs/guide/usage/linter/quickstart.md): Install Oxlint and learn the common workflows.
+- [Quickstart](/docs/guide/usage/formatter/quickstart.md): Install Oxfmt and learn the common workflows.
 - [react-perf/jsx-no-jsx-as-prop](/docs/guide/usage/linter/rules/react_perf/jsx-no-jsx-as-prop.md)
 - [react-perf/jsx-no-new-array-as-prop](/docs/guide/usage/linter/rules/react_perf/jsx-no-new-array-as-prop.md)
 - [react-perf/jsx-no-new-function-as-prop](/docs/guide/usage/linter/rules/react_perf/jsx-no-new-function-as-prop.md)
@@ -497,10 +497,10 @@
 - [Rules](/docs/guide/usage/linter/rules.md)
 - [Security Policy](/docs/contribute/security.md)
 - [Semantic Analysis](/docs/learn/parser_in_rust/semantic_analysis.md)
-- [Setup CI and other integrations](/docs/guide/usage/formatter/ci.md): Run Oxfmt in CI or as a git hook.
 - [Setup CI and other integrations](/docs/guide/usage/linter/ci.md): Run Oxlint in CI or as a git hook.
-- [Setup editors](/docs/guide/usage/formatter/editors.md): Configure Oxfmt in VS Code, Zed, JetBrains, and other editors.
+- [Setup CI and other integrations](/docs/guide/usage/formatter/ci.md): Run Oxfmt in CI or as a git hook.
 - [Setup editors](/docs/guide/usage/linter/editors.md): Configure Oxlint in VS Code, Zed, JetBrains, and other editors.
+- [Setup editors](/docs/guide/usage/formatter/editors.md): Configure Oxfmt in VS Code, Zed, JetBrains, and other editors.
 - [Sorting](/docs/guide/usage/formatter/sorting.md)
 - [Specification](/docs/learn/ecmascript/spec.md)
 - [Syntax Lowering](/docs/guide/usage/transformer/lowering.md)

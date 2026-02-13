@@ -1,0 +1,1 @@
+import{t as e}from"./preload-helper.CbbwMUQf.js";var t={root:()=>e(()=>import(`./@localSearchIndexroot.CfqsnY5C.js`),[])};export{t as default};
