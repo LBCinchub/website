@@ -1505,69 +1505,6 @@ import styled from "styled-components/primitives";
 ---
 
 ---
-url: /docs/guide/usage/formatter/cli.md
----
-
-# Command-line Interface
-
-## Usage
-
-**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
-
-## Mode Options:
-
-* **`    --init`** —
-  Initialize `.oxfmtrc.json` with default values
-* **`    --migrate`**=*`SOURCE`* —
-  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
-* **`    --lsp`** —
-  Start language server protocol (LSP) server
-* **`    --stdin-filepath`**=*`PATH`* —
-  Specify the file name to use to infer which parser to use
-
-## Output Options:
-
-* **`    --write`** —
-  Format and write files in place (default)
-* **`    --check`** —
-  Check if files are formatted, also show statistics
-* **`    --list-different`** —
-  List files that would be changed
-
-## Config Options
-
-* **`-c`**, **`--config`**=*`PATH`* —
-  Path to the configuration file
-
-## Ignore Options
-
-* **`    --ignore-path`**=*`PATH`* —
-  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
-* **`    --with-node-modules`** —
-  Format code in node\_modules directory (skipped by default)
-
-## Runtime Options
-
-* **`    --no-error-on-unmatched-pattern`** —
-  Do not exit with error when pattern is unmatched
-* **`    --threads`**=*`INT`* —
-  Number of threads to use. Set to 1 for using only 1 CPU core.
-
-## Available positional items:
-
-* *`PATH`* —
-  Single file, path or list of paths. Glob patterns are also supported. (Be sure to quote them, otherwise your shell may expand them before passing.) Exclude patterns with `!` prefix like `'!**/fixtures/*.js'` are also supported. If not provided, current working directory is used.
-
-## Available options:
-
-* **`-h`**, **`--help`** —
-  Prints help information
-* **`-V`**, **`--version`** —
-  Prints version information
-
----
-
----
 url: /docs/guide/usage/linter/cli.md
 ---
 
@@ -1582,7 +1519,8 @@ url: /docs/guide/usage/linter/cli.md
 * **`-c`**, **`--config`**=*`<./.oxlintrc.json>`* —
   Oxlint configuration file
 
-- only `.json` extension is supported
+- `.json` config files are supported in all runtimes
+- JavaScript/TypeScript config files are experimental and require running via Node.js
 - you can use comments in configuration files.
 - tries to be compatible with ESLint v8's format
 
@@ -1718,6 +1656,69 @@ Arguments:
   Enable rules that require type information
 * **`    --type-check`** —
   Enable experimental type checking (includes TypeScript compiler diagnostics)
+* **`-h`**, **`--help`** —
+  Prints help information
+* **`-V`**, **`--version`** —
+  Prints version information
+
+---
+
+---
+url: /docs/guide/usage/formatter/cli.md
+---
+
+# Command-line Interface
+
+## Usage
+
+**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
+
+## Mode Options:
+
+* **`    --init`** —
+  Initialize `.oxfmtrc.json` with default values
+* **`    --migrate`**=*`SOURCE`* —
+  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
+* **`    --lsp`** —
+  Start language server protocol (LSP) server
+* **`    --stdin-filepath`**=*`PATH`* —
+  Specify the file name to use to infer which parser to use
+
+## Output Options:
+
+* **`    --write`** —
+  Format and write files in place (default)
+* **`    --check`** —
+  Check if files are formatted, also show statistics
+* **`    --list-different`** —
+  List files that would be changed
+
+## Config Options
+
+* **`-c`**, **`--config`**=*`PATH`* —
+  Path to the configuration file
+
+## Ignore Options
+
+* **`    --ignore-path`**=*`PATH`* —
+  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
+* **`    --with-node-modules`** —
+  Format code in node\_modules directory (skipped by default)
+
+## Runtime Options
+
+* **`    --no-error-on-unmatched-pattern`** —
+  Do not exit with error when pattern is unmatched
+* **`    --threads`**=*`INT`* —
+  Number of threads to use. Set to 1 for using only 1 CPU core.
+
+## Available positional items:
+
+* *`PATH`* —
+  Single file, path or list of paths. Glob patterns are also supported. (Be sure to quote them, otherwise your shell may expand them before passing.) Exclude patterns with `!` prefix like `'!**/fixtures/*.js'` are also supported. If not provided, current working directory is used.
+
+## Available options:
+
 * **`-h`**, **`--help`** —
   Prints help information
 * **`-V`**, **`--version`** —
@@ -2243,7 +2244,7 @@ Example (monorepo + React + jsx-a11y):
 ---
 
 ---
-url: /docs/guide/usage/formatter/generated-config.md
+url: /docs/guide/usage/formatter/config-file-reference.md
 ---
 
 # Configuration options for the Oxfmt.
@@ -2320,6 +2321,9 @@ Custom groups have a higher priority than any predefined group.
 If you want a predefined group to take precedence over a custom group,
 you must write a custom group definition that does the same as what the predefined group does, and put it first in the list.
 
+If you specify multiple conditions like `elementNamePattern`, `selector`, and `modifiers`,
+all conditions must be met for an import to match the custom group (AND logic).
+
 * Default: `[]`
 
 #### experimentalSortImports.customGroups\[n]
@@ -2342,6 +2346,24 @@ default: `""`
 
 Name of the custom group, used in the `groups` option.
 
+##### experimentalSortImports.customGroups\[n].modifiers
+
+type: `string[]`
+
+Modifiers to match the import characteristics.
+All specified modifiers must be present (AND logic).
+
+Possible values: `"side_effect"`, `"type"`, `"value"`, `"default"`, `"wildcard"`, `"named"`
+
+##### experimentalSortImports.customGroups\[n].selector
+
+type: `string`
+
+Selector to match the import kind.
+
+Possible values: `"type"`, `"side_effect_style"`, `"side_effect"`, `"style"`, `"index"`,
+`"sibling"`, `"parent"`, `"subpath"`, `"internal"`, `"builtin"`, `"external"`, `"import"`
+
 ### experimentalSortImports.groups
 
 type: `array`
@@ -2363,8 +2385,8 @@ You may enter modifiers in any order, but the selector must always come at the e
 The list of selectors is sorted from most to least important:
 
 * `type` — TypeScript type imports.
-* `side-effect-style` — Side effect style imports.
-* `side-effect` — Side effect imports.
+* `side_effect_style` — Side effect style imports.
+* `side_effect` — Side effect imports.
 * `style` — Style imports.
 * `index` — Main file from the current directory.
 * `sibling` — Modules from the same directory.
@@ -2377,16 +2399,17 @@ The list of selectors is sorted from most to least important:
 
 The list of modifiers is sorted from most to least important:
 
-* `side-effect` — Side effect imports.
-* `type` — TypeScript type imports.
-* `value` — Value imports.
-* `default` — Imports containing the default specifier.
-* `wildcard` — Imports containing the wildcard (`* as`) specifier.
-* `named` — Imports containing at least one named specifier.
-* `multiline` — Imports on multiple lines.
-* `singleline` — Imports on a single line.
+* `side_effect` — Side effect imports.
 
-See also <https://perfectionist.dev/rules/sort-imports#groups> for details.
+* `type` — TypeScript type imports.
+
+* `value` — Value imports.
+
+* `default` — Imports containing the default specifier.
+
+* `wildcard` — Imports containing the wildcard (`* as`) specifier.
+
+* `named` — Imports containing at least one named specifier.
 
 * Default: See below
 
@@ -2405,10 +2428,6 @@ See also <https://perfectionist.dev/rules/sort-imports#groups> for details.
 #### experimentalSortImports.groups\[n]
 
 type: `array | string`
-
-##### experimentalSortImports.groups\[n]\[n]
-
-type: `string`
 
 ### experimentalSortImports.ignoreCase
 
@@ -2725,6 +2744,9 @@ Custom groups have a higher priority than any predefined group.
 If you want a predefined group to take precedence over a custom group,
 you must write a custom group definition that does the same as what the predefined group does, and put it first in the list.
 
+If you specify multiple conditions like `elementNamePattern`, `selector`, and `modifiers`,
+all conditions must be met for an import to match the custom group (AND logic).
+
 * Default: `[]`
 
 \####### overrides\[n].options.experimentalSortImports.customGroups\[n]
@@ -2747,6 +2769,24 @@ default: `""`
 
 Name of the custom group, used in the `groups` option.
 
+\######## overrides\[n].options.experimentalSortImports.customGroups\[n].modifiers
+
+type: `string[]`
+
+Modifiers to match the import characteristics.
+All specified modifiers must be present (AND logic).
+
+Possible values: `"side_effect"`, `"type"`, `"value"`, `"default"`, `"wildcard"`, `"named"`
+
+\######## overrides\[n].options.experimentalSortImports.customGroups\[n].selector
+
+type: `string`
+
+Selector to match the import kind.
+
+Possible values: `"type"`, `"side_effect_style"`, `"side_effect"`, `"style"`, `"index"`,
+`"sibling"`, `"parent"`, `"subpath"`, `"internal"`, `"builtin"`, `"external"`, `"import"`
+
 ###### overrides\[n].options.experimentalSortImports.groups
 
 type: `array`
@@ -2768,8 +2808,8 @@ You may enter modifiers in any order, but the selector must always come at the e
 The list of selectors is sorted from most to least important:
 
 * `type` — TypeScript type imports.
-* `side-effect-style` — Side effect style imports.
-* `side-effect` — Side effect imports.
+* `side_effect_style` — Side effect style imports.
+* `side_effect` — Side effect imports.
 * `style` — Style imports.
 * `index` — Main file from the current directory.
 * `sibling` — Modules from the same directory.
@@ -2782,16 +2822,17 @@ The list of selectors is sorted from most to least important:
 
 The list of modifiers is sorted from most to least important:
 
-* `side-effect` — Side effect imports.
-* `type` — TypeScript type imports.
-* `value` — Value imports.
-* `default` — Imports containing the default specifier.
-* `wildcard` — Imports containing the wildcard (`* as`) specifier.
-* `named` — Imports containing at least one named specifier.
-* `multiline` — Imports on multiple lines.
-* `singleline` — Imports on a single line.
+* `side_effect` — Side effect imports.
 
-See also <https://perfectionist.dev/rules/sort-imports#groups> for details.
+* `type` — TypeScript type imports.
+
+* `value` — Value imports.
+
+* `default` — Imports containing the default specifier.
+
+* `wildcard` — Imports containing the wildcard (`* as`) specifier.
+
+* `named` — Imports containing at least one named specifier.
 
 * Default: See below
 
@@ -2810,10 +2851,6 @@ See also <https://perfectionist.dev/rules/sort-imports#groups> for details.
 \####### overrides\[n].options.experimentalSortImports.groups\[n]
 
 type: `array | string`
-
-\######## overrides\[n].options.experimentalSortImports.groups\[n]\[n]
-
-type: `string`
 
 ###### overrides\[n].options.experimentalSortImports.ignoreCase
 
@@ -3211,7 +3248,7 @@ Whether or not to indent the code inside `<script>` and `<style>` tags in Vue fi
 ---
 
 ---
-url: /docs/guide/usage/formatter/config-file-reference.md
+url: /docs/guide/usage/formatter/generated-config.md
 ---
 
 # Configuration options for the Oxfmt.
@@ -3288,6 +3325,9 @@ Custom groups have a higher priority than any predefined group.
 If you want a predefined group to take precedence over a custom group,
 you must write a custom group definition that does the same as what the predefined group does, and put it first in the list.
 
+If you specify multiple conditions like `elementNamePattern`, `selector`, and `modifiers`,
+all conditions must be met for an import to match the custom group (AND logic).
+
 * Default: `[]`
 
 #### experimentalSortImports.customGroups\[n]
@@ -3310,6 +3350,24 @@ default: `""`
 
 Name of the custom group, used in the `groups` option.
 
+##### experimentalSortImports.customGroups\[n].modifiers
+
+type: `string[]`
+
+Modifiers to match the import characteristics.
+All specified modifiers must be present (AND logic).
+
+Possible values: `"side_effect"`, `"type"`, `"value"`, `"default"`, `"wildcard"`, `"named"`
+
+##### experimentalSortImports.customGroups\[n].selector
+
+type: `string`
+
+Selector to match the import kind.
+
+Possible values: `"type"`, `"side_effect_style"`, `"side_effect"`, `"style"`, `"index"`,
+`"sibling"`, `"parent"`, `"subpath"`, `"internal"`, `"builtin"`, `"external"`, `"import"`
+
 ### experimentalSortImports.groups
 
 type: `array`
@@ -3331,8 +3389,8 @@ You may enter modifiers in any order, but the selector must always come at the e
 The list of selectors is sorted from most to least important:
 
 * `type` — TypeScript type imports.
-* `side-effect-style` — Side effect style imports.
-* `side-effect` — Side effect imports.
+* `side_effect_style` — Side effect style imports.
+* `side_effect` — Side effect imports.
 * `style` — Style imports.
 * `index` — Main file from the current directory.
 * `sibling` — Modules from the same directory.
@@ -3345,16 +3403,17 @@ The list of selectors is sorted from most to least important:
 
 The list of modifiers is sorted from most to least important:
 
-* `side-effect` — Side effect imports.
-* `type` — TypeScript type imports.
-* `value` — Value imports.
-* `default` — Imports containing the default specifier.
-* `wildcard` — Imports containing the wildcard (`* as`) specifier.
-* `named` — Imports containing at least one named specifier.
-* `multiline` — Imports on multiple lines.
-* `singleline` — Imports on a single line.
+* `side_effect` — Side effect imports.
 
-See also <https://perfectionist.dev/rules/sort-imports#groups> for details.
+* `type` — TypeScript type imports.
+
+* `value` — Value imports.
+
+* `default` — Imports containing the default specifier.
+
+* `wildcard` — Imports containing the wildcard (`* as`) specifier.
+
+* `named` — Imports containing at least one named specifier.
 
 * Default: See below
 
@@ -3373,10 +3432,6 @@ See also <https://perfectionist.dev/rules/sort-imports#groups> for details.
 #### experimentalSortImports.groups\[n]
 
 type: `array | string`
-
-##### experimentalSortImports.groups\[n]\[n]
-
-type: `string`
 
 ### experimentalSortImports.ignoreCase
 
@@ -3693,6 +3748,9 @@ Custom groups have a higher priority than any predefined group.
 If you want a predefined group to take precedence over a custom group,
 you must write a custom group definition that does the same as what the predefined group does, and put it first in the list.
 
+If you specify multiple conditions like `elementNamePattern`, `selector`, and `modifiers`,
+all conditions must be met for an import to match the custom group (AND logic).
+
 * Default: `[]`
 
 \####### overrides\[n].options.experimentalSortImports.customGroups\[n]
@@ -3715,6 +3773,24 @@ default: `""`
 
 Name of the custom group, used in the `groups` option.
 
+\######## overrides\[n].options.experimentalSortImports.customGroups\[n].modifiers
+
+type: `string[]`
+
+Modifiers to match the import characteristics.
+All specified modifiers must be present (AND logic).
+
+Possible values: `"side_effect"`, `"type"`, `"value"`, `"default"`, `"wildcard"`, `"named"`
+
+\######## overrides\[n].options.experimentalSortImports.customGroups\[n].selector
+
+type: `string`
+
+Selector to match the import kind.
+
+Possible values: `"type"`, `"side_effect_style"`, `"side_effect"`, `"style"`, `"index"`,
+`"sibling"`, `"parent"`, `"subpath"`, `"internal"`, `"builtin"`, `"external"`, `"import"`
+
 ###### overrides\[n].options.experimentalSortImports.groups
 
 type: `array`
@@ -3736,8 +3812,8 @@ You may enter modifiers in any order, but the selector must always come at the e
 The list of selectors is sorted from most to least important:
 
 * `type` — TypeScript type imports.
-* `side-effect-style` — Side effect style imports.
-* `side-effect` — Side effect imports.
+* `side_effect_style` — Side effect style imports.
+* `side_effect` — Side effect imports.
 * `style` — Style imports.
 * `index` — Main file from the current directory.
 * `sibling` — Modules from the same directory.
@@ -3750,16 +3826,17 @@ The list of selectors is sorted from most to least important:
 
 The list of modifiers is sorted from most to least important:
 
-* `side-effect` — Side effect imports.
-* `type` — TypeScript type imports.
-* `value` — Value imports.
-* `default` — Imports containing the default specifier.
-* `wildcard` — Imports containing the wildcard (`* as`) specifier.
-* `named` — Imports containing at least one named specifier.
-* `multiline` — Imports on multiple lines.
-* `singleline` — Imports on a single line.
+* `side_effect` — Side effect imports.
 
-See also <https://perfectionist.dev/rules/sort-imports#groups> for details.
+* `type` — TypeScript type imports.
+
+* `value` — Value imports.
+
+* `default` — Imports containing the default specifier.
+
+* `wildcard` — Imports containing the wildcard (`* as`) specifier.
+
+* `named` — Imports containing at least one named specifier.
 
 * Default: See below
 
@@ -3778,10 +3855,6 @@ See also <https://perfectionist.dev/rules/sort-imports#groups> for details.
 \####### overrides\[n].options.experimentalSortImports.groups\[n]
 
 type: `array | string`
-
-\######## overrides\[n].options.experimentalSortImports.groups\[n]\[n]
-
-type: `string`
 
 ###### overrides\[n].options.experimentalSortImports.ignoreCase
 
@@ -11269,46 +11342,12 @@ url: /docs/guide/usage/linter/rules/eslint/no-empty-function.md
 
 ### What it does
 
-Disallows the usages of empty functions
+Disallows the usage of empty functions.
 
 ### Why is this bad?
 
 Empty functions can reduce readability because readers need to guess whether it's
 intentional or not. So writing a clear comment for empty functions is a good practice.
-
-### Options
-
-#### allow
-
-`{ type: string[], default: [] }`
-
-You may pass a list of allowed function kinds, which will allow functions of
-these kinds to be empty.
-
-Example:
-
-```json
-{
-  "no-empty-function": ["error", { "allow": ["functions"] }]
-}
-```
-
-`allow` accepts the following values:
-
-* `"functions"`
-* `"arrowFunctions"`
-* `"generatorFunctions"`
-* `"methods"`
-* `"generatorMethods"`
-* `"getters"`
-* `"setters"`
-* `"constructors"`
-* `"privateConstructors"`
-* `"protectedConstructors"`
-* `"asyncFunctions"`
-* `"asyncMethods"`
-* `"decoratedFunctions"`
-* `"overrideMethods"`
 
 ### Examples
 
@@ -11346,6 +11385,166 @@ class Foo {
   public get name() {
     return this._name;
   }
+}
+```
+
+## Configuration
+
+This rule accepts a configuration object with the following properties:
+
+### allow
+
+type: `array`
+
+Types of functions that are allowed to be empty.
+
+By default, no function kinds are allowed to be empty, but this option can be used to
+permit specific kinds of functions.
+
+Example:
+
+```json
+{
+  "no-empty-function": ["error", { "allow": ["constructors"] }]
+}
+```
+
+#### allow\[n]
+
+type: `"functions" | "arrowFunctions" | "generatorFunctions" | "methods" | "generatorMethods" | "getters" | "setters" | "constructors" | "asyncFunctions" | "asyncMethods" | "privateConstructors" | "protectedConstructors" | "decoratedFunctions" | "overrideMethods"`
+
+Kinds of functions that can be allowed to be empty.
+
+##### `"functions"`
+
+Allow empty regular functions.
+
+```js
+function foo() {}
+```
+
+##### `"arrowFunctions"`
+
+Allow empty arrow functions.
+
+```js
+const foo = () => {};
+```
+
+##### `"generatorFunctions"`
+
+Allow empty generator functions.
+
+```js
+function* foo() {}
+```
+
+##### `"methods"`
+
+Allow empty methods.
+
+```js
+class Foo {
+  bar() {}
+}
+```
+
+##### `"generatorMethods"`
+
+Allow empty generator methods.
+
+```js
+class Foo {
+  *bar() {}
+}
+```
+
+##### `"getters"`
+
+Allow empty getters.
+
+```js
+class Foo {
+  get bar() {}
+}
+```
+
+##### `"setters"`
+
+Allow empty setters.
+
+```js
+class Foo {
+  set bar(value) {}
+}
+```
+
+##### `"constructors"`
+
+Allow empty constructors.
+
+```js
+class Foo {
+  constructor() {}
+}
+```
+
+##### `"asyncFunctions"`
+
+Allow empty async functions.
+
+```js
+async function foo() {}
+```
+
+##### `"asyncMethods"`
+
+Allow empty async methods.
+
+```js
+class Foo {
+  async bar() {}
+}
+```
+
+##### `"privateConstructors"`
+
+Allow empty private constructors.
+
+```ts
+class Foo {
+  private constructor() {}
+}
+```
+
+##### `"protectedConstructors"`
+
+Allow empty protected constructors.
+
+```ts
+class Foo {
+  protected constructor() {}
+}
+```
+
+##### `"decoratedFunctions"`
+
+Allow empty decorated functions.
+
+```js
+class Foo {
+  @decorator()
+  bar() {}
+}
+```
+
+##### `"overrideMethods"`
+
+Allow empty override methods.
+
+```ts
+class Foo extends Base {
+  override bar() {}
 }
 ```
 
@@ -15958,17 +16157,151 @@ oxlint --deny no-setter-return
 ---
 
 ---
+url: /docs/guide/usage/linter/rules/eslint/no-shadow.md
+---
+
+### What it does
+
+Disallows variable declarations from shadowing variables declared in the outer scope.
+
+### Why is this bad?
+
+Shadowing is the process by which a local variable shares the same name as a variable
+in its containing scope. This can cause confusion, as it may be unclear which variable
+is being referenced, and can lead to bugs that are difficult to diagnose.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```js
+var x = 1;
+function foo() {
+  var x = 2; // x shadows the outer x
+}
+```
+
+Examples of **correct** code for this rule:
+
+```js
+var x = 1;
+function foo() {
+  var y = 2; // different name, no shadowing
+}
+```
+
+## Configuration
+
+This rule accepts a configuration object with the following properties:
+
+### allow
+
+type: `string[]`
+
+default: `[]`
+
+List of variable names that are allowed to shadow.
+
+### builtinGlobals
+
+type: `boolean`
+
+default: `false`
+
+Whether to report shadowing of built-in global variables.
+
+### hoist
+
+type: `"all" | "functions" | "functions-and-types" | "never" | "types"`
+
+default: `"functions-and-types"`
+
+Controls how hoisting is handled when checking for shadowing.
+
+#### `"all"`
+
+Report shadowing even before the outer variable is declared (due to hoisting).
+
+#### `"functions"`
+
+Only report shadowing for function declarations that are hoisted.
+
+#### `"functions-and-types"`
+
+Report shadowing for both function and type declarations that are hoisted.
+
+#### `"never"`
+
+Never report shadowing before the outer variable is declared.
+
+#### `"types"`
+
+Only report shadowing for type declarations that are hoisted.
+
+### ignoreFunctionTypeParameterNameValueShadow
+
+type: `boolean`
+
+default: `true`
+
+If `true`, ignore when a function type parameter shadows a value.
+Example: `const T = 1; function foo<T>() {}`
+
+### ignoreOnInitialization
+
+type: `boolean`
+
+default: `false`
+
+Whether to ignore the variable initializers when the shadowed variable is presumably still uninitialized.
+
+### ignoreTypeValueShadow
+
+type: `boolean`
+
+default: `true`
+
+If `true`, ignore when a type and a value have the same name.
+This is common in TypeScript: `type Foo = ...; const Foo = ...;`
+
+## How to use
+
+To **enable** this rule using the config file or in the CLI, you can use:
+
+::: code-group
+
+```json [Config (.oxlintrc.json)]
+{
+  "rules": {
+    "no-shadow": "error"
+  }
+}
+```
+
+```bash [CLI]
+oxlint --deny no-shadow
+```
+
+:::
+
+## References
+
+* Rule Source
+
+---
+
+---
 url: /docs/guide/usage/linter/rules/eslint/no-shadow-restricted-names.md
 ---
 
 ### What it does
 
 Disallows the redefining of global variables such as `undefined`, `NaN`, `Infinity`,
-`eval`, and `arguments`.
+`eval`, `globalThis` and `arguments`.
 
 ### Why is this bad?
 
-Value properties of the Global Object `NaN`, `Infinity`, `undefined` as well as the strict
+Value properties of the Global Object `NaN`, `Infinity`, `undefined`, `globalThis` as well as the strict
 mode restricted identifiers `eval` and `arguments` are considered to be restricted names in
 JavaScript. Defining them to mean something else can have unintended consequences and
 confuse others reading the code. For example, there’s nothing preventing you from
@@ -15994,6 +16327,8 @@ var undefined = 5;
 
 try {
 } catch (eval) {}
+
+const globalThis = "foo";
 ```
 
 ```javascript
@@ -16027,7 +16362,7 @@ This rule accepts a configuration object with the following properties:
 
 type: `boolean`
 
-default: `false`
+default: `true`
 
 If true, also report shadowing of `globalThis`.
 
@@ -16677,6 +17012,65 @@ oxlint --deny no-unexpected-multiline
 ---
 
 ---
+url: /docs/guide/usage/linter/rules/eslint/no-unmodified-loop-condition.md
+---
+
+### What it does
+
+Disallow references in loop conditions that are never modified within the loop.
+
+### Why is this bad?
+
+A loop condition that depends on values that never change within the loop body
+can cause infinite loops or logic bugs.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```js
+let done = false;
+while (!done) {
+  work();
+}
+```
+
+Examples of **correct** code for this rule:
+
+```js
+let done = false;
+while (!done) {
+  done = checkDone();
+}
+```
+
+## How to use
+
+To **enable** this rule using the config file or in the CLI, you can use:
+
+::: code-group
+
+```json [Config (.oxlintrc.json)]
+{
+  "rules": {
+    "no-unmodified-loop-condition": "error"
+  }
+}
+```
+
+```bash [CLI]
+oxlint --deny no-unmodified-loop-condition
+```
+
+:::
+
+## References
+
+* Rule Source
+
+---
+
+---
 url: /docs/guide/usage/linter/rules/eslint/no-unneeded-ternary.md
 ---
 
@@ -16900,21 +17294,17 @@ as `(!a) in b` instead of `!(a in b)`, which is not the intended logic.
 Examples of **incorrect** code for this rule:
 
 ```javascript
-if ((!key) in object) {
-}
+if (!key in object) {}
 
-if ((!obj) instanceof Ctor) {
-}
+if (!obj instanceof Ctor) {}
 ```
 
 Examples of **correct** code for this rule:
 
 ```javascript
-if (!(key in object)) {
-}
+if (!(key in object)) {}
 
-if (!(obj instanceof Ctor)) {
-}
+if (!(obj instanceof Ctor)) {}
 ```
 
 ## Configuration
@@ -19803,6 +20193,12 @@ url: /docs/guide/usage/linter/rules/eslint/require-await.md
 
 Disallow async functions which have no `await` expression.
 
+::: warning NOTE
+This rule is inferior to the accuracy of the type-aware
+`typescript/require-await` rule. If using type-aware
+rules, always prefer that rule over this one.
+:::
+
 ### Why is this bad?
 
 Asynchronous functions in JavaScript behave differently than other
@@ -19823,14 +20219,14 @@ async function fetchData(processDataItem) {
 }
 ```
 
-Asynchronous functions that don’t use await might not need to be
+Asynchronous functions that don’t use `await` might not need to be
 asynchronous functions and could be the unintentional result of
 refactoring.
 
 Note: this rule ignores async generator functions. This is because
 generators yield rather than return a value and async generators might
 yield all the values of another async generator without ever actually
-needing to use await.
+needing to use `await`.
 
 ### Examples
 
@@ -20890,44 +21286,6 @@ The Oxc formatter is built around the same core concepts as Prettier but with si
 ---
 
 ---
-url: /docs/guide/introduction.md
----
-
-# Getting Started
-
-[What is Oxc?](/docs/guide/what-is-oxc)
-
-## Lint or format a codebase
-
-* Lint: [Oxlint](/docs/guide/usage/linter)
-* Format: [Oxfmt](/docs/guide/usage/formatter)
-
-## Build tooling on top of Oxc
-
-* Parse JavaScript and TypeScript: [Parser](/docs/guide/usage/parser)
-* Transform TypeScript, JSX, and modern JavaScript: [Transformer](/docs/guide/usage/transformer)
-* Minify JavaScript for production builds: [Minifier](/docs/guide/usage/minifier)
-* Resolve modules for JavaScript and TypeScript: [Resolver](/docs/guide/usage/resolver)
-
-## Contribute or learn
-
-* [Contribute](/docs/contribute/introduction)
-* [Learn](/docs/learn/parser_in_rust/intro.html)
-
-## Other resources
-
-* [Troubleshooting](/docs/guide/troubleshooting)
-* [Benchmarks](/docs/guide/benchmarks)
-* [Projects using Oxc](/docs/guide/projects)
-* [Talks and media](/docs/guide/media)
-* [Team](/team)
-* [Endorsements](/endorsements)
-* [Release Blog](/blog/)
-* [Releases](https://github.com/oxc-project/oxc/releases)
-
----
-
----
 url: /docs/contribute/development.md
 ---
 
@@ -21008,6 +21366,44 @@ macOS has an antivirus feature called XProtect that scans executables for malwar
 **Note:** This disables an OS security feature. Only do this if you're comfortable with the trade-off.
 
 More details: https://nnethercote.github.io/2025/09/04/faster-rust-builds-on-mac.html
+
+---
+
+---
+url: /docs/guide/introduction.md
+---
+
+# Getting Started
+
+[What is Oxc?](/docs/guide/what-is-oxc)
+
+## Lint or format a codebase
+
+* Lint: [Oxlint](/docs/guide/usage/linter)
+* Format: [Oxfmt](/docs/guide/usage/formatter)
+
+## Build tooling on top of Oxc
+
+* Parse JavaScript and TypeScript: [Parser](/docs/guide/usage/parser)
+* Transform TypeScript, JSX, and modern JavaScript: [Transformer](/docs/guide/usage/transformer)
+* Minify JavaScript for production builds: [Minifier](/docs/guide/usage/minifier)
+* Resolve modules for JavaScript and TypeScript: [Resolver](/docs/guide/usage/resolver)
+
+## Contribute or learn
+
+* [Contribute](/docs/contribute/introduction)
+* [Learn](/docs/learn/parser_in_rust/intro.html)
+
+## Other resources
+
+* [Troubleshooting](/docs/guide/troubleshooting)
+* [Benchmarks](/docs/guide/benchmarks)
+* [Projects using Oxc](/docs/guide/projects)
+* [Talks and media](/docs/guide/media)
+* [Team](/team)
+* [Endorsements](/endorsements)
+* [Release Blog](/blog/)
+* [Releases](https://github.com/oxc-project/oxc/releases)
 
 ---
 
@@ -41142,6 +41538,185 @@ Test results are stored in snapshot files for tracking changes:
 ---
 
 ---
+url: /docs/learn/architecture/parser.md
+---
+
+# Parser Architecture
+
+Oxc maintains its own AST and parser, which is by far the fastest and most conformant JavaScript and TypeScript (including JSX and TSX) parser written in Rust.
+
+As the parser often represents a key performance bottleneck in JavaScript tooling,
+any minor improvements can have a cascading effect on our downstream tools.
+By developing our parser, we have the opportunity to explore and implement well-researched performance techniques.
+
+## AST Design Philosophy
+
+While many existing JavaScript tools rely on [estree] as their AST specification,
+a notable drawback is its abundance of ambiguous nodes.
+This ambiguity often leads to confusion during development with [estree].
+
+The Oxc AST differs from the [estree] AST by removing ambiguous nodes and introducing distinct types.
+For example, instead of using a generic [estree] `Identifier`,
+the Oxc AST provides specific types such as `BindingIdentifier`, `IdentifierReference`, and `IdentifierName`.
+
+This clear distinction greatly enhances the development experience by aligning more closely with the ECMAScript specification.
+
+### AST Node Types
+
+```rust
+// Instead of generic Identifier
+pub struct BindingIdentifier<'a> {
+    pub span: Span,
+    pub name: Atom<'a>,
+}
+
+pub struct IdentifierReference<'a> {
+    pub span: Span,
+    pub name: Atom<'a>,
+    pub reference_id: Cell<Option<ReferenceId>>,
+}
+
+pub struct IdentifierName<'a> {
+    pub span: Span,
+    pub name: Atom<'a>,
+}
+```
+
+### Semantic Clarity
+
+This approach provides semantic clarity:
+
+* **`BindingIdentifier`**: Variable declarations (`let x = 1`)
+* **`IdentifierReference`**: Variable usage (`console.log(x)`)
+* **`IdentifierName`**: Property names (`obj.property`)
+
+## Performance Architecture
+
+### How is it so fast
+
+* **Memory Arena**: AST is allocated in a [memory arena](https://crates.io/crates/bumpalo) for fast allocation and deallocation
+* **String Optimization**: Short strings are inlined by [CompactString](https://crates.io/crates/compact_str)
+* **Minimal Heap Usage**: No other heap allocations are done except the above two
+* **Separation of Concerns**: Scope binding, symbol resolution and some syntax errors are delegated to the semantic analyzer
+
+### Memory Management Details
+
+#### Arena Allocation
+
+```rust
+use oxc_allocator::Allocator;
+
+// All AST nodes are allocated in this arena
+let allocator = Allocator::default();
+let ast_node = allocator.alloc(Expression::NumericLiteral(
+    allocator.alloc(NumericLiteral { value: 42.0, span: SPAN })
+));
+```
+
+Benefits:
+
+* **O(1) allocation**: Simple pointer bump
+* **O(1) deallocation**: Drop entire arena at once
+* **Cache-friendly**: Linear memory layout
+* **No fragmentation**: Continuous memory usage
+
+#### String Interning with CompactString
+
+```rust
+// Strings ≤ 24 bytes are stored inline (no heap allocation)
+let short_name = CompactString::from("variableName");  // Stack allocated
+let long_name = CompactString::from("a_very_long_variable_name_that_exceeds_limit");  // Heap allocated
+```
+
+This reduces memory allocations for the majority of JavaScript identifiers and string literals.
+
+## Parser Architecture
+
+### Two-Phase Design
+
+The Oxc parser follows a two-phase approach:
+
+1. **Parsing Phase**: Build AST structure with minimal semantic analysis
+2. **Semantic Phase**: Perform scope analysis, symbol resolution, and advanced error checking
+
+```rust
+// Phase 1: Parse to AST
+let parser_result = Parser::new(&allocator, &source_text, source_type).parse();
+
+// Phase 2: Semantic analysis
+let semantic_result = SemanticBuilder::new()
+    // Enable additional syntax checks not performed by the parser
+    .with_check_syntax_error(true)
+    .build(&parser_result.program);
+```
+
+### Parser Components
+
+#### Lexer
+
+* **Token generation**: Converts source text to structured tokens
+* **SIMD optimization**: Uses SIMD instructions for whitespace skipping
+* **Context-aware**: Handles regex vs division operator disambiguation
+
+#### Recursive Descent Parser
+
+* **Hand-written**: Custom implementation for maximum performance
+* **Error recovery**: Advanced error handling with meaningful messages
+* **Grammar compliance**: Follows ECMAScript specification precisely
+
+#### AST Builder
+
+* **Type safety**: Leverages Rust's type system for correctness
+* **Memory efficiency**: Direct arena allocation
+* **Builder pattern**: Convenient node construction methods
+
+## Conformance Strategy
+
+### Test Suite Coverage
+
+* **Test262**: 100% pass rate on ECMAScript conformance tests
+* **Babel**: 99.62% compatibility with Babel parser tests
+* **TypeScript**: 99.86% compatibility with TypeScript compiler tests
+
+### Error Handling Philosophy
+
+```rust
+// Meaningful error messages with source location
+pub struct OxcDiagnostic {
+    pub message: String,
+    pub span: Span,
+    pub severity: Severity,
+    pub help: Option<String>,
+}
+```
+
+The parser provides:
+
+* **Precise error locations**: Exact source positions
+* **Recovery strategies**: Continue parsing after errors
+* **Helpful suggestions**: Actionable error messages
+
+## Advanced Features
+
+### TypeScript Support
+
+* **Type stripping**: Removes TypeScript-specific syntax
+* **Decorator parsing**: Handles experimental decorators
+* **Namespace support**: Full module and namespace parsing
+* **JSX integration**: TypeScript + JSX (TSX) support
+
+### Research Areas
+
+* **SIMD text processing**: Vectorized string operations
+* **Cache optimization**: Minimize memory access patterns
+* **Branch prediction**: Optimize hot parsing paths
+* **Zero-copy parsing**: Eliminate unnecessary string copies
+
+[estree]: https://github.com/estree/estree
+
+---
+
+---
 url: /docs/learn/parser_in_rust/parser.md
 ---
 
@@ -41548,185 +42123,6 @@ function isParenthesizedArrowFunctionExpression(): Tristate {
 ```
 
 In summary, the TypeScript parser uses a combination of lookahead (fast path) and backtracking to parse arrow functions.
-
----
-
----
-url: /docs/learn/architecture/parser.md
----
-
-# Parser Architecture
-
-Oxc maintains its own AST and parser, which is by far the fastest and most conformant JavaScript and TypeScript (including JSX and TSX) parser written in Rust.
-
-As the parser often represents a key performance bottleneck in JavaScript tooling,
-any minor improvements can have a cascading effect on our downstream tools.
-By developing our parser, we have the opportunity to explore and implement well-researched performance techniques.
-
-## AST Design Philosophy
-
-While many existing JavaScript tools rely on [estree] as their AST specification,
-a notable drawback is its abundance of ambiguous nodes.
-This ambiguity often leads to confusion during development with [estree].
-
-The Oxc AST differs from the [estree] AST by removing ambiguous nodes and introducing distinct types.
-For example, instead of using a generic [estree] `Identifier`,
-the Oxc AST provides specific types such as `BindingIdentifier`, `IdentifierReference`, and `IdentifierName`.
-
-This clear distinction greatly enhances the development experience by aligning more closely with the ECMAScript specification.
-
-### AST Node Types
-
-```rust
-// Instead of generic Identifier
-pub struct BindingIdentifier<'a> {
-    pub span: Span,
-    pub name: Atom<'a>,
-}
-
-pub struct IdentifierReference<'a> {
-    pub span: Span,
-    pub name: Atom<'a>,
-    pub reference_id: Cell<Option<ReferenceId>>,
-}
-
-pub struct IdentifierName<'a> {
-    pub span: Span,
-    pub name: Atom<'a>,
-}
-```
-
-### Semantic Clarity
-
-This approach provides semantic clarity:
-
-* **`BindingIdentifier`**: Variable declarations (`let x = 1`)
-* **`IdentifierReference`**: Variable usage (`console.log(x)`)
-* **`IdentifierName`**: Property names (`obj.property`)
-
-## Performance Architecture
-
-### How is it so fast
-
-* **Memory Arena**: AST is allocated in a [memory arena](https://crates.io/crates/bumpalo) for fast allocation and deallocation
-* **String Optimization**: Short strings are inlined by [CompactString](https://crates.io/crates/compact_str)
-* **Minimal Heap Usage**: No other heap allocations are done except the above two
-* **Separation of Concerns**: Scope binding, symbol resolution and some syntax errors are delegated to the semantic analyzer
-
-### Memory Management Details
-
-#### Arena Allocation
-
-```rust
-use oxc_allocator::Allocator;
-
-// All AST nodes are allocated in this arena
-let allocator = Allocator::default();
-let ast_node = allocator.alloc(Expression::NumericLiteral(
-    allocator.alloc(NumericLiteral { value: 42.0, span: SPAN })
-));
-```
-
-Benefits:
-
-* **O(1) allocation**: Simple pointer bump
-* **O(1) deallocation**: Drop entire arena at once
-* **Cache-friendly**: Linear memory layout
-* **No fragmentation**: Continuous memory usage
-
-#### String Interning with CompactString
-
-```rust
-// Strings ≤ 24 bytes are stored inline (no heap allocation)
-let short_name = CompactString::from("variableName");  // Stack allocated
-let long_name = CompactString::from("a_very_long_variable_name_that_exceeds_limit");  // Heap allocated
-```
-
-This reduces memory allocations for the majority of JavaScript identifiers and string literals.
-
-## Parser Architecture
-
-### Two-Phase Design
-
-The Oxc parser follows a two-phase approach:
-
-1. **Parsing Phase**: Build AST structure with minimal semantic analysis
-2. **Semantic Phase**: Perform scope analysis, symbol resolution, and advanced error checking
-
-```rust
-// Phase 1: Parse to AST
-let parser_result = Parser::new(&allocator, &source_text, source_type).parse();
-
-// Phase 2: Semantic analysis
-let semantic_result = SemanticBuilder::new()
-    // Enable additional syntax checks not performed by the parser
-    .with_check_syntax_error(true)
-    .build(&parser_result.program);
-```
-
-### Parser Components
-
-#### Lexer
-
-* **Token generation**: Converts source text to structured tokens
-* **SIMD optimization**: Uses SIMD instructions for whitespace skipping
-* **Context-aware**: Handles regex vs division operator disambiguation
-
-#### Recursive Descent Parser
-
-* **Hand-written**: Custom implementation for maximum performance
-* **Error recovery**: Advanced error handling with meaningful messages
-* **Grammar compliance**: Follows ECMAScript specification precisely
-
-#### AST Builder
-
-* **Type safety**: Leverages Rust's type system for correctness
-* **Memory efficiency**: Direct arena allocation
-* **Builder pattern**: Convenient node construction methods
-
-## Conformance Strategy
-
-### Test Suite Coverage
-
-* **Test262**: 100% pass rate on ECMAScript conformance tests
-* **Babel**: 99.62% compatibility with Babel parser tests
-* **TypeScript**: 99.86% compatibility with TypeScript compiler tests
-
-### Error Handling Philosophy
-
-```rust
-// Meaningful error messages with source location
-pub struct OxcDiagnostic {
-    pub message: String,
-    pub span: Span,
-    pub severity: Severity,
-    pub help: Option<String>,
-}
-```
-
-The parser provides:
-
-* **Precise error locations**: Exact source positions
-* **Recovery strategies**: Continue parsing after errors
-* **Helpful suggestions**: Actionable error messages
-
-## Advanced Features
-
-### TypeScript Support
-
-* **Type stripping**: Removes TypeScript-specific syntax
-* **Decorator parsing**: Handles experimental decorators
-* **Namespace support**: Full module and namespace parsing
-* **JSX integration**: TypeScript + JSX (TSX) support
-
-### Research Areas
-
-* **SIMD text processing**: Vectorized string operations
-* **Cache optimization**: Minimize memory access patterns
-* **Branch prediction**: Optimize hot parsing paths
-* **Zero-copy parsing**: Eliminate unnecessary string copies
-
-[estree]: https://github.com/estree/estree
 
 ---
 
@@ -44092,146 +44488,6 @@ oxlint --deny promise/valid-params --promise-plugin
 ---
 
 ---
-url: /docs/guide/usage/formatter/quickstart.md
-description: Install Oxfmt and learn the common workflows.
----
-
-# Quickstart
-
-Recommended setup and common workflows.
-
-## Install
-
-Install `oxfmt` as a dev dependency:
-
-::: code-group
-
-```sh [npm]
-$ npm add -D oxfmt
-```
-
-```sh [pnpm]
-$ pnpm add -D oxfmt
-```
-
-```sh [yarn]
-$ yarn add -D oxfmt
-```
-
-```sh [bun]
-$ bun add -D oxfmt
-```
-
-:::
-
-Add scripts to `package.json`:
-
-```json [package.json]
-{
-  "scripts": {
-    "fmt": "oxfmt",
-    "fmt:check": "oxfmt --check"
-  }
-}
-```
-
-Format files:
-
-```sh
-pnpm run fmt
-```
-
-Check formatting without writing files:
-
-```sh
-pnpm run fmt:check
-```
-
-## Usage
-
-```sh
-oxfmt [OPTIONS] [PATH]...
-```
-
-Running `oxfmt` without arguments formats the current directory (equivalent to `prettier --write .`).
-
-CLI options like `--no-semi` are not supported. Use the configuration file instead to ensure consistent settings across CLI and editor integrations.
-
-To use glob patterns in positional paths, be sure to quote them. Otherwise, they may or may not be expanded depending on your environment.
-
-For the complete list of options, see the [CLI reference](/docs/guide/usage/formatter/cli.html).
-
-## Common workflows
-
-### Pre-commit with lint-staged
-
-```json [package.json]
-{
-  "lint-staged": {
-    "*": "oxfmt --no-error-on-unmatched-pattern"
-  }
-}
-```
-
-`--no-error-on-unmatched-pattern` prevents errors when no files match the pattern.
-
-### Create a config file
-
-Initialize `.oxfmtrc.json` with defaults:
-
-```sh
-oxfmt --init
-```
-
-### Migrate from Prettier
-
-```sh
-oxfmt --migrate prettier
-```
-
-See [migrate from prettier](./migrate-from-prettier) for details.
-
-### List files that differ
-
-```sh
-oxfmt --list-different
-```
-
-This is useful for configuring [files to ignore](./ignore-files).
-
-### Piping file contents
-
-```sh
-echo 'const   x   =   1' | oxfmt --stdin-filepath test.ts
-```
-
-Prints `const x = 1;`
-
-### Node.js API
-
-```ts
-import { format, type FormatOptions } from "oxfmt";
-
-const input = `let a=42;`;
-const options: FormatOptions = {
-  semi: false,
-};
-
-const { code } = await format("a.js", input, options);
-console.log(code); // "let a = 42"
-```
-
-## Next steps
-
-* [Change configuration](./config)
-* [Setup editors](./editors)
-* [Setup CI](./ci)
-* Learn advanced features: [sorting](./sorting), [embedded formatting](./embedded-formatting)
-* Check [CLI reference](./cli)
-
----
-
----
 url: /docs/guide/usage/linter/quickstart.md
 description: Install Oxlint and learn the common workflows.
 ---
@@ -44433,6 +44689,146 @@ The full list is in the [Rules reference](/docs/guide/usage/linter/rules).
 * Learn advanced features: [Multi-file analysis](/docs/guide/usage/linter/multi-file-analysis), [Type-aware linting](/docs/guide/usage/linter/type-aware), [JS plugins](/docs/guide/usage/linter/js-plugins)
 * Migrate: [From ESLint](/docs/guide/usage/linter/migrate-from-eslint)&#x20;
 * [CLI reference](/docs/guide/usage/linter/cli)
+
+---
+
+---
+url: /docs/guide/usage/formatter/quickstart.md
+description: Install Oxfmt and learn the common workflows.
+---
+
+# Quickstart
+
+Recommended setup and common workflows.
+
+## Install
+
+Install `oxfmt` as a dev dependency:
+
+::: code-group
+
+```sh [npm]
+$ npm add -D oxfmt
+```
+
+```sh [pnpm]
+$ pnpm add -D oxfmt
+```
+
+```sh [yarn]
+$ yarn add -D oxfmt
+```
+
+```sh [bun]
+$ bun add -D oxfmt
+```
+
+:::
+
+Add scripts to `package.json`:
+
+```json [package.json]
+{
+  "scripts": {
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check"
+  }
+}
+```
+
+Format files:
+
+```sh
+pnpm run fmt
+```
+
+Check formatting without writing files:
+
+```sh
+pnpm run fmt:check
+```
+
+## Usage
+
+```sh
+oxfmt [OPTIONS] [PATH]...
+```
+
+Running `oxfmt` without arguments formats the current directory (equivalent to `prettier --write .`).
+
+CLI options like `--no-semi` are not supported. Use the configuration file instead to ensure consistent settings across CLI and editor integrations.
+
+To use glob patterns in positional paths, be sure to quote them. Otherwise, they may or may not be expanded depending on your environment.
+
+For the complete list of options, see the [CLI reference](/docs/guide/usage/formatter/cli.html).
+
+## Common workflows
+
+### Pre-commit with lint-staged
+
+```json [package.json]
+{
+  "lint-staged": {
+    "*": "oxfmt --no-error-on-unmatched-pattern"
+  }
+}
+```
+
+`--no-error-on-unmatched-pattern` prevents errors when no files match the pattern.
+
+### Create a config file
+
+Initialize `.oxfmtrc.json` with defaults:
+
+```sh
+oxfmt --init
+```
+
+### Migrate from Prettier
+
+```sh
+oxfmt --migrate prettier
+```
+
+See [migrate from prettier](./migrate-from-prettier) for details.
+
+### List files that differ
+
+```sh
+oxfmt --list-different
+```
+
+This is useful for configuring [files to ignore](./ignore-files).
+
+### Piping file contents
+
+```sh
+echo 'const   x   =   1' | oxfmt --stdin-filepath test.ts
+```
+
+Prints `const x = 1;`
+
+### Node.js API
+
+```ts
+import { format, type FormatOptions } from "oxfmt";
+
+const input = `let a=42;`;
+const options: FormatOptions = {
+  semi: false,
+};
+
+const { code } = await format("a.js", input, options);
+console.log(code); // "let a = 42"
+```
+
+## Next steps
+
+* [Change configuration](./config)
+* [Setup editors](./editors)
+* [Setup CI](./ci)
+* Learn advanced features: [sorting](./sorting), [embedded formatting](./embedded-formatting)
+* Check [CLI reference](./cli)
 
 ---
 
@@ -45046,14 +45442,33 @@ Examples of **correct** code for this rule:
 <Hello id={{color: 'red'}} />
 ```
 
-### Options
+## Configuration
 
-#### forbid
+Configuration for the `forbid-dom-props` rule.
 
-An array of strings, with the names of props that are forbidden. The default value of this option \[].
-Each array element can either be a string with the property name or object specifying the property name, an optional custom message, and a DOM nodes disallowed list (e.g. )
+This rule accepts a configuration object with the following properties:
 
-`{"propName": "someProp", "disallowedFor": ["DOMNode", "AnotherDOMNode"], "message": "Avoid using someProp" }`
+### forbid
+
+type: `array`
+
+An array of prop names or objects that are forbidden on DOM elements.
+
+Each array element can be a string with the property name, or an object
+with `propName`, an optional `disallowedFor` array of DOM node names,
+and an optional custom `message`.
+
+Examples:
+
+* `["error", { "forbid": ["id", "style"] }]`
+* `["error", { "forbid": [{ "propName": "className", "message": "Use class instead" }] }]`
+* `["error", { "forbid": [{ "propName": "style", "disallowedFor": ["div", "span"] }] }]`
+
+#### forbid\[n]
+
+type: `string`
+
+A forbidden prop, either as a plain prop name string or with options.
 
 ## How to use
 
@@ -46251,6 +46666,80 @@ To **enable** this rule using the config file or in the CLI, you can use:
 
 ```bash [CLI]
 oxlint --deny react/jsx-no-comment-textnodes --react-plugin
+```
+
+:::
+
+## References
+
+* Rule Source
+
+---
+
+---
+url: /docs/guide/usage/linter/rules/react/jsx-no-constructed-context-values.md
+---
+
+### What it does
+
+Disallows JSX context provider values from taking values that will cause needless rerenders.
+
+### Why is this bad?
+
+React Context and all its child nodes and Consumers are rerendered whenever the value prop
+changes. Because each JavaScript object carries its own identity, things like object
+expressions (`{foo: 'bar'}`) or function expressions get a new identity on every render.
+This makes the context think it has gotten a new object and can cause needless rerenders
+and unintended consequences.
+
+This can be a large performance hit because not only will it cause the context providers
+and consumers to rerender with all the elements in its subtree, the processing for the
+tree scan React does to render the provider and find consumers is also wasted.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```jsx
+return <SomeContext.Provider value={{ foo: "bar" }}>...</SomeContext.Provider>;
+```
+
+```jsx
+function Component() {
+  function foo() {}
+  return <MyContext.Provider value={foo} />;
+}
+```
+
+Examples of **correct** code for this rule:
+
+```jsx
+const foo = useMemo(() => ({ foo: "bar" }), []);
+return <SomeContext.Provider value={foo}>...</SomeContext.Provider>;
+```
+
+```jsx
+const MyContext = createContext();
+const Component = () => <MyContext.Provider value="Some string" />;
+```
+
+## How to use
+
+To **enable** this rule using the config file or in the CLI, you can use:
+
+::: code-group
+
+```json [Config (.oxlintrc.json)]
+{
+  "plugins": ["react"],
+  "rules": {
+    "react/jsx-no-constructed-context-values": "error"
+  }
+}
+```
+
+```bash [CLI]
+oxlint --deny react/jsx-no-constructed-context-values --react-plugin
 ```
 
 :::
@@ -49130,25 +49619,6 @@ url: /docs/learn/references.md
 ---
 
 ---
-url: /docs/contribute/resolver.md
----
-
-# Resolver
-
-The Oxc resolver is a high-performance Node.js module resolution implementation that's compatible with webpack's enhanced-resolve. It's maintained in [its own GitHub repository](https://github.com/oxc-project/oxc_resolver).
-
-## Architecture
-
-The resolver is designed as a direct port of [enhanced-resolve](https://github.com/webpack/enhanced-resolve) with significant performance improvements:
-
-* **28x faster** than enhanced-resolve
-* **Zero-copy string operations** where possible
-* **Optimized path traversal** algorithms
-* **Efficient caching** strategies
-
----
-
----
 url: /docs/guide/usage/resolver.md
 ---
 
@@ -49180,6 +49650,25 @@ See [https://crates.io/crates/oxc\_resolver][url-oxc-resolver-crate] and its doc
 [url-oxc-resolver-npm]: https://www.npmjs.com/package/oxc-resolver
 
 [url-enhanced-resolve]: https://github.com/webpack/enhanced-resolve
+
+---
+
+---
+url: /docs/contribute/resolver.md
+---
+
+# Resolver
+
+The Oxc resolver is a high-performance Node.js module resolution implementation that's compatible with webpack's enhanced-resolve. It's maintained in [its own GitHub repository](https://github.com/oxc-project/oxc_resolver).
+
+## Architecture
+
+The resolver is designed as a direct port of [enhanced-resolve](https://github.com/webpack/enhanced-resolve) with significant performance improvements:
+
+* **28x faster** than enhanced-resolve
+* **Zero-copy string operations** where possible
+* **Optimized path traversal** algorithms
+* **Efficient caching** strategies
 
 ---
 
@@ -55761,15 +56250,6 @@ default: `true`
 Whether to allow comparing nullable boolean expressions to `true`.
 When false, `x === true` where x is `boolean | null` will be flagged.
 
-### allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing
-
-type: `boolean`
-
-default: `false`
-
-Whether to allow this rule to run without `strictNullChecks` enabled.
-This is not recommended as the rule may produce incorrect results.
-
 ## How to use
 
 To **enable** this rule using the config file or in the CLI, you can use:
@@ -55786,6 +56266,110 @@ To **enable** this rule using the config file or in the CLI, you can use:
 
 ```bash [CLI]
 oxlint --type-aware --deny typescript/no-unnecessary-boolean-literal-compare
+```
+
+:::
+
+## References
+
+* Rule Source
+* Rule Source (tsgolint)
+
+---
+
+---
+url: /docs/guide/usage/linter/rules/typescript/no-unnecessary-condition.md
+---
+
+### What it does
+
+Disallow conditions that are always truthy, always falsy, or always nullish
+based on TypeScript's type information.
+
+### Why is this bad?
+
+Conditions with no possible runtime variation make code harder to read and can
+hide logic errors. They often leave dead branches and suggest that the declared
+types do not match the intended behavior.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```ts
+declare const value: null;
+if (value) {
+  doWork();
+}
+
+const items: string[] = [];
+if (items) {
+  doWork();
+}
+
+declare const status: "ready";
+if (!status) {
+  reportError();
+}
+```
+
+Examples of **correct** code for this rule:
+
+```ts
+declare const maybeUser: User | undefined;
+if (maybeUser) {
+  doWork(maybeUser);
+}
+
+const items: string[] = [];
+if (items.length > 0) {
+  doWork();
+}
+
+declare const status: "ready" | "";
+if (!status) {
+  reportError();
+}
+```
+
+## Configuration
+
+This rule accepts a configuration object with the following properties:
+
+### allowConstantLoopConditions
+
+type: `boolean | "never" | "always" | "only-allowed-literals"`
+
+Represents the different ways `allowConstantLoopConditions` can be specified in JSON.
+Can be:
+
+* `true` or `false`
+* A string enum (`"never"`, `"always"`, `"only-allowed-literals"`)
+
+### checkTypePredicates
+
+type: `boolean`
+
+default: `false`
+
+Whether to check type predicate functions.
+
+## How to use
+
+To **enable** this rule using the config file or in the CLI, you can use:
+
+::: code-group
+
+```json [Config (.oxlintrc.json)]
+{
+  "rules": {
+    "typescript/no-unnecessary-condition": "error"
+  }
+}
+```
+
+```bash [CLI]
+oxlint --type-aware --deny typescript/no-unnecessary-condition
 ```
 
 :::
@@ -56993,6 +57577,121 @@ oxlint --type-aware --deny typescript/no-unsafe-unary-minus
 ---
 
 ---
+url: /docs/guide/usage/linter/rules/typescript/no-use-before-define.md
+---
+
+### What it does
+
+Disallows using variables before they are defined.
+
+### Why is this bad?
+
+Referencing identifiers before their declarations can hide bugs and
+make code order-dependent and difficult to reason about.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```ts
+new A();
+var A = class {};
+```
+
+Examples of **correct** code for this rule:
+
+```ts
+var A = class {};
+new A();
+```
+
+## Configuration
+
+This rule accepts a configuration object with the following properties:
+
+### allowNamedExports
+
+type: `boolean`
+
+default: `false`
+
+Allow named exports that appear before declaration.
+
+### classes
+
+type: `boolean`
+
+default: `true`
+
+Check class declarations.
+
+### enums
+
+type: `boolean`
+
+default: `true`
+
+Check enum declarations.
+
+### functions
+
+type: `boolean`
+
+default: `true`
+
+Check function declarations.
+
+### ignoreTypeReferences
+
+type: `boolean`
+
+default: `true`
+
+Ignore usages that are type-only references.
+
+### typedefs
+
+type: `boolean`
+
+default: `true`
+
+Check type aliases, interfaces, and type parameters.
+
+### variables
+
+type: `boolean`
+
+default: `true`
+
+Check variable declarations.
+
+## How to use
+
+To **enable** this rule using the config file or in the CLI, you can use:
+
+::: code-group
+
+```json [Config (.oxlintrc.json)]
+{
+  "rules": {
+    "typescript/no-use-before-define": "error"
+  }
+}
+```
+
+```bash [CLI]
+oxlint --deny typescript/no-use-before-define
+```
+
+:::
+
+## References
+
+* Rule Source
+
+---
+
+---
 url: /docs/guide/usage/linter/rules/typescript/no-useless-empty-export.md
 ---
 
@@ -57407,6 +58106,113 @@ oxlint --type-aware --deny typescript/only-throw-error
 
 * Rule Source
 * Rule Source (tsgolint)
+
+---
+
+---
+url: /docs/guide/usage/linter/rules/typescript/parameter-properties.md
+---
+
+### What it does
+
+Requires or disallows parameter properties in class constructors.
+
+### Why is this bad?
+
+Mixing parameter properties and class property declarations can make
+class style inconsistent and harder to maintain.
+
+### Examples
+
+#### `{ "prefer": "class-property" }` (default)
+
+Examples of **incorrect** code for this rule:
+
+```ts
+class Foo {
+  constructor(private name: string) {}
+}
+```
+
+Examples of **correct** code for this rule:
+
+```ts
+class Foo {
+  name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+```
+
+#### `{ "prefer": "parameter-property" }`
+
+Examples of **incorrect** code for this rule:
+
+```ts
+class Foo {
+  name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+```
+
+Examples of **correct** code for this rule:
+
+```ts
+class Foo {
+  constructor(private name: string) {}
+}
+```
+
+## Configuration
+
+This rule accepts a configuration object with the following properties:
+
+### allow
+
+type: `array`
+
+default: `[]`
+
+Modifiers that are allowed to be used with parameter properties or class properties, depending on the `prefer` option.
+
+#### allow\[n]
+
+type: `"private" | "private readonly" | "protected" | "protected readonly" | "public" | "public readonly" | "readonly"`
+
+### prefer
+
+type: `"class-property" | "parameter-property"`
+
+default: `"class-property"`
+
+Whether to prefer parameter properties or class properties.
+
+## How to use
+
+To **enable** this rule using the config file or in the CLI, you can use:
+
+::: code-group
+
+```json [Config (.oxlintrc.json)]
+{
+  "rules": {
+    "typescript/parameter-properties": "error"
+  }
+}
+```
+
+```bash [CLI]
+oxlint --deny typescript/parameter-properties
+```
+
+:::
+
+## References
+
+* Rule Source
 
 ---
 
@@ -57969,18 +58775,6 @@ const bool = Boolean(x || y);
 ## Configuration
 
 This rule accepts a configuration object with the following properties:
-
-### allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing
-
-type: `boolean`
-
-default: `false`
-
-Unless this is set to `true`, the rule will error on every file whose
-`tsconfig.json` does *not* have the `strictNullChecks` compiler option
-(or `strict`) set to `true`.
-
-It is *not* recommended to enable this config option.
 
 ### ignoreBooleanCoercion
 
@@ -59607,15 +60401,6 @@ default: `true`
 
 Whether to allow number types in boolean contexts (checks for non-zero numbers).
 
-### allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing
-
-type: `boolean`
-
-default: `false`
-
-Whether to allow this rule to run without `strictNullChecks` enabled.
-This is not recommended as the rule may produce incorrect results.
-
 ### allowString
 
 type: `boolean`
@@ -60048,6 +60833,84 @@ oxlint --type-aware --deny typescript/unbound-method
 
 * Rule Source
 * Rule Source (tsgolint)
+
+---
+
+---
+url: /docs/guide/usage/linter/rules/typescript/unified-signatures.md
+---
+
+### What it does
+
+Disallow overload signatures that can be unified into one.
+
+### Why is this bad?
+
+Duplicate overload signatures that only differ by a single type, or by an optional/rest
+parameter, are harder to maintain and read than a single unified signature.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```ts
+function f(a: number): void;
+function f(a: string): void;
+```
+
+Examples of **correct** code for this rule:
+
+```ts
+function f(a: number | string): void;
+```
+
+## Configuration
+
+This rule accepts a configuration object with the following properties:
+
+### ignoreDifferentlyNamedParameters
+
+type: `boolean`
+
+default: `false`
+
+Whether to ignore parameter name differences when comparing signatures. If `false`, signatures
+will not be considered unifiable if they have parameters in the same position with different
+names, even if the parameter types are the same.
+
+### ignoreOverloadsWithDifferentJSDoc
+
+type: `boolean`
+
+default: `false`
+
+Whether to ignore JSDoc differences when comparing signatures. If `false`, signatures will not
+be considered unifiable if the closest leading block comments for the signatures are different,
+even if the signatures themselves are identical.
+
+## How to use
+
+To **enable** this rule using the config file or in the CLI, you can use:
+
+::: code-group
+
+```json [Config (.oxlintrc.json)]
+{
+  "rules": {
+    "typescript/unified-signatures": "error"
+  }
+}
+```
+
+```bash [CLI]
+oxlint --deny typescript/unified-signatures
+```
+
+:::
+
+## References
+
+* Rule Source
 
 ---
 
@@ -64311,35 +65174,36 @@ This rule enforces proper case for numeric literals.
 
 ### Why is this bad?
 
-When both an identifier and a number literal are in lower case, it can be hard to differentiate between them.
+When both an identifier and a numeric literal are in
+lower case, it can be hard to differentiate between them.
 
 ### Examples
 
 Examples of **incorrect** code for this rule:
 
 ```javascript
+const foo = 0XFF;
 const foo = 0xff;
-const foo = 0xff;
-const foo = 0xff;
-const foo = 0xffn;
+const foo = 0Xff;
+const foo = 0Xffn;
 
-const foo = 0b10;
-const foo = 0b10n;
+const foo = 0B10;
+const foo = 0B10n;
 
-const foo = 0o76;
-const foo = 0o76n;
+const foo = 0O76;
+const foo = 0O76n;
 
-const foo = 2e-5;
+const foo = 2E-5;
 ```
 
 Examples of **correct** code for this rule:
 
 ```javascript
-const foo = 0xff;
+const foo = 0xFF;
 const foo = 0b10;
 const foo = 0o76;
-const foo = 0xffn;
-const foo = 2e5;
+const foo = 0xFFn;
+const foo = 2e+5;
 ```
 
 ## How to use
@@ -68056,67 +68920,6 @@ See [Configuration file reference](./config-file-reference) for details.
 ---
 
 ---
-url: /docs/guide/usage/formatter/generated-cli.md
----
-
-## Usage
-
-**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
-
-## Mode Options:
-
-* **`    --init`** —
-  Initialize `.oxfmtrc.json` with default values
-* **`    --migrate`**=*`SOURCE`* —
-  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
-* **`    --lsp`** —
-  Start language server protocol (LSP) server
-* **`    --stdin-filepath`**=*`PATH`* —
-  Specify the file name to use to infer which parser to use
-
-## Output Options:
-
-* **`    --write`** —
-  Format and write files in place (default)
-* **`    --check`** —
-  Check if files are formatted, also show statistics
-* **`    --list-different`** —
-  List files that would be changed
-
-## Config Options
-
-* **`-c`**, **`--config`**=*`PATH`* —
-  Path to the configuration file
-
-## Ignore Options
-
-* **`    --ignore-path`**=*`PATH`* —
-  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
-* **`    --with-node-modules`** —
-  Format code in node\_modules directory (skipped by default)
-
-## Runtime Options
-
-* **`    --no-error-on-unmatched-pattern`** —
-  Do not exit with error when pattern is unmatched
-* **`    --threads`**=*`INT`* —
-  Number of threads to use. Set to 1 for using only 1 CPU core.
-
-## Available positional items:
-
-* *`PATH`* —
-  Single file, path or list of paths. Glob patterns are also supported. (Be sure to quote them, otherwise your shell may expand them before passing.) Exclude patterns with `!` prefix like `'!**/fixtures/*.js'` are also supported. If not provided, current working directory is used.
-
-## Available options:
-
-* **`-h`**, **`--help`** —
-  Prints help information
-* **`-V`**, **`--version`** —
-  Prints version information
-
----
-
----
 url: /docs/guide/usage/linter/generated-cli.md
 ---
 
@@ -68129,7 +68932,8 @@ url: /docs/guide/usage/linter/generated-cli.md
 * **`-c`**, **`--config`**=*`<./.oxlintrc.json>`* —
   Oxlint configuration file
 
-- only `.json` extension is supported
+- `.json` config files are supported in all runtimes
+- JavaScript/TypeScript config files are experimental and require running via Node.js
 - you can use comments in configuration files.
 - tries to be compatible with ESLint v8's format
 
@@ -68265,6 +69069,67 @@ Arguments:
   Enable rules that require type information
 * **`    --type-check`** —
   Enable experimental type checking (includes TypeScript compiler diagnostics)
+* **`-h`**, **`--help`** —
+  Prints help information
+* **`-V`**, **`--version`** —
+  Prints version information
+
+---
+
+---
+url: /docs/guide/usage/formatter/generated-cli.md
+---
+
+## Usage
+
+**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
+
+## Mode Options:
+
+* **`    --init`** —
+  Initialize `.oxfmtrc.json` with default values
+* **`    --migrate`**=*`SOURCE`* —
+  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
+* **`    --lsp`** —
+  Start language server protocol (LSP) server
+* **`    --stdin-filepath`**=*`PATH`* —
+  Specify the file name to use to infer which parser to use
+
+## Output Options:
+
+* **`    --write`** —
+  Format and write files in place (default)
+* **`    --check`** —
+  Check if files are formatted, also show statistics
+* **`    --list-different`** —
+  List files that would be changed
+
+## Config Options
+
+* **`-c`**, **`--config`**=*`PATH`* —
+  Path to the configuration file
+
+## Ignore Options
+
+* **`    --ignore-path`**=*`PATH`* —
+  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
+* **`    --with-node-modules`** —
+  Format code in node\_modules directory (skipped by default)
+
+## Runtime Options
+
+* **`    --no-error-on-unmatched-pattern`** —
+  Do not exit with error when pattern is unmatched
+* **`    --threads`**=*`INT`* —
+  Number of threads to use. Set to 1 for using only 1 CPU core.
+
+## Available positional items:
+
+* *`PATH`* —
+  Single file, path or list of paths. Glob patterns are also supported. (Be sure to quote them, otherwise your shell may expand them before passing.) Exclude patterns with `!` prefix like `'!**/fixtures/*.js'` are also supported. If not provided, current working directory is used.
+
+## Available options:
+
 * **`-h`**, **`--help`** —
   Prints help information
 * **`-V`**, **`--version`** —

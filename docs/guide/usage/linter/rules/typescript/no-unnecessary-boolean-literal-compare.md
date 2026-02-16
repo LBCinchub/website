@@ -79,15 +79,6 @@ default: `true`
 Whether to allow comparing nullable boolean expressions to `true`.
 When false, `x === true` where x is `boolean | null` will be flagged.
 
-### allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing
-
-type: `boolean`
-
-default: `false`
-
-Whether to allow this rule to run without `strictNullChecks` enabled.
-This is not recommended as the rule may produce incorrect results.
-
 ## How to use
 
 To **enable** this rule using the config file or in the CLI, you can use:

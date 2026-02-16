@@ -13,7 +13,8 @@ url: /docs/guide/usage/linter/cli.md
 * **`-c`**, **`--config`**=*`<./.oxlintrc.json>`* —
   Oxlint configuration file
 
-- only `.json` extension is supported
+- `.json` config files are supported in all runtimes
+- JavaScript/TypeScript config files are experimental and require running via Node.js
 - you can use comments in configuration files.
 - tries to be compatible with ESLint v8's format
 

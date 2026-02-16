@@ -136,15 +136,6 @@ default: `true`
 
 Whether to allow number types in boolean contexts (checks for non-zero numbers).
 
-### allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing
-
-type: `boolean`
-
-default: `false`
-
-Whether to allow this rule to run without `strictNullChecks` enabled.
-This is not recommended as the rule may produce incorrect results.
-
 ### allowString
 
 type: `boolean`

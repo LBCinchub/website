@@ -1,0 +1,1 @@
+import{p as e}from"./client.BJo-vZbz.js";const t=e;export{t};
