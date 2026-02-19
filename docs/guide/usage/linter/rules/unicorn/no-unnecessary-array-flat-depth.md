@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/unicorn/no-unnecessary-array-flat-depth.md
 
 ### What it does
 
-Disallows passing `1` to `Array.prototype.flat`
+Disallows passing `1` to `Array.prototype.flat`.
 
 ### Why is this bad?
 
