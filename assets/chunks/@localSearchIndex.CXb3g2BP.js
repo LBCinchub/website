@@ -1,0 +1,1 @@
+import{t as e}from"./preload-helper.eOPNl-IY.js";var t={root:()=>e(()=>import(`./@localSearchIndexroot.CVa-3Oxa.js`),[])};export{t as default};
