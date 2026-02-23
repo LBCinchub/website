@@ -415,9 +415,9 @@
 - [Oxlint Configuration File](/docs/guide/usage/linter/config-file-reference.md)
 - [Oxlint Configuration File](/docs/guide/usage/linter/generated-config.md)
 - [Parser](/docs/contribute/parser.md)
+- [Parser](/docs/learn/architecture/parser.md)
 - [Parser](/docs/guide/usage/parser.md)
 - [Parser](/docs/learn/parser_in_rust/parser.md)
-- [Parser](/docs/learn/architecture/parser.md)
 - [Performance](/docs/learn/performance.md)
 - [PR Rules and Policies](/docs/contribute/rules.md)
 - [Profiling](/docs/contribute/profiling.md)
@@ -438,8 +438,8 @@
 - [promise/prefer-catch](/docs/guide/usage/linter/rules/promise/prefer-catch.md)
 - [promise/spec-only](/docs/guide/usage/linter/rules/promise/spec-only.md)
 - [promise/valid-params](/docs/guide/usage/linter/rules/promise/valid-params.md)
-- [Quickstart](/docs/guide/usage/linter/quickstart.md): Install Oxlint and learn the common workflows.
 - [Quickstart](/docs/guide/usage/formatter/quickstart.md): Install Oxfmt and learn the common workflows.
+- [Quickstart](/docs/guide/usage/linter/quickstart.md): Install Oxlint and learn the common workflows.
 - [react-perf/jsx-no-jsx-as-prop](/docs/guide/usage/linter/rules/react_perf/jsx-no-jsx-as-prop.md)
 - [react-perf/jsx-no-new-array-as-prop](/docs/guide/usage/linter/rules/react_perf/jsx-no-new-array-as-prop.md)
 - [react-perf/jsx-no-new-function-as-prop](/docs/guide/usage/linter/rules/react_perf/jsx-no-new-function-as-prop.md)
@@ -716,6 +716,7 @@
 - [unicorn/prefer-math-trunc](/docs/guide/usage/linter/rules/unicorn/prefer-math-trunc.md)
 - [unicorn/prefer-modern-dom-apis](/docs/guide/usage/linter/rules/unicorn/prefer-modern-dom-apis.md)
 - [unicorn/prefer-modern-math-apis](/docs/guide/usage/linter/rules/unicorn/prefer-modern-math-apis.md)
+- [unicorn/prefer-module](/docs/guide/usage/linter/rules/unicorn/prefer-module.md)
 - [unicorn/prefer-native-coercion-functions](/docs/guide/usage/linter/rules/unicorn/prefer-native-coercion-functions.md)
 - [unicorn/prefer-negative-index](/docs/guide/usage/linter/rules/unicorn/prefer-negative-index.md)
 - [unicorn/prefer-node-protocol](/docs/guide/usage/linter/rules/unicorn/prefer-node-protocol.md)
@@ -736,6 +737,7 @@
 - [unicorn/prefer-string-starts-ends-with](/docs/guide/usage/linter/rules/unicorn/prefer-string-starts-ends-with.md)
 - [unicorn/prefer-string-trim-start-end](/docs/guide/usage/linter/rules/unicorn/prefer-string-trim-start-end.md)
 - [unicorn/prefer-structured-clone](/docs/guide/usage/linter/rules/unicorn/prefer-structured-clone.md)
+- [unicorn/prefer-ternary](/docs/guide/usage/linter/rules/unicorn/prefer-ternary.md)
 - [unicorn/prefer-top-level-await](/docs/guide/usage/linter/rules/unicorn/prefer-top-level-await.md)
 - [unicorn/prefer-type-error](/docs/guide/usage/linter/rules/unicorn/prefer-type-error.md)
 - [unicorn/relative-url-style](/docs/guide/usage/linter/rules/unicorn/relative-url-style.md)
