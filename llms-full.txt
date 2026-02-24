@@ -1505,69 +1505,6 @@ import styled from "styled-components/primitives";
 ---
 
 ---
-url: /docs/guide/usage/formatter/cli.md
----
-
-# Command-line Interface
-
-## Usage
-
-**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
-
-## Mode Options:
-
-* **`    --init`** —
-  Initialize `.oxfmtrc.json` with default values
-* **`    --migrate`**=*`SOURCE`* —
-  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
-* **`    --lsp`** —
-  Start language server protocol (LSP) server
-* **`    --stdin-filepath`**=*`PATH`* —
-  Specify the file name to use to infer which parser to use
-
-## Output Options:
-
-* **`    --write`** —
-  Format and write files in place (default)
-* **`    --check`** —
-  Check if files are formatted, also show statistics
-* **`    --list-different`** —
-  List files that would be changed
-
-## Config Options
-
-* **`-c`**, **`--config`**=*`PATH`* —
-  Path to the configuration file
-
-## Ignore Options
-
-* **`    --ignore-path`**=*`PATH`* —
-  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
-* **`    --with-node-modules`** —
-  Format code in node\_modules directory (skipped by default)
-
-## Runtime Options
-
-* **`    --no-error-on-unmatched-pattern`** —
-  Do not exit with error when pattern is unmatched
-* **`    --threads`**=*`INT`* —
-  Number of threads to use. Set to 1 for using only 1 CPU core.
-
-## Available positional items:
-
-* *`PATH`* —
-  Single file, path or list of paths. Glob patterns are also supported. (Be sure to quote them, otherwise your shell may expand them before passing.) Exclude patterns with `!` prefix like `'!**/fixtures/*.js'` are also supported. If not provided, current working directory is used.
-
-## Available options:
-
-* **`-h`**, **`--help`** —
-  Prints help information
-* **`-V`**, **`--version`** —
-  Prints version information
-
----
-
----
 url: /docs/guide/usage/linter/cli.md
 ---
 
@@ -1719,6 +1656,69 @@ Arguments:
   Enable rules that require type information
 * **`    --type-check`** —
   Enable experimental type checking (includes TypeScript compiler diagnostics)
+* **`-h`**, **`--help`** —
+  Prints help information
+* **`-V`**, **`--version`** —
+  Prints version information
+
+---
+
+---
+url: /docs/guide/usage/formatter/cli.md
+---
+
+# Command-line Interface
+
+## Usage
+
+**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
+
+## Mode Options:
+
+* **`    --init`** —
+  Initialize `.oxfmtrc.json` with default values
+* **`    --migrate`**=*`SOURCE`* —
+  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
+* **`    --lsp`** —
+  Start language server protocol (LSP) server
+* **`    --stdin-filepath`**=*`PATH`* —
+  Specify the file name to use to infer which parser to use
+
+## Output Options:
+
+* **`    --write`** —
+  Format and write files in place (default)
+* **`    --check`** —
+  Check if files are formatted, also show statistics
+* **`    --list-different`** —
+  List files that would be changed
+
+## Config Options
+
+* **`-c`**, **`--config`**=*`PATH`* —
+  Path to the configuration file
+
+## Ignore Options
+
+* **`    --ignore-path`**=*`PATH`* —
+  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
+* **`    --with-node-modules`** —
+  Format code in node\_modules directory (skipped by default)
+
+## Runtime Options
+
+* **`    --no-error-on-unmatched-pattern`** —
+  Do not exit with error when pattern is unmatched
+* **`    --threads`**=*`INT`* —
+  Number of threads to use. Set to 1 for using only 1 CPU core.
+
+## Available positional items:
+
+* *`PATH`* —
+  Single file, path or list of paths. Glob patterns are also supported. (Be sure to quote them, otherwise your shell may expand them before passing.) Exclude patterns with `!` prefix like `'!**/fixtures/*.js'` are also supported. If not provided, current working directory is used.
+
+## Available options:
+
 * **`-h`**, **`--help`** —
   Prints help information
 * **`-V`**, **`--version`** —
@@ -35688,60 +35688,6 @@ If you no longer use Prettier, you can optionally move its contents from `.prett
 ---
 
 ---
-url: /docs/guide/usage/minifier.md
----
-# Minifier
-
-::: tip
-`oxc-minify` is currently in alpha and may still have bugs.
-We recommend thoroughly testing its output before deploying to production environments.
-:::
-
-## Features
-
-* [Eliminate dead code.](./minifier/dead-code-elimination)
-* [Transforms syntaxes to make the output shorter and repetitive.](./minifier/syntax-normalization)
-* [Mangle variable names.](./minifier/mangling)
-* [Remove whitespace and comments.](./minifier/whitespace-stripping)
-
-## Assumptions
-
-To allow better optimizations, Oxc minifier makes some assumptions about your code. See [Assumptions document](https://github.com/oxc-project/oxc/blob/main/crates/oxc_minifier/docs/ASSUMPTIONS.md) for more information.
-
-## FAQ
-
-See [FAQ](./minifier/faq) for common questions.
-
-## Installation
-
-### With Rolldown
-
-If you are using [Rolldown][url-rolldown], `oxc-minify` will be used for minification by default. No extra installation is required.
-
-### Node.js
-
-* Use the node binding [oxc-minify][url-oxc-minify-npm].
-* Try on [stackblitz](https://stackblitz.com/edit/oxc-minify).
-
-### Rust
-
-Use the umbrella crate [oxc][url-oxc-crate] with the `minifier` feature.
-
-Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_minifier/examples/minifier.rs).
-
-## Integrations
-
-* [`unplugin-oxc`](https://github.com/unplugin/unplugin-oxc)
-
-[url-oxc-crate]: https://docs.rs/oxc
-
-[url-oxc-minify-npm]: https://www.npmjs.com/package/oxc-minify
-
-[url-rolldown]: https://rolldown.rs
-
----
-
----
 url: /docs/contribute/minifier.md
 ---
 
@@ -35830,6 +35776,60 @@ Key strategies for maintaining performance:
 [esbuild]: https://github.com/evanw/esbuild
 
 [tdewolff-minify]: https://github.com/tdewolff/minify
+
+---
+
+---
+url: /docs/guide/usage/minifier.md
+---
+# Minifier
+
+::: tip
+`oxc-minify` is currently in alpha and may still have bugs.
+We recommend thoroughly testing its output before deploying to production environments.
+:::
+
+## Features
+
+* [Eliminate dead code.](./minifier/dead-code-elimination)
+* [Transforms syntaxes to make the output shorter and repetitive.](./minifier/syntax-normalization)
+* [Mangle variable names.](./minifier/mangling)
+* [Remove whitespace and comments.](./minifier/whitespace-stripping)
+
+## Assumptions
+
+To allow better optimizations, Oxc minifier makes some assumptions about your code. See [Assumptions document](https://github.com/oxc-project/oxc/blob/main/crates/oxc_minifier/docs/ASSUMPTIONS.md) for more information.
+
+## FAQ
+
+See [FAQ](./minifier/faq) for common questions.
+
+## Installation
+
+### With Rolldown
+
+If you are using [Rolldown][url-rolldown], `oxc-minify` will be used for minification by default. No extra installation is required.
+
+### Node.js
+
+* Use the node binding [oxc-minify][url-oxc-minify-npm].
+* Try on [stackblitz](https://stackblitz.com/edit/oxc-minify).
+
+### Rust
+
+Use the umbrella crate [oxc][url-oxc-crate] with the `minifier` feature.
+
+Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_minifier/examples/minifier.rs).
+
+## Integrations
+
+* [`unplugin-oxc`](https://github.com/unplugin/unplugin-oxc)
+
+[url-oxc-crate]: https://docs.rs/oxc
+
+[url-oxc-minify-npm]: https://www.npmjs.com/package/oxc-minify
+
+[url-rolldown]: https://rolldown.rs
 
 ---
 
@@ -40105,13 +40105,6 @@ url: /docs/guide/usage/formatter.md
 
 Oxfmt (`/oʊ-ɛks-fɔːr-mæt/`) is a high-performance formatter for the JavaScript ecosystem.
 
-:::info
-Oxfmt is currently in alpha. Please join the discussion!
-
-[RFC: Formatter · oxc-project/oxc · Discussion #13608](https://github.com/oxc-project/oxc/discussions/13608)
-
-:::
-
 ## Supported languages
 
 JavaScript, JSX, TypeScript, TSX, JSON, JSONC, JSON5, YAML, TOML, HTML, Angular, Vue, CSS, SCSS, Less, Markdown, MDX, GraphQL, Ember, Handlebars
@@ -41695,6 +41688,115 @@ to accommodate TypeScript type checking scenarios.
 ---
 
 ---
+url: /docs/contribute/parser.md
+---
+
+# Parser
+
+The Oxc parser is designed to be the fastest and most conformant JavaScript and TypeScript parser available. Contributing to the parser requires understanding both the implementation details and the extensive test infrastructure.
+
+## Architecture Overview
+
+The parser follows a traditional compiler frontend architecture:
+
+```
+Source Text → Lexer → Tokens → Parser → AST
+```
+
+### Key Components
+
+* **Lexer**: Tokenizes source text into structured tokens
+* **Parser**: Recursive descent parser that builds the AST
+* **AST**: Memory-efficient abstract syntax tree
+* **Error Recovery**: Advanced error handling and recovery
+* **Semantic Analysis**: Symbol resolution and scope management
+
+### Design Goals
+
+We aim to be the fastest Rust-based ready-for-production parser with:
+
+* **Speed**: 3x faster than SWC, 5x faster than Biome
+* **Conformance**: 100% Test262 compliance, 99%+ Babel/TypeScript compatibility
+* **Memory Efficiency**: Arena-based allocation, minimal heap usage
+* **Error Quality**: Helpful error messages with recovery
+
+## Development Workflow
+
+### Setting Up
+
+```bash
+# Run parser tests
+cargo test -p oxc_parser
+
+# Run conformance tests
+just c  # or `just coverage`
+```
+
+### Project Structure
+
+```
+crates/oxc_parser/
+├── src/
+│   ├── lib.rs              # Public API
+│   ├── lexer/              # Tokenization
+│   ├── parser/             # Parsing logic
+│   ├── cursor.rs           # Token stream management
+│   └── diagnostics.rs      # Error handling
+├── tests/                  # Unit tests
+└── examples/               # Usage examples
+```
+
+### Core Parser Files
+
+* **`parser/mod.rs`**: Main parser entry point
+* **`parser/statement.rs`**: Statement parsing
+* **`parser/expression.rs`**: Expression parsing
+* **`parser/typescript.rs`**: TypeScript-specific parsing
+* **`parser/jsx.rs`**: JSX parsing logic
+
+## Conformance Testing
+
+### Running Conformance Tests
+
+```bash
+just c
+```
+
+This runs conformance test suites using the runner in [tasks/coverage](https://github.com/oxc-project/oxc/tree/main/tasks/coverage):
+
+### Test262 - ECMAScript Conformance
+
+JavaScript has the [ECMAScript Test Suite](https://github.com/tc39/test262) called Test262.
+The goal of Test262 is to provide test material that covers every observable behavior specified in the specification.
+
+Parser conformance uses the [parse phase tests](https://github.com/tc39/test262/blob/main/INTERPRETING.md#negative).
+
+**Current Status**: `43765/43765 (100.00%)`
+
+### Babel Parser Tests
+
+When new language features are added to JavaScript, Babel implements them first.
+Babel has comprehensive [parser tests](https://github.com/babel/babel/tree/main/packages/babel-parser/test) for cutting-edge features.
+
+**Current Status**: `2093/2101 (99.62%)`
+
+### TypeScript Conformance
+
+The TypeScript conformance tests can be found [here](https://github.com/microsoft/TypeScript/tree/main/tests/cases/conformance).
+
+**Current Status**: `6470/6479 (99.86%)`
+
+### Viewing Results
+
+Test results are stored in snapshot files for tracking changes:
+
+* [`parser_test262.snap`](https://github.com/oxc-project/oxc/blob/main/tasks/coverage/snapshots/parser_test262.snap)
+* [`parser_babel.snap`](https://github.com/oxc-project/oxc/blob/main/tasks/coverage/snapshots/parser_babel.snap)
+* [`parser_typescript.snap`](https://github.com/oxc-project/oxc/blob/main/tasks/coverage/snapshots/parser_typescript.snap)
+
+---
+
+---
 url: /docs/guide/usage/parser.md
 ---
 
@@ -42344,115 +42446,6 @@ function isParenthesizedArrowFunctionExpression(): Tristate {
 ```
 
 In summary, the TypeScript parser uses a combination of lookahead (fast path) and backtracking to parse arrow functions.
-
----
-
----
-url: /docs/contribute/parser.md
----
-
-# Parser
-
-The Oxc parser is designed to be the fastest and most conformant JavaScript and TypeScript parser available. Contributing to the parser requires understanding both the implementation details and the extensive test infrastructure.
-
-## Architecture Overview
-
-The parser follows a traditional compiler frontend architecture:
-
-```
-Source Text → Lexer → Tokens → Parser → AST
-```
-
-### Key Components
-
-* **Lexer**: Tokenizes source text into structured tokens
-* **Parser**: Recursive descent parser that builds the AST
-* **AST**: Memory-efficient abstract syntax tree
-* **Error Recovery**: Advanced error handling and recovery
-* **Semantic Analysis**: Symbol resolution and scope management
-
-### Design Goals
-
-We aim to be the fastest Rust-based ready-for-production parser with:
-
-* **Speed**: 3x faster than SWC, 5x faster than Biome
-* **Conformance**: 100% Test262 compliance, 99%+ Babel/TypeScript compatibility
-* **Memory Efficiency**: Arena-based allocation, minimal heap usage
-* **Error Quality**: Helpful error messages with recovery
-
-## Development Workflow
-
-### Setting Up
-
-```bash
-# Run parser tests
-cargo test -p oxc_parser
-
-# Run conformance tests
-just c  # or `just coverage`
-```
-
-### Project Structure
-
-```
-crates/oxc_parser/
-├── src/
-│   ├── lib.rs              # Public API
-│   ├── lexer/              # Tokenization
-│   ├── parser/             # Parsing logic
-│   ├── cursor.rs           # Token stream management
-│   └── diagnostics.rs      # Error handling
-├── tests/                  # Unit tests
-└── examples/               # Usage examples
-```
-
-### Core Parser Files
-
-* **`parser/mod.rs`**: Main parser entry point
-* **`parser/statement.rs`**: Statement parsing
-* **`parser/expression.rs`**: Expression parsing
-* **`parser/typescript.rs`**: TypeScript-specific parsing
-* **`parser/jsx.rs`**: JSX parsing logic
-
-## Conformance Testing
-
-### Running Conformance Tests
-
-```bash
-just c
-```
-
-This runs conformance test suites using the runner in [tasks/coverage](https://github.com/oxc-project/oxc/tree/main/tasks/coverage):
-
-### Test262 - ECMAScript Conformance
-
-JavaScript has the [ECMAScript Test Suite](https://github.com/tc39/test262) called Test262.
-The goal of Test262 is to provide test material that covers every observable behavior specified in the specification.
-
-Parser conformance uses the [parse phase tests](https://github.com/tc39/test262/blob/main/INTERPRETING.md#negative).
-
-**Current Status**: `43765/43765 (100.00%)`
-
-### Babel Parser Tests
-
-When new language features are added to JavaScript, Babel implements them first.
-Babel has comprehensive [parser tests](https://github.com/babel/babel/tree/main/packages/babel-parser/test) for cutting-edge features.
-
-**Current Status**: `2093/2101 (99.62%)`
-
-### TypeScript Conformance
-
-The TypeScript conformance tests can be found [here](https://github.com/microsoft/TypeScript/tree/main/tests/cases/conformance).
-
-**Current Status**: `6470/6479 (99.86%)`
-
-### Viewing Results
-
-Test results are stored in snapshot files for tracking changes:
-
-* [`parser_test262.snap`](https://github.com/oxc-project/oxc/blob/main/tasks/coverage/snapshots/parser_test262.snap)
-* [`parser_babel.snap`](https://github.com/oxc-project/oxc/blob/main/tasks/coverage/snapshots/parser_babel.snap)
-* [`parser_typescript.snap`](https://github.com/oxc-project/oxc/blob/main/tasks/coverage/snapshots/parser_typescript.snap)
 
 ---
 
@@ -50569,130 +50562,6 @@ A Vite plugin is supported via a [third-party package](https://www.npmjs.com/pac
 ---
 
 ---
-url: /docs/guide/usage/linter/editors.md
-description: 'Configure Oxlint in VS Code, Zed, JetBrains, and other editors.'
----
-
-# Setup editors
-
-Editor extensions use `oxlint --lsp` from your project, so `oxlint` must be installed locally.
-
-See [Quickstart](./quickstart) to install Oxlint.
-
-## Supported editors
-
-* [VS Code](#vs-code) (and Cursor, etc.)
-* [Zed](#zed)
-* [JetBrains](#jetbrains)
-* [Neovim](#neovim)
-* [Other editors](#other-editors)
-
-## VS Code
-
-### Install
-
-Download the official Oxc VS Code extension from:
-
-* [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode)
-* [Open VSX Registry](https://open-vsx.org/extension/oxc/oxc-vscode)
-
-**The extension is compatible with other VS Code-based editors**, including Cursor.
-
-### Team setup
-
-1. Recommend the extension for contributors:
-
-`.vscode/extensions.json`:
-
-```json [.vscode/extensions.json]
-{
-  "recommendations": ["oxc.oxc-vscode"]
-}
-```
-
-2. Enable fix-on-save in `.vscode/settings.json`:
-
-```json [.vscode/settings.json]
-{
-  "editor.codeActionsOnSave": {
-    "source.fixAll.oxc": "always"
-  }
-}
-```
-
-3. Enable type-aware linting in `.vscode/settings.json`:
-
-```json [.vscode/settings.json]
-{
-  "oxc.typeAware": true
-}
-```
-
-You also need to ensure `oxlint-tsgolint` is installed in your project. See [the type-aware linting docs](/docs/guide/usage/linter/type-aware) for more details.
-
-### Reference
-
-* [oxc-project/oxc-vscode](https://github.com/oxc-project/oxc-vscode)
-
-## Zed
-
-### Install
-
-* [Oxc Zed Extension](https://zed.dev/extensions/oxc)
-
-### Reference
-
-* [oxc-project/oxc-zed](https://github.com/oxc-project/oxc-zed)
-
-## JetBrains
-
-IntelliJ IDEA and WebStorm.
-
-### Install
-
-* [Oxc in JetBrains Marketplace](https://plugins.jetbrains.com/plugin/27061-oxc)
-
-### Reference
-
-* [oxc-project/oxc-intellij-plugin](https://github.com/oxc-project/oxc-intellij-plugin)
-
-## Neovim
-
-### nvim-lspconfig
-
-```sh
-npm i -g oxlint
-```
-
-```lua
-vim.lsp.enable('oxlint')
-```
-
-* [nvim-lspconfig: oxlint](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#oxlint)
-
-### coc.nvim
-
-```vim
-:CocInstall coc-oxc
-```
-
-* [oxc-project/coc-oxc](https://github.com/oxc-project/coc-oxc)
-
-## Other editors
-
-For editors with LSP support (Emacs, Helix, Sublime), configure:
-
-```bash
-oxlint --lsp
-```
-
-## Reference
-
-* [oxc\_language\_server](https://github.com/oxc-project/oxc/tree/main/crates/oxc_language_server)
-
----
-
----
 url: /docs/guide/usage/formatter/editors.md
 description: 'Configure Oxfmt in VS Code, Zed, JetBrains, and other editors.'
 ---
@@ -50836,6 +50705,130 @@ Or, for editors without LSP support:
 
 ```sh
 cat foo/bar.js | oxfmt --stdin-filepath dummy.js --config ./path/to/config.json
+```
+
+## Reference
+
+* [oxc\_language\_server](https://github.com/oxc-project/oxc/tree/main/crates/oxc_language_server)
+
+---
+
+---
+url: /docs/guide/usage/linter/editors.md
+description: 'Configure Oxlint in VS Code, Zed, JetBrains, and other editors.'
+---
+
+# Setup editors
+
+Editor extensions use `oxlint --lsp` from your project, so `oxlint` must be installed locally.
+
+See [Quickstart](./quickstart) to install Oxlint.
+
+## Supported editors
+
+* [VS Code](#vs-code) (and Cursor, etc.)
+* [Zed](#zed)
+* [JetBrains](#jetbrains)
+* [Neovim](#neovim)
+* [Other editors](#other-editors)
+
+## VS Code
+
+### Install
+
+Download the official Oxc VS Code extension from:
+
+* [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode)
+* [Open VSX Registry](https://open-vsx.org/extension/oxc/oxc-vscode)
+
+**The extension is compatible with other VS Code-based editors**, including Cursor.
+
+### Team setup
+
+1. Recommend the extension for contributors:
+
+`.vscode/extensions.json`:
+
+```json [.vscode/extensions.json]
+{
+  "recommendations": ["oxc.oxc-vscode"]
+}
+```
+
+2. Enable fix-on-save in `.vscode/settings.json`:
+
+```json [.vscode/settings.json]
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "always"
+  }
+}
+```
+
+3. Enable type-aware linting in `.vscode/settings.json`:
+
+```json [.vscode/settings.json]
+{
+  "oxc.typeAware": true
+}
+```
+
+You also need to ensure `oxlint-tsgolint` is installed in your project. See [the type-aware linting docs](/docs/guide/usage/linter/type-aware) for more details.
+
+### Reference
+
+* [oxc-project/oxc-vscode](https://github.com/oxc-project/oxc-vscode)
+
+## Zed
+
+### Install
+
+* [Oxc Zed Extension](https://zed.dev/extensions/oxc)
+
+### Reference
+
+* [oxc-project/oxc-zed](https://github.com/oxc-project/oxc-zed)
+
+## JetBrains
+
+IntelliJ IDEA and WebStorm.
+
+### Install
+
+* [Oxc in JetBrains Marketplace](https://plugins.jetbrains.com/plugin/27061-oxc)
+
+### Reference
+
+* [oxc-project/oxc-intellij-plugin](https://github.com/oxc-project/oxc-intellij-plugin)
+
+## Neovim
+
+### nvim-lspconfig
+
+```sh
+npm i -g oxlint
+```
+
+```lua
+vim.lsp.enable('oxlint')
+```
+
+* [nvim-lspconfig: oxlint](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#oxlint)
+
+### coc.nvim
+
+```vim
+:CocInstall coc-oxc
+```
+
+* [oxc-project/coc-oxc](https://github.com/oxc-project/coc-oxc)
+
+## Other editors
+
+For editors with LSP support (Emacs, Helix, Sublime), configure:
+
+```bash
+oxlint --lsp
 ```
 
 ## Reference

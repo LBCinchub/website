@@ -6,13 +6,6 @@ url: /docs/guide/usage/formatter.md
 
 Oxfmt (`/oʊ-ɛks-fɔːr-mæt/`) is a high-performance formatter for the JavaScript ecosystem.
 
-:::info
-Oxfmt is currently in alpha. Please join the discussion!
-
-[RFC: Formatter · oxc-project/oxc · Discussion #13608](https://github.com/oxc-project/oxc/discussions/13608)
-
-:::
-
 ## Supported languages
 
 JavaScript, JSX, TypeScript, TSX, JSON, JSONC, JSON5, YAML, TOML, HTML, Angular, Vue, CSS, SCSS, Less, Markdown, MDX, GraphQL, Ember, Handlebars
