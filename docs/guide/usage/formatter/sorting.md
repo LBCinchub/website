@@ -13,10 +13,6 @@ See [Configuration file reference](./config-file-reference) for full details.
 
 ## Sort imports
 
-:::warning
-For progress, see [tracking issue](https://github.com/oxc-project/oxc/issues/14253).
-:::
-
 Based on [eslint-plugin-perfectionist/sort-imports](https://perfectionist.dev/rules/sort-imports).
 
 Disabled by default.
@@ -27,7 +23,7 @@ The same order as `eslint-plugin-perfectionist/sort-imports` default.
 
 ```json [.oxfmtrc.json]
 {
-  "experimentalSortImports": {
+  "sortImports": {
     "groups": [
       "type-import",
       ["value-builtin", "value-external"],
@@ -45,13 +41,35 @@ Use `"newlinesBetween": false` at the top level to disable newlines between grou
 
 ```json [.oxfmtrc.json]
 {
-  "experimentalSortImports": {
+  "sortImports": {
     "newlinesBetween": false,
     "groups": [
       ["value-builtin", "value-external"],
       ["value-internal", "value-parent", "value-sibling", "value-index"],
       { "newlinesBetween": true },
       "type-import",
+      "unknown"
+    ]
+  }
+}
+```
+
+Use `customGroups` to define your own groups for matching specific imports. Each custom group has a `groupName` that can be referenced in `groups`. The `elementNamePattern` accepts glob patterns to match import sources.
+
+```json [.oxfmtrc.json]
+{
+  "sortImports": {
+    "customGroups": [
+      {
+        "groupName": "react-libs",
+        "elementNamePattern": ["react", "react-**"]
+      }
+    ],
+    "groups": [
+      "react-libs",
+      ["value-builtin", "value-external"],
+      "value-internal",
+      ["value-parent", "value-sibling", "value-index"],
       "unknown"
     ]
   }
@@ -70,7 +88,7 @@ Disabled by default.
 
 ```json [.oxfmtrc.json]
 {
-  "experimentalTailwindcss": {
+  "sortTailwindcss": {
     "stylesheet": "./path/to/stylesheet.css",
     "functions": ["clsx", "cn"],
     "preserveWhitespace": true
@@ -94,7 +112,7 @@ To disable:
 
 ```json [.oxfmtrc.json]
 {
-  "experimentalSortPackageJson": false
+  "sortPackageJson": false
 }
 ```
 
@@ -102,7 +120,7 @@ To sort `scripts` alphabetically:
 
 ```json [.oxfmtrc.json]
 {
-  "experimentalSortPackageJson": {
+  "sortPackageJson": {
     "sortScripts": true
   }
 }
