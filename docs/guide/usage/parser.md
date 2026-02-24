@@ -31,7 +31,7 @@ Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/m
 
 After parsing and transforming, you can print code.
 
-Here's a direct example using [esrap](https://www.npmjs.com/package/esrap) *(`parse` in reverse!)*:
+Here's a direct example using [esrap](https://npmx.dev/package/esrap) *(`parse` in reverse!)*:
 
 ```js
 import { print } from "esrap";
@@ -58,4 +58,4 @@ Today, comments are not printed. *It will be supported thanks to [oxc-parser #13
 
 [url-oxc-parser-crate]: https://docs.rs/oxc_parser
 
-[url-oxc-parser-npm]: https://www.npmjs.com/package/oxc-parser
+[url-oxc-parser-npm]: https://npmx.dev/package/oxc-parser

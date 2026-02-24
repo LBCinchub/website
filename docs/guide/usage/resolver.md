@@ -27,6 +27,6 @@ See [https://crates.io/crates/oxc\_resolver][url-oxc-resolver-crate] and its doc
 
 [url-oxc-resolver-docs]: https://docs.rs/oxc_resolver
 
-[url-oxc-resolver-npm]: https://www.npmjs.com/package/oxc-resolver
+[url-oxc-resolver-npm]: https://npmx.dev/package/oxc-resolver
 
 [url-enhanced-resolve]: https://github.com/webpack/enhanced-resolve

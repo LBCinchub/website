@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://oxc.rs</id>
     <title>The Oxidation Compiler Blog</title>
-    <updated>2026-02-24T04:22:07.068Z</updated>
+    <updated>2026-02-24T07:30:44.134Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://oxc.rs"/>
     <icon>https://cdn.jsdelivr.net/gh/oxc-project/oxc-assets/square.ico</icon>
@@ -268,9 +268,9 @@ you may consider <a href="https://github.com/sponsors/Boshen" target="_blank" re
 <li>TS isolated declarations <code>.d.ts</code> emit: Oxc is 40x faster than TSC on typical files, 20x faster on larger files.</li>
 </ul>
 <h2 id="usage-examples" tabindex="-1">Usage Examples <a class="header-anchor" href="#usage-examples" aria-label="Permalink to “Usage Examples”">&#8203;</a></h2>
-<h3 id="oxc-transform-npm-package" tabindex="-1"><a href="https://www.npmjs.com/package/oxc-transform" target="_blank" rel="noreferrer"><code>oxc-transform</code></a> npm package <a class="header-anchor" href="#oxc-transform-npm-package" aria-label="Permalink to “oxc-transform npm package”">&#8203;</a></h3>
+<h3 id="oxc-transform-npm-package" tabindex="-1"><a href="https://npmx.dev/package/oxc-transform" target="_blank" rel="noreferrer"><code>oxc-transform</code></a> npm package <a class="header-anchor" href="#oxc-transform-npm-package" aria-label="Permalink to “oxc-transform npm package”">&#8203;</a></h3>
 <p>Vue.js is currently <a href="https://github.com/vuejs/core/blob/0895b2624b707ea1e75c41f2e1f75388e7a6f101/scripts/build-types.js#L20" target="_blank" rel="noreferrer">experimenting</a>
-the <a href="https://www.npmjs.com/package/oxc-transform" target="_blank" rel="noreferrer"><code>oxc-transform</code></a> npm package for isolated declarations in its build pipeline:</p>
+the <a href="https://npmx.dev/package/oxc-transform" target="_blank" rel="noreferrer"><code>oxc-transform</code></a> npm package for isolated declarations in its build pipeline:</p>
 <div class="language-javascript"><button title="Copy Code" class="copy"></button><span class="lang">javascript</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">import</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> { isolatedDeclaration } </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">from</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "oxc-transform"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
 <span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> dts</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> isolatedDeclaration</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(filename, ts);</span></span></code></pre>
 </div><p><a href="https://github.com/lukeed" target="_blank" rel="noreferrer">@lukeed</a> and <a href="https://github.com/maraisr" target="_blank" rel="noreferrer">@maraisr</a> are utilizing <code>oxc-transform</code>
@@ -321,9 +321,9 @@ and the benchmarks are shown in its <a href="https://github.com/oxc-project/benc
 <li>TS isolated declarations <code>.d.ts</code> emit: Oxc is 40x faster than TSC on typical files, 20x faster on larger files.</li>
 </ul>
 <h2 id="usage-examples" tabindex="-1">Usage Examples <a class="header-anchor" href="#usage-examples" aria-label="Permalink to “Usage Examples”">&#8203;</a></h2>
-<h3 id="oxc-transform-npm-package" tabindex="-1"><a href="https://www.npmjs.com/package/oxc-transform" target="_blank" rel="noreferrer"><code>oxc-transform</code></a> npm package <a class="header-anchor" href="#oxc-transform-npm-package" aria-label="Permalink to “oxc-transform npm package”">&#8203;</a></h3>
+<h3 id="oxc-transform-npm-package" tabindex="-1"><a href="https://npmx.dev/package/oxc-transform" target="_blank" rel="noreferrer"><code>oxc-transform</code></a> npm package <a class="header-anchor" href="#oxc-transform-npm-package" aria-label="Permalink to “oxc-transform npm package”">&#8203;</a></h3>
 <p>Vue.js is currently <a href="https://github.com/vuejs/core/blob/0895b2624b707ea1e75c41f2e1f75388e7a6f101/scripts/build-types.js#L20" target="_blank" rel="noreferrer">experimenting</a>
-the <a href="https://www.npmjs.com/package/oxc-transform" target="_blank" rel="noreferrer"><code>oxc-transform</code></a> npm package for isolated declarations in its build pipeline:</p>
+the <a href="https://npmx.dev/package/oxc-transform" target="_blank" rel="noreferrer"><code>oxc-transform</code></a> npm package for isolated declarations in its build pipeline:</p>
 <div class="language-javascript"><button title="Copy Code" class="copy"></button><span class="lang">javascript</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">import</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> { isolatedDeclaration } </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">from</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "oxc-transform"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
 <span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> dts</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> isolatedDeclaration</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(filename, ts);</span></span></code></pre>
 </div><p><a href="https://github.com/lukeed" target="_blank" rel="noreferrer">@lukeed</a> and <a href="https://github.com/maraisr" target="_blank" rel="noreferrer">@maraisr</a> are utilizing <code>oxc-transform</code>
@@ -423,15 +423,15 @@ and the benchmarks are shown in its <a href="https://github.com/oxc-project/benc
 <tbody>
 <tr>
 <td><code>@oxc-transform/binding-darwin-arm64</code></td>
-<td><a href="https://www.npmjs.com/package/@oxc-transform/binding-darwin-arm64" target="_blank" rel="noreferrer">2.0 MB</a></td>
+<td><a href="https://npmx.dev/package/@oxc-transform/binding-darwin-arm64" target="_blank" rel="noreferrer">2.0 MB</a></td>
 </tr>
 <tr>
 <td><code>@swc/core-darwin-arm64</code></td>
-<td><a href="https://www.npmjs.com/package/@swc/core-darwin-arm64" target="_blank" rel="noreferrer">37.5 MB</a></td>
+<td><a href="https://npmx.dev/package/@swc/core-darwin-arm64" target="_blank" rel="noreferrer">37.5 MB</a></td>
 </tr>
 <tr>
 <td><code>@babel/core</code> + <code>@babel/preset-env</code> + <code>@babel/preset-react</code> + <code>@babel/preset-typescript</code></td>
-<td><a href="https://www.npmjs.com/package/@oxc-transform/binding-darwin-arm64" target="_blank" rel="noreferrer">21 MB and 170 packages</a></td>
+<td><a href="https://npmx.dev/package/@oxc-transform/binding-darwin-arm64" target="_blank" rel="noreferrer">21 MB and 170 packages</a></td>
 </tr>
 </tbody>
 </table>
@@ -588,17 +588,17 @@ with CLI arguments.</p>
         <link href="https://oxc.rs/blog/2025-03-13-minifier-alpha"/>
         <updated>2025-03-13T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[<AppBlogPostHeader /><br />
-<p>We are excited to announce an alpha release for <a href="https://www.npmjs.com/package/oxc-minify" target="_blank" rel="noreferrer"><code>oxc-minify</code></a>.</p>
+<p>We are excited to announce an alpha release for <a href="https://npmx.dev/package/oxc-minify" target="_blank" rel="noreferrer"><code>oxc-minify</code></a>.</p>
 <p>While lacking some advanced minification techniques,
 the current version already outperforms <code>esbuild</code> in terms of performance and compression size,
 as demonstrated by <a href="https://github.com/privatenumber/minification-benchmarks" target="_blank" rel="noreferrer">minification-benchmarks</a>.</p>
 <p>Comparing widely-used minifiers on <code>typescript.js</code>:</p>
 <div align="center">
-<p>| Artifact                                                                                                                               |                   Original size |                         Gzip size |                                   |
+<p>| Artifact                                                                                                                          |                   Original size |                         Gzip size |                                   |
 | :</p>
 ]]></summary>
         <content type="html"><![CDATA[<AppBlogPostHeader /><br />
-<p>We are excited to announce an alpha release for <a href="https://www.npmjs.com/package/oxc-minify" target="_blank" rel="noreferrer"><code>oxc-minify</code></a>.</p>
+<p>We are excited to announce an alpha release for <a href="https://npmx.dev/package/oxc-minify" target="_blank" rel="noreferrer"><code>oxc-minify</code></a>.</p>
 <p>While lacking some advanced minification techniques,
 the current version already outperforms <code>esbuild</code> in terms of performance and compression size,
 as demonstrated by <a href="https://github.com/privatenumber/minification-benchmarks" target="_blank" rel="noreferrer">minification-benchmarks</a>.</p>
@@ -615,7 +615,7 @@ as demonstrated by <a href="https://github.com/privatenumber/minification-benchm
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><a href="https://www.npmjs.com/package/typescript/v/4.9.5" target="_blank" rel="noreferrer">typescript v4.9.5</a> (<a href="https://unpkg.com/typescript@4.9.5/lib/typescript.js" target="_blank" rel="noreferrer">Source</a>)</td>
+<td style="text-align:left"><a href="https://npmx.dev/package/typescript/v/4.9.5" target="_blank" rel="noreferrer">typescript v4.9.5</a> (<a href="https://unpkg.com/typescript@4.9.5/lib/typescript.js" target="_blank" rel="noreferrer">Source</a>)</td>
 <td style="text-align:right"><code>10.95 MB</code></td>
 <td style="text-align:right"><code>1.88 MB</code></td>
 <td style="text-align:right"></td>
@@ -659,7 +659,7 @@ as demonstrated by <a href="https://github.com/privatenumber/minification-benchm
 </tbody>
 </table>
 </div>
-<h2 id="oxc-minify-usage-example" tabindex="-1"><a href="https://www.npmjs.com/package/oxc-minify" target="_blank" rel="noreferrer"><code>oxc-minify</code></a> Usage Example <a class="header-anchor" href="#oxc-minify-usage-example" aria-label="Permalink to “oxc-minify Usage Example”">&#8203;</a></h2>
+<h2 id="oxc-minify-usage-example" tabindex="-1"><a href="https://npmx.dev/package/oxc-minify" target="_blank" rel="noreferrer"><code>oxc-minify</code></a> Usage Example <a class="header-anchor" href="#oxc-minify-usage-example" aria-label="Permalink to “oxc-minify Usage Example”">&#8203;</a></h2>
 <div class="language-typescript"><button title="Copy Code" class="copy"></button><span class="lang">typescript</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">import</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> { minify } </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">from</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "oxc-minify"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
 <span class="line"></span>
 <span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> filename</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "test.js"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">;</span></span>
@@ -709,7 +709,7 @@ especially the advanced symbol minification algorithm which <code>esbuild</code>
 <p>This milestone represents a significant step forward in feature completeness, performance, and stability.</p>
 <h2 id="how-to-use" tabindex="-1">How to use <a class="header-anchor" href="#how-to-use" aria-label="Permalink to “How to use”">&#8203;</a></h2>
 <p>At this stage, Oxlint can be used to fully replace ESLint in small to medium projects.</p>
-<p>For larger projects, our advice is to turn off ESLint rules via <a href="https://www.npmjs.com/package/eslint-plugin-oxlint" target="_blank" rel="noreferrer">eslint-plugin-oxlint</a>,
+<p>For larger projects, our advice is to turn off ESLint rules via <a href="https://npmx.dev/package/eslint-plugin-oxlint" target="_blank" rel="noreferrer">eslint-plugin-oxlint</a>,
 and run Oxlint before ESLint in your local or CI setup for a quicker feedback loop.</p>
 <p>To test Oxlint in your codebase, you can use the package manager of your choice at the root of your codebase:</p>
 <table><tbody><tr><td>npm</td><td><div class="language-sh"><button title="Copy Code" class="copy"></button><span class="lang">sh</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;user-select:none;-webkit-user-select:none">$ </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">npx</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> oxlint@latest</span></span></code></pre>
@@ -741,7 +741,7 @@ and run Oxlint before ESLint in your local or CI setup for a quicker feedback lo
 <p>This milestone represents a significant step forward in feature completeness, performance, and stability.</p>
 <h2 id="how-to-use" tabindex="-1">How to use <a class="header-anchor" href="#how-to-use" aria-label="Permalink to “How to use”">&#8203;</a></h2>
 <p>At this stage, Oxlint can be used to fully replace ESLint in small to medium projects.</p>
-<p>For larger projects, our advice is to turn off ESLint rules via <a href="https://www.npmjs.com/package/eslint-plugin-oxlint" target="_blank" rel="noreferrer">eslint-plugin-oxlint</a>,
+<p>For larger projects, our advice is to turn off ESLint rules via <a href="https://npmx.dev/package/eslint-plugin-oxlint" target="_blank" rel="noreferrer">eslint-plugin-oxlint</a>,
 and run Oxlint before ESLint in your local or CI setup for a quicker feedback loop.</p>
 <p>To test Oxlint in your codebase, you can use the package manager of your choice at the root of your codebase:</p>
 <table><tbody><tr><td>npm</td><td><div class="language-sh"><button title="Copy Code" class="copy"></button><span class="lang">sh</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0;user-select:none;-webkit-user-select:none">$ </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">npx</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> oxlint@latest</span></span></code></pre>

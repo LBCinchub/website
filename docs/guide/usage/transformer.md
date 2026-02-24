@@ -32,4 +32,4 @@ Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/m
 
 [url-oxc-crate]: https://docs.rs/oxc
 
-[url-oxc-transform-npm]: https://www.npmjs.com/package/oxc-transform
+[url-oxc-transform-npm]: https://npmx.dev/package/oxc-transform
