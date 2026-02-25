@@ -4,7 +4,7 @@
         <title>The Oxidation Compiler Blog</title>
         <link>https://oxc.rs</link>
         <description></description>
-        <lastBuildDate>Tue, 24 Feb 2026 22:52:04 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 25 Feb 2026 03:41:19 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -118,13 +118,13 @@ or discuss on <a href="https://news.ycombinator.com/item?id=38652887" target="_b
             <link>https://oxc.rs/blog/2024-05-04-import-plugin-alpha</link>
             <guid isPermaLink="false">https://oxc.rs/blog/2024-05-04-import-plugin-alpha</guid>
             <pubDate>Sat, 04 May 2024 00:00:00 GMT</pubDate>
-            <description><![CDATA[<AppBlogPostHeader /><p>We are excited to announce an alpha release for <code>oxlint --import-plugin</code>, a port of <a href="https://github.com/import-js/eslint-plugin-import" target="_blank" rel="noreferrer"><code>eslint-plugin-import</code></a>.</p>
+            <description><![CDATA[<AppBlogPostHeader /><p>We are excited to announce an alpha release for <code>oxlint --import-plugin</code>, a port of <a href="https://npmx.dev/package/eslint-plugin-import" target="_blank" rel="noreferrer"><code>eslint-plugin-import</code></a>.</p>
 <p>This port aims to resolve all known issues associated with <code>eslint-plugin-import</code>:</p>
 <ul>
 <li>Performance - execution time exceeding one minute when certain rules are enabled</li>
 <li>Dependency size - 188 dependencies totaling 30M</li>
 <li>Backwards compatibility - the necessity to <a href="https://github.com/import-js/eslint-plugin-import/pull/2447#issuecomment-1117384140" target="_blank" rel="noreferrer">support Node.js v4.0.0</a></li>
-<li>Dependency compatibility - the need to replace it with <a href="https://github.com/un-ts/eslint-plugin-import-x" target="_blank" rel="noreferrer"><code>eslint-plugin-import-x</code></a></li>
+<li>Dependency compatibility - the need to replace it with <a href="https://npmx.dev/package/eslint-plugin-import-x" target="_blank" rel="noreferrer"><code>eslint-plugin-import-x</code></a></li>
 <li><a href="https://github.com/import-js/eslint-plugin-import/issues/2948" target="_blank" rel="noreferrer">Upgrading to ESLint v9</a></li>
 </ul>
 <h2 id="what-s-in-the-release" tabindex="-1">What's in the release? <a class="header-anchor" href="#what-s-in-the-release" aria-label="Permalink to “What's in the release?”">&#8203;</a></h2>
@@ -178,13 +178,13 @@ you may follow <a href="https://github.com/brooooooklyn" target="_blank" rel="no
 you may consider <a href="https://github.com/sponsors/Boshen" target="_blank" rel="noreferrer">sponsoring</a> so we can prioritize your project.</p>
 <p>Please remember <code>oxlint</code> is currently community driven, I believe that with enough resources, we can make <code>--import-plugin</code> generally available in the next few months.</p>
 ]]></description>
-            <content:encoded><![CDATA[<AppBlogPostHeader /><p>We are excited to announce an alpha release for <code>oxlint --import-plugin</code>, a port of <a href="https://github.com/import-js/eslint-plugin-import" target="_blank" rel="noreferrer"><code>eslint-plugin-import</code></a>.</p>
+            <content:encoded><![CDATA[<AppBlogPostHeader /><p>We are excited to announce an alpha release for <code>oxlint --import-plugin</code>, a port of <a href="https://npmx.dev/package/eslint-plugin-import" target="_blank" rel="noreferrer"><code>eslint-plugin-import</code></a>.</p>
 <p>This port aims to resolve all known issues associated with <code>eslint-plugin-import</code>:</p>
 <ul>
 <li>Performance - execution time exceeding one minute when certain rules are enabled</li>
 <li>Dependency size - 188 dependencies totaling 30M</li>
 <li>Backwards compatibility - the necessity to <a href="https://github.com/import-js/eslint-plugin-import/pull/2447#issuecomment-1117384140" target="_blank" rel="noreferrer">support Node.js v4.0.0</a></li>
-<li>Dependency compatibility - the need to replace it with <a href="https://github.com/un-ts/eslint-plugin-import-x" target="_blank" rel="noreferrer"><code>eslint-plugin-import-x</code></a></li>
+<li>Dependency compatibility - the need to replace it with <a href="https://npmx.dev/package/eslint-plugin-import-x" target="_blank" rel="noreferrer"><code>eslint-plugin-import-x</code></a></li>
 <li><a href="https://github.com/import-js/eslint-plugin-import/issues/2948" target="_blank" rel="noreferrer">Upgrading to ESLint v9</a></li>
 </ul>
 <h2 id="what-s-in-the-release" tabindex="-1">What's in the release? <a class="header-anchor" href="#what-s-in-the-release" aria-label="Permalink to “What's in the release?”">&#8203;</a></h2>
@@ -283,7 +283,7 @@ to transform and generate <code>.d.ts</code> <a href="https://github.com/lukeed/
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">});</span></span>
 <span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">await</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> fs.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">writeFile</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"out.js"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, transformed.code);</span></span>
 <span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">await</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> fs.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">writeFile</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"out.d.ts"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, transformed.declaration);</span></span></code></pre>
-</div><h3 id="unplugin-isolated-decl" tabindex="-1"><a href="https://github.com/unplugin/unplugin-isolated-decl" target="_blank" rel="noreferrer"><code>unplugin-isolated-decl</code></a> <a class="header-anchor" href="#unplugin-isolated-decl" aria-label="Permalink to “unplugin-isolated-decl”">&#8203;</a></h3>
+</div><h3 id="unplugin-isolated-decl" tabindex="-1"><a href="https://npmx.dev/package/unplugin-isolated-decl" target="_blank" rel="noreferrer"><code>unplugin-isolated-decl</code></a> <a class="header-anchor" href="#unplugin-isolated-decl" aria-label="Permalink to “unplugin-isolated-decl”">&#8203;</a></h3>
 <p><code>vue-macros</code> <a href="https://github.com/vue-macros/vue-macros/blob/4247c7ba9189c630111e058245ce1412c8da9229/tsup.config.ts#L10" target="_blank" rel="noreferrer">uses</a> <code>unplugin-isolated-decl</code> as the integration tool for its esbuild plugin.</p>
 <p><a href="https://github.com/sxzz" target="_blank" rel="noreferrer">@sxzz</a> <a href="https://x.com/sanxiaozhizi/status/1821320327231893600" target="_blank" rel="noreferrer">reports</a> their <code>.d.ts</code> generation time is reduced from 76s to 16s.</p>
 <h3 id="bazel-build-at-airtable" tabindex="-1">Bazel build at <a href="https://github.com/Airtable" target="_blank" rel="noreferrer">Airtable</a> <a class="header-anchor" href="#bazel-build-at-airtable" aria-label="Permalink to “Bazel build at Airtable”">&#8203;</a></h3>
@@ -336,7 +336,7 @@ to transform and generate <code>.d.ts</code> <a href="https://github.com/lukeed/
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">});</span></span>
 <span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">await</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> fs.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">writeFile</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"out.js"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, transformed.code);</span></span>
 <span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">await</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> fs.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">writeFile</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"out.d.ts"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, transformed.declaration);</span></span></code></pre>
-</div><h3 id="unplugin-isolated-decl" tabindex="-1"><a href="https://github.com/unplugin/unplugin-isolated-decl" target="_blank" rel="noreferrer"><code>unplugin-isolated-decl</code></a> <a class="header-anchor" href="#unplugin-isolated-decl" aria-label="Permalink to “unplugin-isolated-decl”">&#8203;</a></h3>
+</div><h3 id="unplugin-isolated-decl" tabindex="-1"><a href="https://npmx.dev/package/unplugin-isolated-decl" target="_blank" rel="noreferrer"><code>unplugin-isolated-decl</code></a> <a class="header-anchor" href="#unplugin-isolated-decl" aria-label="Permalink to “unplugin-isolated-decl”">&#8203;</a></h3>
 <p><code>vue-macros</code> <a href="https://github.com/vue-macros/vue-macros/blob/4247c7ba9189c630111e058245ce1412c8da9229/tsup.config.ts#L10" target="_blank" rel="noreferrer">uses</a> <code>unplugin-isolated-decl</code> as the integration tool for its esbuild plugin.</p>
 <p><a href="https://github.com/sxzz" target="_blank" rel="noreferrer">@sxzz</a> <a href="https://x.com/sanxiaozhizi/status/1821320327231893600" target="_blank" rel="noreferrer">reports</a> their <code>.d.ts</code> generation time is reduced from 76s to 16s.</p>
 <h3 id="bazel-build-at-airtable" tabindex="-1">Bazel build at <a href="https://github.com/Airtable" target="_blank" rel="noreferrer">Airtable</a> <a class="header-anchor" href="#bazel-build-at-airtable" aria-label="Permalink to “Bazel build at Airtable”">&#8203;</a></h3>
@@ -913,7 +913,7 @@ This configuration format is based on ESLint v8’s flat config, making migratio
 Each source file is linted with the nearest applicable configuration, and you can use overrides to target specific glob patterns.
 You can also extend shared configs to keep teams consistent.</p>
 <p>For projects already using ESLint, <a href="https://github.com/oxc-project/oxlint-migrate" target="_blank" rel="noreferrer">oxlint-migrate</a> can be used to migrate an existing ESLint flat-config file to Oxlint.
-Additionally, <a href="https://github.com/oxc-project/eslint-plugin-oxlint" target="_blank" rel="noreferrer">eslint-plugin-oxlint</a> can disable overlapping ESLint rules while both linters are used together.
+Additionally, <a href="https://npmx.dev/package/eslint-plugin-oxlint" target="_blank" rel="noreferrer">eslint-plugin-oxlint</a> can disable overlapping ESLint rules while both linters are used together.
 It is recommended to run <code>oxlint &amp;&amp; eslint</code> to benefit from Oxlint's faster feedback cycle.</p>
 <p>For more detailed instructions on how to use Oxlint and integrate it with your project or editor, check out the <a href="https://oxc.rs/docs/guide/usage/linter" target="_blank" rel="noreferrer">installation guide</a>.</p>
 <h2 id="versioning" tabindex="-1">Versioning <a class="header-anchor" href="#versioning" aria-label="Permalink to “Versioning”">&#8203;</a></h2>
