@@ -31,6 +31,12 @@ class C {
 }
 ```
 
+## Configuration
+
+This rule accepts one of the following string values:
+
+type: `"fields" | "getters"`
+
 ## How to use
 
 To **enable** this rule using the config file or in the CLI, you can use:

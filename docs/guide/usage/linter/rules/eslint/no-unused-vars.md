@@ -276,6 +276,46 @@ foo.forEach((item) => {
 });
 ```
 
+### fix
+
+type: `object`
+
+default: `{"imports":"suggestion", "variables":"suggestion"}`
+
+Fine-grained auto-fix controls for `no-unused-vars`.
+
+#### fix.imports
+
+type: `"off" | "suggestion" | "fix"`
+
+##### `"off"`
+
+Disable auto-fixes for this symbol kind.
+
+##### `"suggestion"`
+
+Emit suggestion-style fixes (current behavior).
+
+##### `"fix"`
+
+Emit fix-style fixes.
+
+#### fix.variables
+
+type: `"off" | "suggestion" | "fix"`
+
+##### `"off"`
+
+Disable auto-fixes for this symbol kind.
+
+##### `"suggestion"`
+
+Emit suggestion-style fixes (current behavior).
+
+##### `"fix"`
+
+Emit fix-style fixes.
+
 ### ignoreClassWithStaticInitBlock
 
 type: `boolean`

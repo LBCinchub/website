@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-useless-concat.md
 
 ### What it does
 
-Disallow unnecessary concatenation of literals or template literals
+Disallow unnecessary concatenation of literals or template literals.
 
 ### Why is this bad?
 
@@ -27,11 +27,8 @@ Examples of **correct** code for this rule:
 
 ```javascript
 var foo = "a" + bar;
-```
 
-// when the string concatenation is multiline
-
-```javascript
+// When the string concatenation is multiline
 var foo = "a" + "b" + "c";
 ```
 
