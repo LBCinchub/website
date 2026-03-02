@@ -18,11 +18,25 @@ const x = () => { return 2; };
 </>;
 ```
 
-For non-JS files, use `prettier-ignore` comment. See also Prettier's [ignore documentation](https://prettier.io/docs/ignore#html).
+For JS-in-Vue, use `oxfmt-ignore` inside the `<script>` tag:
+
+```vue
+<script>
+// oxfmt-ignore
+const a    = 42;
+</script>
+```
+
+Trailing ignore comments are also supported:
+
+```js
+const a    = 42; // oxfmt-ignore
+```
+
+For other files and non-JS parts of Vue files (e.g., `<template>`, `<style>`), use `prettier-ignore` comment. See also Prettier's [ignore documentation](https://prettier.io/docs/ignore#html).
 
 Currently, TOML files do not support ignore comments.
 
 ## Prettier compatibility
 
 * `prettier-ignore` comment is also supported
-* Trailing ignore comments in JS/TS files are not supported for performance reasons

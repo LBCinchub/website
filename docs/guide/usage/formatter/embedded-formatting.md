@@ -35,6 +35,28 @@ const styles = css`
 `;
 ```
 
+GraphQL inside a tagged template literal:
+
+```js
+const query = gql`
+  query {
+    user {
+      id
+      name
+    }
+  }
+`;
+
+const query2 = graphql(`
+  query {
+    user {
+      id
+      name
+    }
+  }
+`);
+```
+
 HTML inside a tagged template literal:
 
 ```js
