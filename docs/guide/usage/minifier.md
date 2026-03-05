@@ -4,7 +4,6 @@ url: /docs/guide/usage/minifier.md
 # Minifier
 
 ::: tip
-`oxc-minify` is currently in alpha and may still have bugs.
 We recommend thoroughly testing its output before deploying to production environments.
 :::
 
