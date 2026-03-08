@@ -1,1 +1,0 @@
-import{p as e}from"./client.DUZwSOR0.js";const t=e;export{t};
