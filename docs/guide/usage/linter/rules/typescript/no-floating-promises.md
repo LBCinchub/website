@@ -83,7 +83,7 @@ Allows specific calls to be ignored, specified as type or value specifiers.
 
 #### allowForKnownSafeCalls\[n]
 
-type: `string`
+type: `object | string`
 
 Type or value specifier for matching specific declarations
 
@@ -116,6 +116,27 @@ Supports four types of specifiers:
 { "from": "package", "name": "Observable", "package": "rxjs" }
 { "from": "package", "name": ["Observable", "Subject"], "package": "rxjs" }
 ```
+
+##### allowForKnownSafeCalls\[n].from
+
+type: `"file"`
+
+##### allowForKnownSafeCalls\[n].name
+
+type: `array | string`
+
+Name specifier that can be a single string or array of strings
+
+###### allowForKnownSafeCalls\[n].name\[n]
+
+type: `string`
+
+##### allowForKnownSafeCalls\[n].path
+
+type: `string`
+
+Optional file path to specify where the types or values must be declared.
+If omitted, all files will be matched.
 
 ### allowForKnownSafePromises
 
@@ -127,7 +148,7 @@ Allows specific Promise types to be ignored, specified as type or value specifie
 
 #### allowForKnownSafePromises\[n]
 
-type: `string`
+type: `object | string`
 
 Type or value specifier for matching specific declarations
 
@@ -160,6 +181,27 @@ Supports four types of specifiers:
 { "from": "package", "name": "Observable", "package": "rxjs" }
 { "from": "package", "name": ["Observable", "Subject"], "package": "rxjs" }
 ```
+
+##### allowForKnownSafePromises\[n].from
+
+type: `"file"`
+
+##### allowForKnownSafePromises\[n].name
+
+type: `array | string`
+
+Name specifier that can be a single string or array of strings
+
+###### allowForKnownSafePromises\[n].name\[n]
+
+type: `string`
+
+##### allowForKnownSafePromises\[n].path
+
+type: `string`
+
+Optional file path to specify where the types or values must be declared.
+If omitted, all files will be matched.
 
 ### checkThenables
 

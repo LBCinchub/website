@@ -51,7 +51,7 @@ Type/value specifiers that should be exempt from this rule.
 
 #### allow\[n]
 
-type: `string`
+type: `object | string`
 
 Type or value specifier for matching specific declarations
 
@@ -84,6 +84,27 @@ Supports four types of specifiers:
 { "from": "package", "name": "Observable", "package": "rxjs" }
 { "from": "package", "name": ["Observable", "Subject"], "package": "rxjs" }
 ```
+
+##### allow\[n].from
+
+type: `"file"`
+
+##### allow\[n].name
+
+type: `array | string`
+
+Name specifier that can be a single string or array of strings
+
+###### allow\[n].name\[n]
+
+type: `string`
+
+##### allow\[n].path
+
+type: `string`
+
+Optional file path to specify where the types or values must be declared.
+If omitted, all files will be matched.
 
 ### checkParameterProperties
 

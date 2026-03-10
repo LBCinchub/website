@@ -1582,12 +1582,12 @@ url: /docs/guide/usage/linter/cli.md
 * **`-c`**, **`--config`**=*`<./.oxlintrc.json>`* —
   Oxlint configuration file
 
-- `.json` config files are supported in all runtimes
+- `.json` and `.jsonc` config files are supported in all runtimes
 - JavaScript/TypeScript config files are experimental and require running via Node.js
 - you can use comments in configuration files.
 - tries to be compatible with ESLint v8's format
 
-  If not provided, Oxlint will look for `.oxlintrc.json` in the current working directory.
+  If not provided, Oxlint will look for a `.oxlintrc.json`, `.oxlintrc.jsonc`, or `oxlint.config.ts` file in the current working directory.
 
 * **`    --tsconfig`**=*`<./tsconfig.json>`* —
   TypeScript `tsconfig.json` path for reading path alias and project references for import plugin. If not provided, will look for `tsconfig.json` in the current working directory.
@@ -2659,7 +2659,11 @@ by including a `{ "newlinesBetween": boolean }` marker object in the `groups` li
 
 \####### overrides\[n].options.sortImports.groups\[n]
 
-type: `array | string`
+type: `object | array | string`
+
+\######## overrides\[n].options.sortImports.groups\[n].newlinesBetween
+
+type: `boolean`
 
 ###### overrides\[n].options.sortImports.ignoreCase
 
@@ -3049,7 +3053,11 @@ by including a `{ "newlinesBetween": boolean }` marker object in the `groups` li
 
 #### sortImports.groups\[n]
 
-type: `array | string`
+type: `object | array | string`
+
+##### sortImports.groups\[n].newlinesBetween
+
+type: `boolean`
 
 ### sortImports.ignoreCase
 
@@ -3653,7 +3661,11 @@ by including a `{ "newlinesBetween": boolean }` marker object in the `groups` li
 
 \####### overrides\[n].options.sortImports.groups\[n]
 
-type: `array | string`
+type: `object | array | string`
+
+\######## overrides\[n].options.sortImports.groups\[n].newlinesBetween
+
+type: `boolean`
 
 ###### overrides\[n].options.sortImports.ignoreCase
 
@@ -4043,7 +4055,11 @@ by including a `{ "newlinesBetween": boolean }` marker object in the `groups` li
 
 #### sortImports.groups\[n]
 
-type: `array | string`
+type: `object | array | string`
+
+##### sortImports.groups\[n].newlinesBetween
+
+type: `boolean`
 
 ### sortImports.ignoreCase
 
@@ -21491,44 +21507,6 @@ The Oxc formatter is built around the same core concepts as Prettier but with si
 ---
 
 ---
-url: /docs/guide/introduction.md
----
-
-# Getting Started
-
-[What is Oxc?](/docs/guide/what-is-oxc)
-
-## Lint or format a codebase
-
-* Lint: [Oxlint](/docs/guide/usage/linter)
-* Format: [Oxfmt](/docs/guide/usage/formatter)
-
-## Build tooling on top of Oxc
-
-* Parse JavaScript and TypeScript: [Parser](/docs/guide/usage/parser)
-* Transform TypeScript, JSX, and modern JavaScript: [Transformer](/docs/guide/usage/transformer)
-* Minify JavaScript for production builds: [Minifier](/docs/guide/usage/minifier)
-* Resolve modules for JavaScript and TypeScript: [Resolver](/docs/guide/usage/resolver)
-
-## Contribute or learn
-
-* [Contribute](/docs/contribute/introduction)
-* [Learn](/docs/learn/parser_in_rust/intro.html)
-
-## Other resources
-
-* [Troubleshooting](/docs/guide/troubleshooting)
-* [Benchmarks](/docs/guide/benchmarks)
-* [Projects using Oxc](/docs/guide/projects)
-* [Talks and media](/docs/guide/media)
-* [Team](/team)
-* [Endorsements](/endorsements)
-* [Release Blog](/blog/)
-* [Releases](https://github.com/oxc-project/oxc/releases)
-
----
-
----
 url: /docs/contribute/development.md
 ---
 
@@ -21609,6 +21587,44 @@ macOS has an antivirus feature called XProtect that scans executables for malwar
 **Note:** This disables an OS security feature. Only do this if you're comfortable with the trade-off.
 
 More details: https://nnethercote.github.io/2025/09/04/faster-rust-builds-on-mac.html
+
+---
+
+---
+url: /docs/guide/introduction.md
+---
+
+# Getting Started
+
+[What is Oxc?](/docs/guide/what-is-oxc)
+
+## Lint or format a codebase
+
+* Lint: [Oxlint](/docs/guide/usage/linter)
+* Format: [Oxfmt](/docs/guide/usage/formatter)
+
+## Build tooling on top of Oxc
+
+* Parse JavaScript and TypeScript: [Parser](/docs/guide/usage/parser)
+* Transform TypeScript, JSX, and modern JavaScript: [Transformer](/docs/guide/usage/transformer)
+* Minify JavaScript for production builds: [Minifier](/docs/guide/usage/minifier)
+* Resolve modules for JavaScript and TypeScript: [Resolver](/docs/guide/usage/resolver)
+
+## Contribute or learn
+
+* [Contribute](/docs/contribute/introduction)
+* [Learn](/docs/learn/parser_in_rust/intro.html)
+
+## Other resources
+
+* [Troubleshooting](/docs/guide/troubleshooting)
+* [Benchmarks](/docs/guide/benchmarks)
+* [Projects using Oxc](/docs/guide/projects)
+* [Talks and media](/docs/guide/media)
+* [Team](/team)
+* [Endorsements](/endorsements)
+* [Release Blog](/blog/)
+* [Releases](https://github.com/oxc-project/oxc/releases)
 
 ---
 
@@ -22949,7 +22965,16 @@ In order to provide a consistent use of file extensions across your code base, t
 
 ### Why is this bad?
 
-ESM-based file resolve algorithms (e.g., the one that Vite provides) recommend specifying the file extension to improve performance.
+ESM-based file resolve algorithms (e.g., the one that Vite provides) recommend
+specifying the file extension to improve performance. Without extensions, the
+bundler must check for various possible file extensions, which can slow down
+the build process on large projects. In addition, common ESM environments
+(such as browsers and Node.js) typically require fully specified relative imports,
+which means extensionless imports are not supported there.
+
+For personal preference and compatibility reasons, the rule also allows configuration
+to *disallow* extensions in imports. This is generally not recommended, but it can be
+done if preferred.
 
 ### Examples
 
@@ -23007,6 +23032,21 @@ import styles from "./styles.css"; // ✓ OK - .css not configured, ignored
 import foo from "./foo"; // ✓ OK - no extension
 import bar from "lodash/fp"; // ✓ OK - package import, ignored (ignorePackages sets this to true)
 ```
+
+### Differences compared to `eslint-plugin-import`
+
+If you see differences between this rule implementation and the original `eslint-plugin-import`
+rule, please note that there are some intentional, inherent differences in the behavior of this
+rule and the original.
+
+Oxlint understands and can resolve TypeScript paths out-of-the-box. If your ESLint
+configuration did not include `eslint-import-resolver-typescript` or similar, then the original
+rule will not have been able to resolve TypeScript paths correctly, and so the behavior
+between ESLint and Oxlint may differ. Generally, this means that Oxlint will catch *more*
+valid violations than the original rule, though this depends on the specific configuration.
+
+Oxlint is also able to resolve multiple `tsconfig.json` files in a single repo, and so in a
+monorepo setup will be more capable with regards to resolving file paths.
 
 ## Configuration
 
@@ -24580,7 +24620,7 @@ Given
 ```javascript
 // foo.js
 export default "foo";
-export const bar = "baz";
+export const bar = true;
 ```
 
 Examples of **incorrect** code for this rule:
@@ -24596,6 +24636,16 @@ Examples of **correct** code for this rule:
 // Valid: correctly importing default export with a non-conflicting name.
 import foo from "./foo.js";
 ```
+
+### Differences compared to `eslint-plugin-import`
+
+If you see differences between this rule implementation and the original `eslint-plugin-import`
+rule, please note that the behavior may differ in certain cases due to differences in how
+module resolution is implemented and configured.
+
+For example, the original rule may require additional resolver configuration to handle certain
+imports, especially when TypeScript paths are used or in monorepo setups with multiple
+`tsconfig.json` files.
 
 ## How to use
 
@@ -25394,6 +25444,51 @@ oxlint --deny import/unambiguous --import-plugin
 ---
 
 ---
+url: /docs/guide/usage/formatter/ignore-comments.md
+---
+# Inline ignore comments
+
+For JS/TS files, use `oxfmt-ignore` to skip formatting the next statement:
+
+```js
+// oxfmt-ignore
+const a    = 42;
+
+/* oxfmt-ignore */
+const x = () => { return 2; };
+
+<>
+  {/* oxfmt-ignore */}
+  <span   ugly   format=""   />
+</>;
+```
+
+For JS-in-Vue, use `oxfmt-ignore` inside the `<script>` tag:
+
+```vue
+<script>
+// oxfmt-ignore
+const a    = 42;
+</script>
+```
+
+Trailing ignore comments are also supported:
+
+```js
+const a    = 42; // oxfmt-ignore
+```
+
+For other files and non-JS parts of Vue files (e.g., `<template>`, `<style>`), use `prettier-ignore` comment. See also Prettier's [ignore documentation](https://prettier.io/docs/ignore#html).
+
+Currently, TOML files do not support ignore comments.
+
+## Prettier compatibility
+
+* `prettier-ignore` comment is also supported
+
+---
+
+---
 url: /docs/guide/usage/linter/ignore-comments.md
 description: Disable specific rules inline using Oxlint ignore comments
 ---
@@ -25479,51 +25574,6 @@ oxlint --report-unused-disable-directives-severity error
 ```
 
 Only one of these options can be used at a time.
-
----
-
----
-url: /docs/guide/usage/formatter/ignore-comments.md
----
-# Inline ignore comments
-
-For JS/TS files, use `oxfmt-ignore` to skip formatting the next statement:
-
-```js
-// oxfmt-ignore
-const a    = 42;
-
-/* oxfmt-ignore */
-const x = () => { return 2; };
-
-<>
-  {/* oxfmt-ignore */}
-  <span   ugly   format=""   />
-</>;
-```
-
-For JS-in-Vue, use `oxfmt-ignore` inside the `<script>` tag:
-
-```vue
-<script>
-// oxfmt-ignore
-const a    = 42;
-</script>
-```
-
-Trailing ignore comments are also supported:
-
-```js
-const a    = 42; // oxfmt-ignore
-```
-
-For other files and non-JS parts of Vue files (e.g., `<template>`, `<style>`), use `prettier-ignore` comment. See also Prettier's [ignore documentation](https://prettier.io/docs/ignore#html).
-
-Currently, TOML files do not support ignore comments.
-
-## Prettier compatibility
-
-* `prettier-ignore` comment is also supported
 
 ---
 
@@ -40451,13 +40501,7 @@ url: /docs/guide/usage/linter/generated-config.md
 
 This configuration is aligned with ESLint v8's configuration schema (`eslintrc.json`).
 
-Usage: `oxlint -c oxlintrc.json --import-plugin`
-
-::: danger NOTE
-
-Only the `.json` format is supported. You can use comments in configuration files.
-
-:::
+Usage: `oxlint -c oxlintrc.json`
 
 Example
 
@@ -40500,6 +40544,42 @@ Example
     }
   ]
 }
+```
+
+`oxlint.config.ts`
+
+```ts
+import { defineConfig } from "oxlint";
+
+export default defineConfig({
+plugins: ["import", "typescript", "unicorn"],
+env: {
+"browser": true
+},
+globals: {
+"foo": "readonly"
+},
+settings: {
+react: {
+version: "18.2.0"
+},
+custom: { option: true }
+},
+rules: {
+"eqeqeq": "warn",
+"import/no-cycle": "error",
+"react/self-closing-comp": ["error", { "html": false }]
+},
+overrides: [
+{
+files: ["*.test.ts", "*.spec.ts"],
+rules: {
+"@typescript-eslint/no-explicit-any": "off"
+}
+}
+]
+}
+});
 ```
 
 ## $schema
@@ -40679,6 +40759,30 @@ type: `object`
 
 Options for the linter.
 
+### options.denyWarnings
+
+type: `boolean`
+
+Ensure warnings produce a non-zero exit code.
+
+Equivalent to passing `--deny-warnings` on the CLI.
+
+### options.maxWarnings
+
+type: `integer`
+
+Specify a warning threshold. Exits with an error status if warnings exceed this value.
+
+Equivalent to passing `--max-warnings` on the CLI.
+
+### options.reportUnusedDisableDirectives
+
+Report unused disable directives (e.g. `// oxlint-disable-line` or `// eslint-disable-line`).
+
+Equivalent to passing `--report-unused-disable-directives-severity` on the CLI.
+CLI flags take precedence over this value when both are set.
+Only supported in the root configuration file.
+
 ### options.typeAware
 
 type: `boolean`
@@ -40687,6 +40791,8 @@ Enable rules that require type information.
 
 Equivalent to passing `--type-aware` on the CLI.
 
+Note that this requires the `oxlint-tsgolint` package to be installed.
+
 ### options.typeCheck
 
 type: `boolean`
@@ -40694,6 +40800,8 @@ type: `boolean`
 Enable experimental type checking (includes TypeScript compiler diagnostics).
 
 Equivalent to passing `--type-check` on the CLI.
+
+Note that this requires the `oxlint-tsgolint` package to be installed.
 
 ## overrides
 
@@ -41152,13 +41260,7 @@ url: /docs/guide/usage/linter/config-file-reference.md
 
 This configuration is aligned with ESLint v8's configuration schema (`eslintrc.json`).
 
-Usage: `oxlint -c oxlintrc.json --import-plugin`
-
-::: danger NOTE
-
-Only the `.json` format is supported. You can use comments in configuration files.
-
-:::
+Usage: `oxlint -c oxlintrc.json`
 
 Example
 
@@ -41201,6 +41303,42 @@ Example
     }
   ]
 }
+```
+
+`oxlint.config.ts`
+
+```ts
+import { defineConfig } from "oxlint";
+
+export default defineConfig({
+plugins: ["import", "typescript", "unicorn"],
+env: {
+"browser": true
+},
+globals: {
+"foo": "readonly"
+},
+settings: {
+react: {
+version: "18.2.0"
+},
+custom: { option: true }
+},
+rules: {
+"eqeqeq": "warn",
+"import/no-cycle": "error",
+"react/self-closing-comp": ["error", { "html": false }]
+},
+overrides: [
+{
+files: ["*.test.ts", "*.spec.ts"],
+rules: {
+"@typescript-eslint/no-explicit-any": "off"
+}
+}
+]
+}
+});
 ```
 
 ## $schema
@@ -41380,6 +41518,30 @@ type: `object`
 
 Options for the linter.
 
+### options.denyWarnings
+
+type: `boolean`
+
+Ensure warnings produce a non-zero exit code.
+
+Equivalent to passing `--deny-warnings` on the CLI.
+
+### options.maxWarnings
+
+type: `integer`
+
+Specify a warning threshold. Exits with an error status if warnings exceed this value.
+
+Equivalent to passing `--max-warnings` on the CLI.
+
+### options.reportUnusedDisableDirectives
+
+Report unused disable directives (e.g. `// oxlint-disable-line` or `// eslint-disable-line`).
+
+Equivalent to passing `--report-unused-disable-directives-severity` on the CLI.
+CLI flags take precedence over this value when both are set.
+Only supported in the root configuration file.
+
 ### options.typeAware
 
 type: `boolean`
@@ -41388,6 +41550,8 @@ Enable rules that require type information.
 
 Equivalent to passing `--type-aware` on the CLI.
 
+Note that this requires the `oxlint-tsgolint` package to be installed.
+
 ### options.typeCheck
 
 type: `boolean`
@@ -41395,6 +41559,8 @@ type: `boolean`
 Enable experimental type checking (includes TypeScript compiler diagnostics).
 
 Equivalent to passing `--type-check` on the CLI.
+
+Note that this requires the `oxlint-tsgolint` package to be installed.
 
 ## overrides
 
@@ -41951,6 +42117,70 @@ Test results are stored in snapshot files for tracking changes:
 * [`parser_test262.snap`](https://github.com/oxc-project/oxc/blob/main/tasks/coverage/snapshots/parser_test262.snap)
 * [`parser_babel.snap`](https://github.com/oxc-project/oxc/blob/main/tasks/coverage/snapshots/parser_babel.snap)
 * [`parser_typescript.snap`](https://github.com/oxc-project/oxc/blob/main/tasks/coverage/snapshots/parser_typescript.snap)
+
+---
+
+---
+url: /docs/guide/usage/parser.md
+---
+
+# Parser
+
+This is production ready.
+
+## Features
+
+* 3x faster than swc parser ([benchmark][url-benchmark]).
+* Parses `.js(x)` and `.ts(x)`.
+* Passes all parser tests from Test262 and 99% from Babel and TypeScript.
+* Returns ESM information directly, no need for [`es-module-lexer`](https://npmx.dev/package/es-module-lexer).
+* [✅ works with checker.ts](https://x.com/robpalmer2/status/1805502964435505559)
+
+## Installation
+
+### Node.js
+
+* Use the node binding [oxc-parser][url-oxc-parser-npm].
+* Try on [stackblitz](https://stackblitz.com/edit/oxc-parser).
+
+### Rust
+
+Use the umbrella crate [oxc][url-oxc-crate] or the individual [oxc\_ast][url-oxc-ast-crate] and [oxc\_parser][url-oxc-parser-crate] crates.
+
+Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_parser/examples/parser.rs).
+
+## Print
+
+After parsing and transforming, you can print code.
+
+Here's a direct example using [esrap](https://npmx.dev/package/esrap) *(`parse` in reverse!)*:
+
+```js
+import { print } from "esrap";
+import ts from "esrap/languages/ts";
+import { parseSync } from "oxc-parser";
+
+const { program } = parseSync("test.js", 'alert("hello oxc & esrap");');
+const { code } = print(program, ts());
+
+console.log(code); // alert("hello oxc & esrap");
+```
+
+:::info
+Today, comments are not printed. *It will be supported thanks to [oxc-parser #13285](https://github.com/oxc-project/oxc/pull/13285).*
+:::
+
+[url-swc]: https://swc.rs
+
+[url-benchmark]: https://github.com/oxc-project/bench-javascript-parser-written-in-rust
+
+[url-oxc-crate]: https://docs.rs/oxc
+
+[url-oxc-ast-crate]: https://docs.rs/oxc_ast
+
+[url-oxc-parser-crate]: https://docs.rs/oxc_parser
+
+[url-oxc-parser-npm]: https://npmx.dev/package/oxc-parser
 
 ---
 
@@ -42540,70 +42770,6 @@ function isParenthesizedArrowFunctionExpression(): Tristate {
 ```
 
 In summary, the TypeScript parser uses a combination of lookahead (fast path) and backtracking to parse arrow functions.
-
----
-
----
-url: /docs/guide/usage/parser.md
----
-
-# Parser
-
-This is production ready.
-
-## Features
-
-* 3x faster than swc parser ([benchmark][url-benchmark]).
-* Parses `.js(x)` and `.ts(x)`.
-* Passes all parser tests from Test262 and 99% from Babel and TypeScript.
-* Returns ESM information directly, no need for [`es-module-lexer`](https://npmx.dev/package/es-module-lexer).
-* [✅ works with checker.ts](https://x.com/robpalmer2/status/1805502964435505559)
-
-## Installation
-
-### Node.js
-
-* Use the node binding [oxc-parser][url-oxc-parser-npm].
-* Try on [stackblitz](https://stackblitz.com/edit/oxc-parser).
-
-### Rust
-
-Use the umbrella crate [oxc][url-oxc-crate] or the individual [oxc\_ast][url-oxc-ast-crate] and [oxc\_parser][url-oxc-parser-crate] crates.
-
-Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_parser/examples/parser.rs).
-
-## Print
-
-After parsing and transforming, you can print code.
-
-Here's a direct example using [esrap](https://npmx.dev/package/esrap) *(`parse` in reverse!)*:
-
-```js
-import { print } from "esrap";
-import ts from "esrap/languages/ts";
-import { parseSync } from "oxc-parser";
-
-const { program } = parseSync("test.js", 'alert("hello oxc & esrap");');
-const { code } = print(program, ts());
-
-console.log(code); // alert("hello oxc & esrap");
-```
-
-:::info
-Today, comments are not printed. *It will be supported thanks to [oxc-parser #13285](https://github.com/oxc-project/oxc/pull/13285).*
-:::
-
-[url-swc]: https://swc.rs
-
-[url-benchmark]: https://github.com/oxc-project/bench-javascript-parser-written-in-rust
-
-[url-oxc-crate]: https://docs.rs/oxc
-
-[url-oxc-ast-crate]: https://docs.rs/oxc_ast
-
-[url-oxc-parser-crate]: https://docs.rs/oxc_parser
-
-[url-oxc-parser-npm]: https://npmx.dev/package/oxc-parser
 
 ---
 
@@ -44905,178 +45071,6 @@ oxlint --deny promise/valid-params --promise-plugin
 ---
 
 ---
-url: /docs/guide/usage/formatter/quickstart.md
-description: Install Oxfmt and learn the common workflows.
----
-
-# Quickstart
-
-Recommended setup and common workflows.
-
-## Install
-
-Install `oxfmt` as a dev dependency:
-
-::: code-group
-
-```sh [npm]
-$ npm add -D oxfmt
-```
-
-```sh [pnpm]
-$ pnpm add -D oxfmt
-```
-
-```sh [yarn]
-$ yarn add -D oxfmt
-```
-
-```sh [bun]
-$ bun add -D oxfmt
-```
-
-:::
-
-Add scripts to `package.json`:
-
-```json [package.json]
-{
-  "scripts": {
-    "fmt": "oxfmt",
-    "fmt:check": "oxfmt --check"
-  }
-}
-```
-
-Format files:
-
-::: code-group
-
-```sh [npm]
-npm run fmt
-```
-
-```sh [pnpm]
-pnpm run fmt
-```
-
-```sh [yarn]
-yarn run fmt
-```
-
-```sh [bun]
-bun run fmt
-```
-
-:::
-
-Check formatting without writing files:
-
-::: code-group
-
-```sh [npm]
-npm run fmt:check
-```
-
-```sh [pnpm]
-pnpm run fmt:check
-```
-
-```sh [yarn]
-yarn run fmt:check
-```
-
-```sh [bun]
-bun run fmt:check
-```
-
-:::
-
-## Usage
-
-```sh
-oxfmt [OPTIONS] [PATH]...
-```
-
-Running `oxfmt` without arguments formats the current directory (equivalent to `prettier --write .`).
-
-CLI options like `--no-semi` are not supported. Use the configuration file instead to ensure consistent settings across CLI and editor integrations.
-
-To use glob patterns in positional paths, be sure to quote them. Otherwise, they may or may not be expanded depending on your environment.
-
-For the complete list of options, see the [CLI reference](/docs/guide/usage/formatter/cli.html).
-
-## Common workflows
-
-### Pre-commit with lint-staged
-
-```json [package.json]
-{
-  "lint-staged": {
-    "*": "oxfmt --no-error-on-unmatched-pattern"
-  }
-}
-```
-
-`--no-error-on-unmatched-pattern` prevents errors when no files match the pattern.
-
-### Create a config file
-
-Initialize `.oxfmtrc.json` with defaults:
-
-```sh
-oxfmt --init
-```
-
-### Migrate from Prettier
-
-```sh
-oxfmt --migrate prettier
-```
-
-See [migrate from prettier](./migrate-from-prettier) for details.
-
-### List files that differ
-
-```sh
-oxfmt --list-different
-```
-
-This is useful for configuring [files to ignore](./ignore-files).
-
-### Piping file contents
-
-```sh
-echo 'const   x   =   1' | oxfmt --stdin-filepath test.ts
-```
-
-Prints `const x = 1;`
-
-### Node.js API
-
-```ts
-import { format, type FormatOptions } from "oxfmt";
-
-const input = `let a=42;`;
-const options: FormatOptions = {
-  semi: false,
-};
-
-const { code } = await format("a.js", input, options);
-console.log(code); // "let a = 42"
-```
-
-## Next steps
-
-* [Change configuration](./config)
-* [Setup editors](./editors)
-* [Setup CI](./ci)
-* Learn advanced features: [sorting](./sorting), [embedded formatting](./embedded-formatting)
-* Check [CLI reference](./cli)
-
----
-
----
 url: /docs/guide/usage/linter/quickstart.md
 description: Install Oxlint and learn the common workflows.
 ---
@@ -45338,6 +45332,178 @@ The full list is in the [Rules reference](/docs/guide/usage/linter/rules).
 * Learn advanced features: [Multi-file analysis](/docs/guide/usage/linter/multi-file-analysis), [Type-aware linting](/docs/guide/usage/linter/type-aware), [JS plugins](/docs/guide/usage/linter/js-plugins)
 * Migrate: [From ESLint](/docs/guide/usage/linter/migrate-from-eslint)&#x20;
 * [CLI reference](/docs/guide/usage/linter/cli)
+
+---
+
+---
+url: /docs/guide/usage/formatter/quickstart.md
+description: Install Oxfmt and learn the common workflows.
+---
+
+# Quickstart
+
+Recommended setup and common workflows.
+
+## Install
+
+Install `oxfmt` as a dev dependency:
+
+::: code-group
+
+```sh [npm]
+$ npm add -D oxfmt
+```
+
+```sh [pnpm]
+$ pnpm add -D oxfmt
+```
+
+```sh [yarn]
+$ yarn add -D oxfmt
+```
+
+```sh [bun]
+$ bun add -D oxfmt
+```
+
+:::
+
+Add scripts to `package.json`:
+
+```json [package.json]
+{
+  "scripts": {
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check"
+  }
+}
+```
+
+Format files:
+
+::: code-group
+
+```sh [npm]
+npm run fmt
+```
+
+```sh [pnpm]
+pnpm run fmt
+```
+
+```sh [yarn]
+yarn run fmt
+```
+
+```sh [bun]
+bun run fmt
+```
+
+:::
+
+Check formatting without writing files:
+
+::: code-group
+
+```sh [npm]
+npm run fmt:check
+```
+
+```sh [pnpm]
+pnpm run fmt:check
+```
+
+```sh [yarn]
+yarn run fmt:check
+```
+
+```sh [bun]
+bun run fmt:check
+```
+
+:::
+
+## Usage
+
+```sh
+oxfmt [OPTIONS] [PATH]...
+```
+
+Running `oxfmt` without arguments formats the current directory (equivalent to `prettier --write .`).
+
+CLI options like `--no-semi` are not supported. Use the configuration file instead to ensure consistent settings across CLI and editor integrations.
+
+To use glob patterns in positional paths, be sure to quote them. Otherwise, they may or may not be expanded depending on your environment.
+
+For the complete list of options, see the [CLI reference](/docs/guide/usage/formatter/cli.html).
+
+## Common workflows
+
+### Pre-commit with lint-staged
+
+```json [package.json]
+{
+  "lint-staged": {
+    "*": "oxfmt --no-error-on-unmatched-pattern"
+  }
+}
+```
+
+`--no-error-on-unmatched-pattern` prevents errors when no files match the pattern.
+
+### Create a config file
+
+Initialize `.oxfmtrc.json` with defaults:
+
+```sh
+oxfmt --init
+```
+
+### Migrate from Prettier
+
+```sh
+oxfmt --migrate prettier
+```
+
+See [migrate from prettier](./migrate-from-prettier) for details.
+
+### List files that differ
+
+```sh
+oxfmt --list-different
+```
+
+This is useful for configuring [files to ignore](./ignore-files).
+
+### Piping file contents
+
+```sh
+echo 'const   x   =   1' | oxfmt --stdin-filepath test.ts
+```
+
+Prints `const x = 1;`
+
+### Node.js API
+
+```ts
+import { format, type FormatOptions } from "oxfmt";
+
+const input = `let a=42;`;
+const options: FormatOptions = {
+  semi: false,
+};
+
+const { code } = await format("a.js", input, options);
+console.log(code); // "let a = 42"
+```
+
+## Next steps
+
+* [Change configuration](./config)
+* [Setup editors](./editors)
+* [Setup CI](./ci)
+* Learn advanced features: [sorting](./sorting), [embedded formatting](./embedded-formatting)
+* Check [CLI reference](./cli)
 
 ---
 
@@ -45975,9 +46141,29 @@ Examples:
 
 #### forbid\[n]
 
-type: `string`
+type: `object | string`
 
 A forbidden prop, either as a plain prop name string or with options.
+
+##### forbid\[n].disallowedFor
+
+type: `string[]`
+
+A list of DOM element names (e.g. `["div", "span"]`) on which this
+prop is forbidden. If empty or omitted, the prop is forbidden on all
+DOM elements.
+
+##### forbid\[n].message
+
+type: `string`
+
+A custom message to display when this prop is used.
+
+##### forbid\[n].propName
+
+type: `string`
+
+The name of the prop to forbid.
 
 ## How to use
 
@@ -54414,7 +54600,7 @@ Use this to allow specific deprecated APIs that you intentionally want to contin
 
 #### allow\[n]
 
-type: `string`
+type: `object | string`
 
 Type or value specifier for matching specific declarations
 
@@ -54447,6 +54633,27 @@ Supports four types of specifiers:
 { "from": "package", "name": "Observable", "package": "rxjs" }
 { "from": "package", "name": ["Observable", "Subject"], "package": "rxjs" }
 ```
+
+##### allow\[n].from
+
+type: `"file"`
+
+##### allow\[n].name
+
+type: `array | string`
+
+Name specifier that can be a single string or array of strings
+
+###### allow\[n].name\[n]
+
+type: `string`
+
+##### allow\[n].path
+
+type: `string`
+
+Optional file path to specify where the types or values must be declared.
+If omitted, all files will be matched.
 
 ## How to use
 
@@ -55301,7 +55508,7 @@ Allows specific calls to be ignored, specified as type or value specifiers.
 
 #### allowForKnownSafeCalls\[n]
 
-type: `string`
+type: `object | string`
 
 Type or value specifier for matching specific declarations
 
@@ -55334,6 +55541,27 @@ Supports four types of specifiers:
 { "from": "package", "name": "Observable", "package": "rxjs" }
 { "from": "package", "name": ["Observable", "Subject"], "package": "rxjs" }
 ```
+
+##### allowForKnownSafeCalls\[n].from
+
+type: `"file"`
+
+##### allowForKnownSafeCalls\[n].name
+
+type: `array | string`
+
+Name specifier that can be a single string or array of strings
+
+###### allowForKnownSafeCalls\[n].name\[n]
+
+type: `string`
+
+##### allowForKnownSafeCalls\[n].path
+
+type: `string`
+
+Optional file path to specify where the types or values must be declared.
+If omitted, all files will be matched.
 
 ### allowForKnownSafePromises
 
@@ -55345,7 +55573,7 @@ Allows specific Promise types to be ignored, specified as type or value specifie
 
 #### allowForKnownSafePromises\[n]
 
-type: `string`
+type: `object | string`
 
 Type or value specifier for matching specific declarations
 
@@ -55378,6 +55606,27 @@ Supports four types of specifiers:
 { "from": "package", "name": "Observable", "package": "rxjs" }
 { "from": "package", "name": ["Observable", "Subject"], "package": "rxjs" }
 ```
+
+##### allowForKnownSafePromises\[n].from
+
+type: `"file"`
+
+##### allowForKnownSafePromises\[n].name
+
+type: `array | string`
+
+Name specifier that can be a single string or array of strings
+
+###### allowForKnownSafePromises\[n].name\[n]
+
+type: `string`
+
+##### allowForKnownSafePromises\[n].path
+
+type: `string`
+
+Optional file path to specify where the types or values must be declared.
+If omitted, all files will be matched.
 
 ### checkThenables
 
@@ -56207,7 +56456,7 @@ even if they would normally be flagged as misused.
 
 #### allow\[n]
 
-type: `string`
+type: `object | string`
 
 Type or value specifier for matching specific declarations
 
@@ -56240,6 +56489,27 @@ Supports four types of specifiers:
 { "from": "package", "name": "Observable", "package": "rxjs" }
 { "from": "package", "name": ["Observable", "Subject"], "package": "rxjs" }
 ```
+
+##### allow\[n].from
+
+type: `"file"`
+
+##### allow\[n].name
+
+type: `array | string`
+
+Name specifier that can be a single string or array of strings
+
+###### allow\[n].name\[n]
+
+type: `string`
+
+##### allow\[n].path
+
+type: `string`
+
+Optional file path to specify where the types or values must be declared.
+If omitted, all files will be matched.
 
 ## How to use
 
@@ -57726,6 +57996,60 @@ oxlint --deny typescript/no-unnecessary-type-constraint
 ---
 
 ---
+url: /docs/guide/usage/linter/rules/typescript/no-unnecessary-type-conversion.md
+---
+
+### What it does
+
+Disallow unnecessary type conversion expressions.
+
+### Why is this bad?
+
+Type conversions that do not change a value's type or runtime behavior
+add noise and can obscure intent.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```ts
+const value = String("asdf");
+```
+
+Examples of **correct** code for this rule:
+
+```ts
+const value = "asdf";
+```
+
+## How to use
+
+To **enable** this rule using the config file or in the CLI, you can use:
+
+::: code-group
+
+```json [Config (.oxlintrc.json)]
+{
+  "rules": {
+    "typescript/no-unnecessary-type-conversion": "error"
+  }
+}
+```
+
+```bash [CLI]
+oxlint --type-aware --deny typescript/no-unnecessary-type-conversion
+```
+
+:::
+
+## References
+
+* Rule Source
+* Rule Source (tsgolint)
+
+---
+
+---
 url: /docs/guide/usage/linter/rules/typescript/no-unnecessary-type-parameters.md
 ---
 
@@ -58950,7 +59274,7 @@ Use this to allow throwing custom error types.
 
 #### allow\[n]
 
-type: `string`
+type: `object | string`
 
 Type or value specifier for matching specific declarations
 
@@ -58983,6 +59307,27 @@ Supports four types of specifiers:
 { "from": "package", "name": "Observable", "package": "rxjs" }
 { "from": "package", "name": ["Observable", "Subject"], "package": "rxjs" }
 ```
+
+##### allow\[n].from
+
+type: `"file"`
+
+##### allow\[n].name
+
+type: `array | string`
+
+Name specifier that can be a single string or array of strings
+
+###### allow\[n].name\[n]
+
+type: `string`
+
+##### allow\[n].path
+
+type: `string`
+
+Optional file path to specify where the types or values must be declared.
+If omitted, all files will be matched.
 
 ### allowRethrowing
 
@@ -59792,13 +60137,45 @@ logical expression (with `&&`).
 
 ### ignorePrimitives
 
-type: `boolean`
+type: `object | boolean`
 
 Represents the different ways `ignorePrimitives` can be specified in JSON.
 Can be:
 
 * `true` - ignore all primitive types
 * An object specifying which primitives to ignore
+
+#### ignorePrimitives.bigint
+
+type: `boolean`
+
+default: `false`
+
+Ignore bigint primitive types.
+
+#### ignorePrimitives.boolean
+
+type: `boolean`
+
+default: `false`
+
+Ignore boolean primitive types.
+
+#### ignorePrimitives.number
+
+type: `boolean`
+
+default: `false`
+
+Ignore number primitive types.
+
+#### ignorePrimitives.string
+
+type: `boolean`
+
+default: `false`
+
+Ignore string primitive types.
 
 ### ignoreTernaryTests
 
@@ -60220,7 +60597,7 @@ Type/value specifiers that should be exempt from this rule.
 
 #### allow\[n]
 
-type: `string`
+type: `object | string`
 
 Type or value specifier for matching specific declarations
 
@@ -60253,6 +60630,27 @@ Supports four types of specifiers:
 { "from": "package", "name": "Observable", "package": "rxjs" }
 { "from": "package", "name": ["Observable", "Subject"], "package": "rxjs" }
 ```
+
+##### allow\[n].from
+
+type: `"file"`
+
+##### allow\[n].name
+
+type: `array | string`
+
+Name specifier that can be a single string or array of strings
+
+###### allow\[n].name\[n]
+
+type: `string`
+
+##### allow\[n].path
+
+type: `string`
+
+Optional file path to specify where the types or values must be declared.
+If omitted, all files will be matched.
 
 ### checkParameterProperties
 
@@ -61344,7 +61742,7 @@ Defaults include Error, URL, and URLSearchParams from lib.
 
 #### allow\[n]
 
-type: `string`
+type: `object | string`
 
 Type or value specifier for matching specific declarations
 
@@ -61377,6 +61775,27 @@ Supports four types of specifiers:
 { "from": "package", "name": "Observable", "package": "rxjs" }
 { "from": "package", "name": ["Observable", "Subject"], "package": "rxjs" }
 ```
+
+##### allow\[n].from
+
+type: `"file"`
+
+##### allow\[n].name
+
+type: `array | string`
+
+Name specifier that can be a single string or array of strings
+
+###### allow\[n].name\[n]
+
+type: `string`
+
+##### allow\[n].path
+
+type: `string`
+
+Optional file path to specify where the types or values must be declared.
+If omitted, all files will be matched.
 
 ### allowAny
 
@@ -62524,7 +62943,11 @@ Enforces consistent usage of the `assert` module.
 
 ### Why is this bad?
 
-Inconsistent usage of the `assert` module can lead to confusion and errors.
+Inconsistent usage of the `assert` module can make code
+harder to follow and understand.
+
+`assert.ok(...)` is preferred as it makes the intent of
+the assertion clearer.
 
 ### Examples
 
@@ -63064,9 +63487,13 @@ url: /docs/guide/usage/linter/rules/unicorn/explicit-length-check.md
 
 ### What it does
 
-Enforce explicitly comparing the length or size property of a value.
+Enforce explicitly comparing the `length` or `size` property of a value.
 
 ### Why is this bad?
+
+Using the explicit `length` or `size` properties can help make code clearer
+and easier to understand, as it avoids relying on implicit truthy/falsy
+evaluations.
 
 ### Examples
 
@@ -63088,6 +63515,11 @@ Examples of **correct** code for this rule:
 
 ```javascript
 const isEmpty = foo.length === 0;
+
+if (foo.length > 0 || bar.length > 0) {
+}
+
+const unicorn = foo.length > 0 ? 1 : 2;
 ```
 
 ## Configuration
@@ -63464,12 +63896,13 @@ url: /docs/guide/usage/linter/rules/unicorn/no-accessor-recursion.md
 
 ### What it does
 
-Disallow recursive access to this within getters and setters
+Disallow recursive access to `this` within getters and setters.
 
 ### Why is this bad?
 
-This rule prevents recursive access to this within getter and setter methods in objects and classes,
-avoiding infinite recursion and stack overflow errors.
+This rule prevents recursive access to `this` within getter and
+setter methods in objects and classes, avoiding infinite recursion
+and stack overflow errors.
 
 ### Examples
 
@@ -63481,6 +63914,12 @@ const foo = {
     return this.bar;
   },
 };
+
+const baz = {
+  set bar(value) {
+    this.bar = value;
+  },
+};
 ```
 
 Examples of **correct** code for this rule:
@@ -63488,7 +63927,13 @@ Examples of **correct** code for this rule:
 ```js
 const foo = {
   get bar() {
-    return this.baz;
+    return this.qux;
+  },
+};
+
+const baz = {
+  set bar(value) {
+    this._bar = value;
   },
 };
 ```
@@ -64116,7 +64561,9 @@ Disallows leading/trailing space inside `console.log()` and similar methods.
 
 ### Why is this bad?
 
-The `console.log()` method and similar methods join the parameters with a space so adding a leading/trailing space to a parameter, results in two spaces being added.
+The `console.log()` method and similar methods join the parameters
+with a space so adding a leading/trailing space to a parameter,
+results in two spaces being added.
 
 ### Examples
 
@@ -64164,7 +64611,7 @@ url: /docs/guide/usage/linter/rules/unicorn/no-document-cookie.md
 
 ### What it does
 
-Disallow direct use of
+Disallows direct use of
 [`document.cookie`](https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie).
 
 ### Why is this bad?
@@ -64174,7 +64621,7 @@ It's not recommended to use
 directly as it's easy to get the string wrong. Instead, you should use
 the [Cookie Store
 API](https://developer.mozilla.org/en-US/docs/Web/API/Cookie_Store_API)
-or a [cookie library](https://www.npmjs.com/search?q=cookie).
+or a [cookie library](https://npmx.dev/search?q=cookie).
 
 ### Examples
 
@@ -64335,9 +64782,14 @@ url: /docs/guide/usage/linter/rules/unicorn/no-hex-escape.md
 
 ### What it does
 
-Enforces a convention of using [Unicode escapes](https://mathiasbynens.be/notes/javascript-escapes#unicode) instead of [hexadecimal escapes](https://mathiasbynens.be/notes/javascript-escapes#hexadecimal) for consistency and clarity.
+Enforces a convention of using [Unicode escapes](https://mathiasbynens.be/notes/javascript-escapes#unicode)
+instead of [hexadecimal escapes](https://mathiasbynens.be/notes/javascript-escapes#hexadecimal) for
+consistency and clarity.
 
 ### Why is this bad?
+
+Using hexadecimal escapes can be less readable and harder to understand
+when compared to Unicode escapes.
 
 ### Examples
 
@@ -64464,7 +64916,8 @@ Require `Array.isArray()` instead of `instanceof Array`.
 
 ### Why is this bad?
 
-The instanceof Array check doesn't work across realms/contexts, for example, frames/windows in browsers or the vm module in Node.js.
+The `instanceof Array` check doesn't work across realms/contexts.
+For example, frames/windows in browsers or the `vm` module in Node.js.
 
 ### Examples
 
@@ -64838,11 +65291,15 @@ url: /docs/guide/usage/linter/rules/unicorn/no-magic-array-flat-depth.md
 
 ### What it does
 
-Disallow magic numbers for `Array.prototype.flat` depth.
+Disallow magic numbers for [`Array.prototype.flat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat)
+depth.
 
 ### Why is this bad?
 
-Magic numbers are hard to understand and maintain. When calling `Array.prototype.flat`, it is usually called with `1` or infinity. If you are using a different number, it is better to add a comment explaining the depth.
+Magic numbers are hard to understand and maintain.
+When calling `Array.prototype.flat`, it is usually called with
+`1` or `Infinity`. If you are using a different number, it is
+better to add a comment explaining the reason for the depth provided.
 
 ### Examples
 
@@ -65236,29 +65693,36 @@ url: /docs/guide/usage/linter/rules/unicorn/no-process-exit.md
 
 ### What it does
 
-Disallow `process.exit()`.
+Disallow all usage of `process.exit()`.
 
 ### Why is this bad?
 
-Only use `process.exit()` in CLI apps. Throw an error instead.
+`process.exit()` should generally only be used in command-line utilities. In all other
+types of applications, the code should throw an error instead.
 
 ### Examples
 
 Examples of **incorrect** code for this rule:
 
 ```javascript
-if (problem) process.exit(1);
+if (problem) {
+  process.exit(1);
+}
 ```
 
 Examples of **correct** code for this rule:
 
 ```javascript
-if (problem) throw new Error("message");
+if (problem) {
+  throw new Error("message");
+}
 ```
 
 ```
 #!/usr/bin/env node
-if (problem) process.exit(1);
+if (problem) {
+  process.exit(1);
+}
 ```
 
 ## How to use
@@ -65293,7 +65757,7 @@ url: /docs/guide/usage/linter/rules/unicorn/no-single-promise-in-promise-methods
 
 ### What it does
 
-Disallow passing single-element arrays to Promise methods
+Disallow passing single-element arrays to `Promise` methods.
 
 ### Why is this bad?
 
@@ -65357,11 +65821,11 @@ url: /docs/guide/usage/linter/rules/unicorn/no-static-only-class.md
 
 ### What it does
 
-Disallow classes that only have static members.
+Disallow `class` declarations that exclusively contain `static` members.
 
 ### Why is this bad?
 
-A class with only static members could just be an object instead.
+A `class` with only `static` members should just be defined as an object instead.
 
 ### Examples
 
@@ -65429,12 +65893,12 @@ url: /docs/guide/usage/linter/rules/unicorn/no-thenable.md
 
 ### What it does
 
-Disallow `then` property
+Disallow defining a `then` property.
 
 ### Why is this bad?
 
 If an object is defined as "thenable", once it's accidentally
-used in an await expression, it may cause problems:
+used in an `await` expression, it may cause problems.
 
 ### Examples
 
@@ -65449,7 +65913,7 @@ async function example() {
 
   const { unicorn } = await foo;
 
-  console.log("after"); //<- This will never execute
+  console.log("after"); // <- This will never execute
 }
 ```
 
@@ -65799,13 +66263,15 @@ url: /docs/guide/usage/linter/rules/unicorn/no-unnecessary-slice-end.md
 
 ### What it does
 
-Omitting the end argument defaults it to the object's .length.
-Passing it explicitly or using Infinity is unnecessary
+Disallows unnecessarily passing a second argument to `slice(...)`, for
+cases where it would not change the result.
 
 ### Why is this bad?
 
-In JavaScript, omitting the end index already causes .slice() to run to the end of the target,
-so explicitly passing its length or Infinity is redundant.
+When using `.slice(...)` without a second argument, the second argument
+defaults to the object's length. As such, passing the length explicitly
+
+* or using `Infinity` - is unnecessary.
 
 ### Examples
 
@@ -65855,12 +66321,13 @@ url: /docs/guide/usage/linter/rules/unicorn/no-unreadable-array-destructuring.md
 
 ### What it does
 
-Disallow unreadable array destructuring
+Disallows destructuring values from an array in ways that are difficult to read.
 
 ### Why is this bad?
 
-Destructuring is very useful, but it can also make some code harder to read.
-This rule prevents ignoring consecutive values when destructuring from an array.
+Destructuring can be very useful, but it can also make some code harder to read.
+This rule prevents ignoring consecutive values (e.g. `let [,,foo] = array`)
+when destructuring from an array.
 
 ### Examples
 
@@ -65868,12 +66335,18 @@ Examples of **incorrect** code for this rule:
 
 ```javascript
 const [, , foo] = parts;
+const [, , ...rest] = parts;
 ```
 
 Examples of **correct** code for this rule:
 
 ```javascript
 const [foo] = parts;
+const foo = parts[3];
+const rest = parts.slice(2);
+
+// One is fine
+const [, foo] = parts;
 ```
 
 ## How to use
@@ -65970,12 +66443,15 @@ url: /docs/guide/usage/linter/rules/unicorn/no-useless-collection-argument.md
 
 ### What it does
 
-Disallow useless values or fallbacks in Set, Map, WeakSet, or WeakMap
+Disallow useless values or fallbacks in `Set`, `Map`, `WeakSet`, or `WeakMap`.
 
 ### Why is this bad?
 
-It's unnecessary to pass an empty array or string when constructing a Set, Map, WeakSet, or WeakMap, since they accept nullish values.
-It's also unnecessary to provide a fallback for possible nullish values.
+It is unnecessary to pass an empty array or empty string when
+constructing a `Set`, `Map`, `WeakSet`, or `WeakMap`, since
+they accept nullish values.
+
+It is also unnecessary to provide a fallback for possible nullish values.
 
 ### Examples
 
@@ -66212,11 +66688,19 @@ url: /docs/guide/usage/linter/rules/unicorn/no-useless-promise-resolve-reject.md
 
 ### What it does
 
-Disallows returning values wrapped in `Promise.resolve` or `Promise.reject` in an async function or a `Promise#then`/`catch`/`finally` callback.
+Disallows returning values wrapped in `Promise.resolve` or `Promise.reject`
+in an async function or a `Promise#then`/`catch`/`finally` callback.
 
 ### Why is this bad?
 
-Wrapping a return value in `Promise.resolve` in an async function or a `Promise#then`/`catch`/`finally` callback is unnecessary as all return values in async functions and promise callback functions are already wrapped in a `Promise`. Similarly, returning an error wrapped in `Promise.reject` is equivalent to simply `throw`ing the error. This is the same for `yield`ing in async generators as well.
+Wrapping a return value in `Promise.resolve` in an async function
+or a `Promise#then`/`catch`/`finally` callback is unnecessary as all
+return values in async functions and promise callback functions are
+already wrapped in a `Promise`.
+
+Similarly, returning an error wrapped in `Promise.reject` is equivalent
+to simply `throw`ing the error. This is the same for `yield`ing in
+async generators as well.
 
 ### Examples
 
@@ -66374,11 +66858,12 @@ url: /docs/guide/usage/linter/rules/unicorn/no-useless-switch-case.md
 
 ### What it does
 
-Disallows useless default cases in switch statements.
+Disallows useless `default` cases in `switch` statements.
 
 ### Why is this bad?
 
-An empty case before the last default case is useless.
+An empty case before the last `default` case is useless, as the
+`default` case will catch it regardless.
 
 ### Examples
 
@@ -66436,11 +66921,19 @@ url: /docs/guide/usage/linter/rules/unicorn/no-useless-undefined.md
 
 ### What it does
 
-Do not use useless `undefined`.
+Prevents usage of `undefined` in cases where it would be useless.
+
+::: warning
+This rule can conflict with the default behaviors of the `eslint/array-callback-return`
+and `eslint/getter-return` rules. For both rules, you can set
+the `allowImplicit` option to avoid conflicts.
+:::
 
 ### Why is this bad?
 
-`undefined` is the default value for new variables, parameters, return statements, etc… so specifying it doesn't make any difference.
+`undefined` is the default value for new variables, parameters,
+return statements, etc, so specifying `undefined` in these cases
+is pointless.
 
 ### Examples
 
@@ -66448,12 +66941,14 @@ Examples of **incorrect** code for this rule:
 
 ```javascript
 let foo = undefined;
+const noop = () => undefined;
 ```
 
 Examples of **correct** code for this rule:
 
 ```javascript
 let foo;
+const noop = () => {};
 ```
 
 ## Configuration
@@ -66637,10 +67132,20 @@ Enforces a convention of grouping digits using numeric separators.
 
 ### Why is this bad?
 
-Long numbers can become really hard to read, so cutting it into groups of digits,
-separated with a \_, is important to keep your code clear. This rule also enforces
-a proper usage of the numeric separator, by checking if the groups of digits are
-of the correct size.
+A long series of digits can be difficult to read, and
+it can be difficult to determine the value of the number at a glance.
+Breaking up the digits with numeric separators (`_`) can greatly
+improve readability.
+
+Compare the following two numbers and how easy it is to understand their magnitude:
+
+```js
+1000000000;
+1_000_000_000;
+```
+
+This rule also enforces proper group size, for example
+enforcing that the `_` separator is used every 3 digits.
 
 ### Examples
 
@@ -67131,12 +67636,16 @@ url: /docs/guide/usage/linter/rules/unicorn/prefer-at.md
 
 ### What it does
 
-Prefer `.at()` method for index access and `String#charAt()`.
+Prefer the [`Array#at()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at) and
+[`String#at()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/at)
+methods for index access.
+
+This rule also discourages using [`String#charAt()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charAt).
 
 ### Why is this bad?
 
 The `.at()` method is more readable and consistent for accessing elements by index,
-especially for negative indices which access elements from the end.
+especially for negative indices which access elements from the end of the array or string.
 
 ### Examples
 
@@ -67353,10 +67862,24 @@ and makes the intent clearer.
 
 Examples of **incorrect** code for this rule:
 
-```js
+```ts
 class Foo {
   constructor() {
     this.bar = 1;
+  }
+}
+
+class MyError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "MyError";
+  }
+}
+
+class Foo {
+  foo = "foo";
+  constructor() {
+    this.foo = "bar";
   }
 }
 ```
@@ -67366,6 +67889,14 @@ Examples of **correct** code for this rule:
 ```js
 class Foo {
   bar = 1;
+}
+
+class MyError extends Error {
+  name = "MyError";
+}
+
+class Foo {
+  foo = "bar";
 }
 ```
 
@@ -67750,7 +68281,8 @@ Prefers the use of `child.remove()` over `parentNode.removeChild(child)`.
 
 ### Why is this bad?
 
-The DOM function [`Node#remove()`](https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/remove) is preferred over the indirect removal of an object with [`Node#removeChild()`](https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild).
+The DOM function [`Node#remove()`](https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/remove) is preferred
+over the indirect removal of an object with [`Node#removeChild()`](https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild).
 
 ### Examples
 
@@ -67912,15 +68444,17 @@ url: /docs/guide/usage/linter/rules/unicorn/prefer-global-this.md
 
 Enforces the use of [`globalThis`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis) instead of
 environment‑specific global object aliases (`window`, `self`, or `global`).
+
 Using the standard `globalThis` makes your code portable across browsers, Web Workers, Node.js,
 and future JavaScript runtimes.
 
 ### Why is this bad?
 
-• **Portability** – `window` is only defined in browser main threads, `self` is used in Web Workers,
+**Portability** – `window` is only defined in browser main threads, `self` is used in Web Workers,
 and `global` is Node‑specific. Choosing the wrong alias causes runtime crashes when the code is
 executed outside of its original environment.
-• **Clarity** – `globalThis` clearly communicates that you are referring to the global object itself
+
+**Clarity** – `globalThis` clearly communicates that you are referring to the global object itself
 rather than a particular platform.
 
 ### Examples
@@ -68037,12 +68571,16 @@ url: /docs/guide/usage/linter/rules/unicorn/prefer-keyboard-event-key.md
 
 ### What it does
 
-Enforces the use of [`KeyboardEvent#key`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key) over [`KeyboardEvent#keyCode`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode) which is deprecated.
+Enforces the use of [`KeyboardEvent#key`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key)
+over [`KeyboardEvent#keyCode`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode),
+which is deprecated.
+
 The `.key` property is also more semantic and readable.
 
 ### Why is this bad?
 
-The `keyCode`, `which`, and `charCode` properties are deprecated and should be avoided in favor of the `key` property.
+The `keyCode`, `which`, and `charCode` properties are deprecated
+and should be avoided in favor of the `key` property.
 
 ### Examples
 
@@ -68512,11 +69050,12 @@ url: /docs/guide/usage/linter/rules/unicorn/prefer-negative-index.md
 
 ### What it does
 
-Prefer negative index over `.length` - index when possible
+Prefer using a negative index over `.length - index` when possible.
 
 ### Why is this bad?
 
-Conciseness and readability
+Using a negative index with `at` or `slice` is generally more readable
+and concise than using `.length - index`.
 
 ### Examples
 
@@ -68888,7 +69427,8 @@ url: /docs/guide/usage/linter/rules/unicorn/prefer-query-selector.md
 
 ### What it does
 
-Prefer `.querySelector()` over `.getElementById()`, `.querySelectorAll()` over `.getElementsByClassName()` and `.getElementsByTagName()`.
+Prefer `.querySelector()` over `.getElementById()`. And prefer `.querySelectorAll()`
+over `.getElementsByClassName()`, `.getElementsByTagName()`, and `.getElementsByName()`.
 
 ### Why is this bad?
 
@@ -68904,6 +69444,7 @@ document.getElementById("foo");
 document.getElementsByClassName("foo bar");
 document.getElementsByTagName("main");
 document.getElementsByClassName(fn());
+document.getElementsByName("foo");
 ```
 
 Examples of **correct** code for this rule:
@@ -70117,11 +70658,18 @@ url: /docs/guide/usage/linter/rules/unicorn/require-post-message-target-origin.m
 
 ### What it does
 
-Enforce using the targetOrigin argument with window.postMessage()
+Enforce using the `targetOrigin` argument with `window.postMessage()`.
+
+Note that this rule may have false positives, as it is not capable of
+detecting all cases correctly without type information. As such, it
+may not be a good idea to enable in cases where `postMessage()` may
+be used with `BroadcastChannel` or worker/service worker contexts
+(for example, `WorkerGlobalScope#postMessage`, where the second argument
+is a transfer list or options object, not `targetOrigin`).
 
 ### Why is this bad?
 
-When calling window.postMessage() without the targetOrigin argument,
+When calling `window.postMessage()` without the `targetOrigin` argument,
 the message cannot be received by any window.
 
 ### Examples
@@ -70444,67 +70992,6 @@ https://github.com/oven-sh/bun/issues/25658 to be fixed.
 ---
 
 ---
-url: /docs/guide/usage/formatter/generated-cli.md
----
-
-## Usage
-
-**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
-
-## Mode Options:
-
-* **`    --init`** —
-  Initialize `.oxfmtrc.json` with default values
-* **`    --migrate`**=*`SOURCE`* —
-  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
-* **`    --lsp`** —
-  Start language server protocol (LSP) server
-* **`    --stdin-filepath`**=*`PATH`* —
-  Specify the file name to use to infer which parser to use
-
-## Output Options:
-
-* **`    --write`** —
-  Format and write files in place (default)
-* **`    --check`** —
-  Check if files are formatted, also show statistics
-* **`    --list-different`** —
-  List files that would be changed
-
-## Config Options
-
-* **`-c`**, **`--config`**=*`PATH`* —
-  Path to the configuration file
-
-## Ignore Options
-
-* **`    --ignore-path`**=*`PATH`* —
-  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
-* **`    --with-node-modules`** —
-  Format code in node\_modules directory (skipped by default)
-
-## Runtime Options
-
-* **`    --no-error-on-unmatched-pattern`** —
-  Do not exit with error when pattern is unmatched
-* **`    --threads`**=*`INT`* —
-  Number of threads to use. Set to 1 for using only 1 CPU core.
-
-## Available positional items:
-
-* *`PATH`* —
-  Single file, path or list of paths. Glob patterns are also supported. (Be sure to quote them, otherwise your shell may expand them before passing.) Exclude patterns with `!` prefix like `'!**/fixtures/*.js'` are also supported. If not provided, current working directory is used.
-
-## Available options:
-
-* **`-h`**, **`--help`** —
-  Prints help information
-* **`-V`**, **`--version`** —
-  Prints version information
-
----
-
----
 url: /docs/guide/usage/linter/generated-cli.md
 ---
 
@@ -70517,12 +71004,12 @@ url: /docs/guide/usage/linter/generated-cli.md
 * **`-c`**, **`--config`**=*`<./.oxlintrc.json>`* —
   Oxlint configuration file
 
-- `.json` config files are supported in all runtimes
+- `.json` and `.jsonc` config files are supported in all runtimes
 - JavaScript/TypeScript config files are experimental and require running via Node.js
 - you can use comments in configuration files.
 - tries to be compatible with ESLint v8's format
 
-  If not provided, Oxlint will look for `.oxlintrc.json` in the current working directory.
+  If not provided, Oxlint will look for a `.oxlintrc.json`, `.oxlintrc.jsonc`, or `oxlint.config.ts` file in the current working directory.
 
 * **`    --tsconfig`**=*`<./tsconfig.json>`* —
   TypeScript `tsconfig.json` path for reading path alias and project references for import plugin. If not provided, will look for `tsconfig.json` in the current working directory.
@@ -70654,6 +71141,67 @@ Arguments:
   Enable rules that require type information
 * **`    --type-check`** —
   Enable experimental type checking (includes TypeScript compiler diagnostics)
+* **`-h`**, **`--help`** —
+  Prints help information
+* **`-V`**, **`--version`** —
+  Prints version information
+
+---
+
+---
+url: /docs/guide/usage/formatter/generated-cli.md
+---
+
+## Usage
+
+**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
+
+## Mode Options:
+
+* **`    --init`** —
+  Initialize `.oxfmtrc.json` with default values
+* **`    --migrate`**=*`SOURCE`* —
+  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
+* **`    --lsp`** —
+  Start language server protocol (LSP) server
+* **`    --stdin-filepath`**=*`PATH`* —
+  Specify the file name to use to infer which parser to use
+
+## Output Options:
+
+* **`    --write`** —
+  Format and write files in place (default)
+* **`    --check`** —
+  Check if files are formatted, also show statistics
+* **`    --list-different`** —
+  List files that would be changed
+
+## Config Options
+
+* **`-c`**, **`--config`**=*`PATH`* —
+  Path to the configuration file
+
+## Ignore Options
+
+* **`    --ignore-path`**=*`PATH`* —
+  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
+* **`    --with-node-modules`** —
+  Format code in node\_modules directory (skipped by default)
+
+## Runtime Options
+
+* **`    --no-error-on-unmatched-pattern`** —
+  Do not exit with error when pattern is unmatched
+* **`    --threads`**=*`INT`* —
+  Number of threads to use. Set to 1 for using only 1 CPU core.
+
+## Available positional items:
+
+* *`PATH`* —
+  Single file, path or list of paths. Glob patterns are also supported. (Be sure to quote them, otherwise your shell may expand them before passing.) Exclude patterns with `!` prefix like `'!**/fixtures/*.js'` are also supported. If not provided, current working directory is used.
+
+## Available options:
+
 * **`-h`**, **`--help`** —
   Prints help information
 * **`-V`**, **`--version`** —
@@ -72306,12 +72854,16 @@ url: /docs/guide/usage/linter/rules/vue/max-props.md
 
 ### What it does
 
-Enforce maximum number of props in Vue component.
+Enforce a maximum number of props defined for a given Vue component.
 
 ### Why is this bad?
 
-This rule enforces a maximum number of props in a Vue SFC,
-in order to aid in maintainability and reduce complexity.
+A large number of props on a component can indicate that it is trying
+to do too much and may be difficult to maintain or understand.
+
+By limiting the number of props, developers are encouraged to avoid
+overly complex components and instead create smaller, more focused
+components that are easier to reason about.
 
 ### Examples
 
@@ -72346,7 +72898,7 @@ type: `integer`
 
 default: `1`
 
-The maximum number of props allowed in a Vue Single File Component (SFC).
+The maximum number of props allowed in a Vue SFC.
 
 ## How to use
 

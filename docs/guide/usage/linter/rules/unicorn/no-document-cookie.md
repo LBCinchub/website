@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/unicorn/no-document-cookie.md
 
 ### What it does
 
-Disallow direct use of
+Disallows direct use of
 [`document.cookie`](https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie).
 
 ### Why is this bad?
@@ -14,7 +14,7 @@ It's not recommended to use
 directly as it's easy to get the string wrong. Instead, you should use
 the [Cookie Store
 API](https://developer.mozilla.org/en-US/docs/Web/API/Cookie_Store_API)
-or a [cookie library](https://www.npmjs.com/search?q=cookie).
+or a [cookie library](https://npmx.dev/search?q=cookie).
 
 ### Examples
 

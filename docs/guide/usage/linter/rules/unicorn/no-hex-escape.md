@@ -4,9 +4,14 @@ url: /docs/guide/usage/linter/rules/unicorn/no-hex-escape.md
 
 ### What it does
 
-Enforces a convention of using [Unicode escapes](https://mathiasbynens.be/notes/javascript-escapes#unicode) instead of [hexadecimal escapes](https://mathiasbynens.be/notes/javascript-escapes#hexadecimal) for consistency and clarity.
+Enforces a convention of using [Unicode escapes](https://mathiasbynens.be/notes/javascript-escapes#unicode)
+instead of [hexadecimal escapes](https://mathiasbynens.be/notes/javascript-escapes#hexadecimal) for
+consistency and clarity.
 
 ### Why is this bad?
+
+Using hexadecimal escapes can be less readable and harder to understand
+when compared to Unicode escapes.
 
 ### Examples
 

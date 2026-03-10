@@ -4,12 +4,15 @@ url: /docs/guide/usage/linter/rules/unicorn/no-useless-collection-argument.md
 
 ### What it does
 
-Disallow useless values or fallbacks in Set, Map, WeakSet, or WeakMap
+Disallow useless values or fallbacks in `Set`, `Map`, `WeakSet`, or `WeakMap`.
 
 ### Why is this bad?
 
-It's unnecessary to pass an empty array or string when constructing a Set, Map, WeakSet, or WeakMap, since they accept nullish values.
-It's also unnecessary to provide a fallback for possible nullish values.
+It is unnecessary to pass an empty array or empty string when
+constructing a `Set`, `Map`, `WeakSet`, or `WeakMap`, since
+they accept nullish values.
+
+It is also unnecessary to provide a fallback for possible nullish values.
 
 ### Examples
 

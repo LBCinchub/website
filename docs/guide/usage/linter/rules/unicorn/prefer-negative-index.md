@@ -4,11 +4,12 @@ url: /docs/guide/usage/linter/rules/unicorn/prefer-negative-index.md
 
 ### What it does
 
-Prefer negative index over `.length` - index when possible
+Prefer using a negative index over `.length - index` when possible.
 
 ### Why is this bad?
 
-Conciseness and readability
+Using a negative index with `at` or `slice` is generally more readable
+and concise than using `.length - index`.
 
 ### Examples
 

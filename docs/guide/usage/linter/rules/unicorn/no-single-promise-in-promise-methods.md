@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/unicorn/no-single-promise-in-promise-methods
 
 ### What it does
 
-Disallow passing single-element arrays to Promise methods
+Disallow passing single-element arrays to `Promise` methods.
 
 ### Why is this bad?
 

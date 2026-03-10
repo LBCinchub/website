@@ -4,12 +4,16 @@ url: /docs/guide/usage/linter/rules/unicorn/prefer-at.md
 
 ### What it does
 
-Prefer `.at()` method for index access and `String#charAt()`.
+Prefer the [`Array#at()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at) and
+[`String#at()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/at)
+methods for index access.
+
+This rule also discourages using [`String#charAt()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charAt).
 
 ### Why is this bad?
 
 The `.at()` method is more readable and consistent for accessing elements by index,
-especially for negative indices which access elements from the end.
+especially for negative indices which access elements from the end of the array or string.
 
 ### Examples
 
