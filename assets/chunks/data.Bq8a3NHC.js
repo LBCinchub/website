@@ -1,1 +1,0 @@
-import{p as e}from"./client.BqgfcAMQ.js";const t=e;export{t};
