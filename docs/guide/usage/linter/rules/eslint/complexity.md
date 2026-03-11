@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/complexity.md
 
 ### What it does
 
-Enforces a maximum cyclomatic complexity in a program, which is the number
+Enforces a maximum [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) in a program, which is the number
 of linearly independent paths in a program.
 
 ### Why is this bad?

@@ -29,7 +29,7 @@ url: /docs/guide/usage/formatter/generated-cli.md
 ## Config Options
 
 * **`-c`**, **`--config`**=*`PATH`* —
-  Path to the configuration file
+  Path to the configuration file (.json, .jsonc, .ts, .mts, .cts, .js, .mjs, .cjs)
 
 ## Ignore Options
 
