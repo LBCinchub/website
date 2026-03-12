@@ -4,7 +4,7 @@
         <title>The Oxidation Compiler Blog</title>
         <link>https://oxc.rs</link>
         <description></description>
-        <lastBuildDate>Thu, 12 Mar 2026 08:57:37 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 12 Mar 2026 23:18:01 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -1410,7 +1410,7 @@ But token-related APIs are absent, so stylistic (formatting) rules will not.</p>
 <span class="line"><span>1 | debugger;</span></span>
 <span class="line"><span>  : ^^^^^^^^^</span></span>
 <span class="line"><span>  `----</span></span></code></pre>
-</div><p>For further details on authoring plugins, see <a href="/docs/guide/usage/linter/js-plugins.html">the docs</a>.</p>
+</div><p>For further details on authoring plugins, see <a href="/docs/guide/usage/linter/writing-js-plugins.html">the docs</a>.</p>
 <h2 id="alternative-api" tabindex="-1">Alternative API <a class="header-anchor" href="#alternative-api" aria-label="Permalink to “Alternative API”">&#8203;</a></h2>
 <p>Oxlint also offers a slightly different API which unlocks better performance.</p>
 <p><strong>This alternative API produces plugins which are compatible with ESLint, as well as Oxlint.</strong></p>
@@ -1487,7 +1487,7 @@ But token-related APIs are absent, so stylistic (formatting) rules will not.</p>
 whereas <code>createOnce</code> is called once only.</p>
 <p>All other APIs behave exactly the same as in ESLint.</p>
 <p>The reasons why this alternative API has potential to greatly improve performance are explained in
-<a href="/docs/guide/usage/linter/js-plugins.html#why-is-the-alternative-api-faster">the docs</a>.</p>
+<a href="/docs/guide/usage/linter/writing-js-plugins.html#why-is-the-alternative-api-faster">the docs</a>.</p>
 <h2 id="performance" tabindex="-1">Performance <a class="header-anchor" href="#performance" aria-label="Permalink to “Performance”">&#8203;</a></h2>
 <p>As mentioned above, performance has not been our focus in this initial preview release of Oxlint JS plugins.
 Our primary goal has been to fill out enough of the API for JS plugins to be useful in real world projects,
@@ -1592,7 +1592,7 @@ and ESLint compatibility, and to investigate if there's a &quot;have cake and ea
 providing an ESLint-compatible API <em>and</em> acceptable performance (&quot;acceptable&quot; here means pretty damn fast!)</p>
 <p>We believe that through a combination of different approaches, we've found a way to satisfy both demands.</p>
 <h3 id="alternative-api-1" tabindex="-1">Alternative API <a class="header-anchor" href="#alternative-api-1" aria-label="Permalink to “Alternative API”">&#8203;</a></h3>
-<p>See explanation <a href="/docs/guide/usage/linter/js-plugins.html#why-is-the-alternative-api-faster">in docs</a>
+<p>See explanation <a href="/docs/guide/usage/linter/writing-js-plugins.html#why-is-the-alternative-api-faster">in docs</a>
 of why this API unlocks potential for higher performance.</p>
 <h3 id="raw-transfer" tabindex="-1">Raw transfer <a class="header-anchor" href="#raw-transfer" aria-label="Permalink to “Raw transfer”">&#8203;</a></h3>
 <p>Tools like Oxc represent the code of a JS/TS file as an &quot;AST&quot;
