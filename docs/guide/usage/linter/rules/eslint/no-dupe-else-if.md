@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-dupe-else-if.md
 
 ### What it does
 
-Disallow duplicate conditions in if-else-if chains
+Disallow duplicate conditions in if-else-if chains.
 
 ### Why is this bad?
 

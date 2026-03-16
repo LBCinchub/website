@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/unicorn/prefer-string-raw.md
 
 ### What it does
 
-Prefers use of String.raw to avoid escaping .
+Prefers use of `String.raw` to avoid escaping `\`.
 
 ### Why is this bad?
 

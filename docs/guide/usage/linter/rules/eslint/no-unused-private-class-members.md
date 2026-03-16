@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-unused-private-class-members.md
 
 ### What it does
 
-Disallow unused private class members
+Disallow unused private class members.
 
 ### Why is this bad?
 

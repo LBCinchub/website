@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/typescript/no-inferrable-types.md
 
 ### What it does
 
-Disallow explicit type declarations for variables or parameters initialized to a number, string, or boolean
+Disallow explicit type declarations for variables or parameters initialized to a number, string, or boolean.
 
 ### Why is this bad?
 

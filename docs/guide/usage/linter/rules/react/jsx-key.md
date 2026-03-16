@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/react/jsx-key.md
 
 ### What it does
 
-Enforce `key` prop for elements in array
+Enforce `key` prop for elements in array.
 
 ### Why is this bad?
 

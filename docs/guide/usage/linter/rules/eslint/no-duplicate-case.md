@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-duplicate-case.md
 
 ### What it does
 
-Disallow duplicate case labels
+Disallow duplicate case labels.
 
 ### Why is this bad?
 

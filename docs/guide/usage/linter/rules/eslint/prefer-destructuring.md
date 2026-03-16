@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/prefer-destructuring.md
 
 ### What it does
 
-Require destructuring from arrays and/or objects
+Require destructuring from arrays and/or objects.
 
 ### Why is this bad?
 

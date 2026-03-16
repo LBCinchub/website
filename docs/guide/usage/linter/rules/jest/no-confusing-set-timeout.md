@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/jest/no-confusing-set-timeout.md
 
 ### What it does
 
-Disallow confusing usages of jest.setTimeout
+Disallow confusing usages of `jest.setTimeout`.
 
 ### Why is this bad?
 

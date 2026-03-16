@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-bitwise.md
 
 ### What it does
 
-Disallow bitwise operators
+Disallow bitwise operators.
 
 ### Why is this bad?
 

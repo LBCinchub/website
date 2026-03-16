@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-empty-character-class.md
 
 ### What it does
 
-Disallow empty character classes in regular expressions
+Disallow empty character classes in regular expressions.
 
 ### Why is this bad?
 

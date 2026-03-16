@@ -5,12 +5,12 @@ url: >-
 
 ### What it does
 
-Enforce using the digits argument with Number.toFixed()
+Enforce using the digits argument with `Number#toFixed()`.
 
 ### Why is this bad?
 
-It's better to make it clear what the value of the digits argument is when calling Number.toFixed(),
-instead of relying on the default value of 0.
+It's better to make it clear what the value of the digits argument is when calling `Number#toFixed()`,
+instead of relying on the default value of `0`.
 
 ### Examples
 

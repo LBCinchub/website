@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-ternary.md
 
 ### What it does
 
-Disallow ternary operators
+Disallow ternary operators.
 
 ### Why is this bad?
 

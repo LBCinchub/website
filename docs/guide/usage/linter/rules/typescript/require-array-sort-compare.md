@@ -4,11 +4,11 @@ url: /docs/guide/usage/linter/rules/typescript/require-array-sort-compare.md
 
 ### What it does
 
-This rule requires Array.sort() to be called with a comparison function.
+This rule requires `Array#sort()` to be called with a comparison function.
 
 ### Why is this bad?
 
-When Array.sort() is called without a comparison function, it converts elements to strings and sorts them lexicographically. This often leads to unexpected results, especially with numbers where `[1, 10, 2].sort()` returns `[1, 10, 2]` instead of `[1, 2, 10]`.
+When `Array#sort()` is called without a comparison function, it converts elements to strings and sorts them lexicographically. This often leads to unexpected results, especially with numbers where `[1, 10, 2].sort()` returns `[1, 10, 2]` instead of `[1, 2, 10]`.
 
 ### Examples
 

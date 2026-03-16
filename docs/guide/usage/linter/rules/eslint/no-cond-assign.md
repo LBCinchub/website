@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-cond-assign.md
 
 ### What it does
 
-Disallow assignment operators in conditional expressions
+Disallow assignment operators in conditional expressions.
 
 ### Why is this bad?
 

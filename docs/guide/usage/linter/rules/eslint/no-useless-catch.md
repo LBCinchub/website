@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-useless-catch.md
 
 ### What it does
 
-Disallow unnecessary catch clauses
+Disallow unnecessary catch clauses.
 
 ### Why is this bad?
 

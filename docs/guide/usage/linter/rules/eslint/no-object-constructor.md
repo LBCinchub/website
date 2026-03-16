@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-object-constructor.md
 
 ### What it does
 
-Disallow calls to the Object constructor without an argument
+Disallow calls to the Object constructor without an argument.
 
 ### Why is this bad?
 

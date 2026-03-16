@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/unicorn/consistent-empty-array-spread.md
 
 ### What it does
 
-When spreading a ternary in an array, we can use both \[] and '' as fallbacks,
+When spreading a ternary in an array, we can use both `[]` and `''` as fallbacks,
 but it's better to have consistent types in both branches.
 
 ### Why is this bad?

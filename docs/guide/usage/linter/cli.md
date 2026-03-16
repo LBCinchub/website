@@ -21,7 +21,10 @@ url: /docs/guide/usage/linter/cli.md
   If not provided, Oxlint will look for a `.oxlintrc.json`, `.oxlintrc.jsonc`, or `oxlint.config.ts` file in the current working directory.
 
 * **`    --tsconfig`**=*`<./tsconfig.json>`* —
-  TypeScript `tsconfig.json` path for reading path alias and project references for import plugin. If not provided, will look for `tsconfig.json` in the current working directory.
+  Override the TypeScript config used for import resolution. Oxlint automatically discovers the relevant `tsconfig.json` for each file. Use this only when your project uses a non-standard tsconfig name or location.
+
+  NOTE: Type checking and Type aware rules will still use the tsconfig discovered automatically, and will not be affected by this option.
+
 * **`    --init`** —
   Initialize oxlint configuration with default values
 
@@ -59,7 +62,7 @@ Arguments:
 * **`    --disable-typescript-plugin`** —
   Disable TypeScript plugin, which is turned on by default
 * **`    --import-plugin`** —
-  Enable import plugin and detect ESM problems. It should be used with the `--tsconfig` flag if your project has a tsconfig with a name other than `tsconfig.json`.
+  Enable import plugin and detect ESM problems.
 * **`    --react-plugin`** —
   Enable react plugin, which is turned off by default
 * **`    --jsdoc-plugin`** —

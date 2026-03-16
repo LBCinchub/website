@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-nonoctal-decimal-escape.md
 
 ### What it does
 
-This rule disallows \8 and \9 escape sequences in string literals
+This rule disallows \8 and \9 escape sequences in string literals.
 
 ### Why is this bad?
 

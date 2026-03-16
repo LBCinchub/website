@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/unicorn/no-array-callback-reference.md
 
 ### What it does
 
-Prevents passing a function reference directly to iterator methods
+Prevents passing a function reference directly to iterator methods.
 
 ### Why is this bad?
 

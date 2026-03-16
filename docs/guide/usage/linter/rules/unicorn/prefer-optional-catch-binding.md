@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/unicorn/prefer-optional-catch-binding.md
 
 ### What it does
 
-Prefers omitting the catch binding parameter if it is unused
+Prefers omitting the catch binding parameter if it is unused.
 
 ### Why is this bad?
 

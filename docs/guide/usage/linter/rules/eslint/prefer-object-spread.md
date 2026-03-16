@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/prefer-object-spread.md
 
 ### What it does
 
-Disallow using `Object.assign` with an object literal as the first argument and prefer the use of object spread instead
+Disallow using `Object.assign` with an object literal as the first argument and prefer the use of object spread instead.
 
 ### Why is this bad?
 

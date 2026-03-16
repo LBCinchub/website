@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/typescript/prefer-promise-reject-errors.md
 
 ### What it does
 
-This rule enforces passing an Error object to Promise.reject().
+This rule enforces passing an Error object to `Promise.reject()`.
 
 ### Why is this bad?
 

@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/array-callback-return.md
 
 ### What it does
 
-Enforce return statements in callbacks of array methods
+Enforce return statements in callbacks of array methods.
 
 ### Why is this bad?
 

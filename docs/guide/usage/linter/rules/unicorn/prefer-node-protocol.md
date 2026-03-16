@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/unicorn/prefer-node-protocol.md
 
 ### What it does
 
-Prefer using the `node:protocol` when importing Node.js builtin modules
+Prefer using the `node:protocol` when importing Node.js builtin modules.
 
 ### Why is this bad?
 

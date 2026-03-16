@@ -4,11 +4,11 @@ url: /docs/guide/usage/linter/rules/unicorn/prefer-structured-clone.md
 
 ### What it does
 
-Prefer using structuredClone to create a deep clone.
+Prefer using `structuredClone` to create a deep clone.
 
 ### Why is this bad?
 
-structuredClone is the modern way to create a deep clone of a value.
+`structuredClone` is the modern way to create a deep clone of a value.
 
 ### Examples
 

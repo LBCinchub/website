@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-constructor-return.md
 
 ### What it does
 
-Disallow returning value from constructor
+Disallow returning value from constructor.
 
 ### Why is this bad?
 

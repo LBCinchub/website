@@ -4,12 +4,12 @@ url: /docs/guide/usage/linter/rules/eslint/no-unassigned-vars.md
 
 ### What it does
 
-Disallow let or var variables that are read but never assigned
+Disallow let or var variables that are read but never assigned.
 
 ### Why is this bad?
 
 This rule flags let or var declarations that are never assigned a value but are still read or used in the code.
-Since these variables will always be undefined, their usage is likely a programming mistake.
+Since these variables will always be `undefined`, their usage is likely a programming mistake.
 
 ### Examples
 

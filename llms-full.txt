@@ -1527,7 +1527,10 @@ url: /docs/guide/usage/linter/cli.md
   If not provided, Oxlint will look for a `.oxlintrc.json`, `.oxlintrc.jsonc`, or `oxlint.config.ts` file in the current working directory.
 
 * **`    --tsconfig`**=*`<./tsconfig.json>`* —
-  TypeScript `tsconfig.json` path for reading path alias and project references for import plugin. If not provided, will look for `tsconfig.json` in the current working directory.
+  Override the TypeScript config used for import resolution. Oxlint automatically discovers the relevant `tsconfig.json` for each file. Use this only when your project uses a non-standard tsconfig name or location.
+
+  NOTE: Type checking and Type aware rules will still use the tsconfig discovered automatically, and will not be affected by this option.
+
 * **`    --init`** —
   Initialize oxlint configuration with default values
 
@@ -1565,7 +1568,7 @@ Arguments:
 * **`    --disable-typescript-plugin`** —
   Disable TypeScript plugin, which is turned on by default
 * **`    --import-plugin`** —
-  Enable import plugin and detect ESM problems. It should be used with the `--tsconfig` flag if your project has a tsconfig with a name other than `tsconfig.json`.
+  Enable import plugin and detect ESM problems.
 * **`    --react-plugin`** —
   Enable react plugin, which is turned off by default
 * **`    --jsdoc-plugin`** —
@@ -1723,184 +1726,6 @@ url: /docs/guide/usage/formatter/cli.md
   Prints help information
 * **`-V`**, **`--version`** —
   Prints version information
-
----
-
----
-url: /docs/guide/usage/formatter/config.md
-description: Configure Oxfmt using a .oxfmtrc.json file.
----
-
-# Configuration
-
-Oxfmt works out of the box, but most teams commit a configuration file to keep formatting consistent across local runs, editors, and CI.
-
-This page focuses on project configuration: formatting options, ignore patterns, and experimental features.
-
-## Create a config file
-
-To generate a starter config in the current directory:
-
-```sh
-oxfmt --init
-```
-
-Oxfmt automatically looks for the following files starting from the current directory and walking up the tree:
-
-* `.oxfmtrc.json`
-* `.oxfmtrc.jsonc`
-* `oxfmt.config.ts`
-
-You can also pass a config explicitly with `-c`. This accepts any supported format (`.json`, `.jsonc`, `.ts`, `.mts`, `.cts`, `.js`, `.mjs`, `.cjs`):
-
-```sh
-oxfmt -c path/to/yourconfig.json
-```
-
-A minimal JSON configuration looks like this:
-
-```json [.oxfmtrc.json]
-{
-  "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "printWidth": 80
-}
-```
-
-JavaScript / TypeScript config files use a default export. `defineConfig` is optional but gives you type checking and editor autocomplete:
-
-```ts [oxfmt.config.ts]
-import { defineConfig } from "oxfmt";
-
-export default defineConfig({
-  printWidth: 80,
-});
-```
-
-## Configuration file format
-
-A configuration file is a JSON object. The most common top-level fields are:
-
-* `printWidth`: Line width limit (default: 100)
-* `tabWidth`: Spaces per indentation level (default: 2)
-* `useTabs`: Use tabs instead of spaces (default: false)
-* `semi`: Add semicolons (default: true)
-* `singleQuote`: Use single quotes (default: false)
-* `trailingComma`: Trailing commas in multi-line structures (default: "all")
-* `ignorePatterns`: Glob patterns to exclude from formatting
-* `sortImports`: Configure import sorting (disabled by default)
-* `sortTailwindcss`: Configure Tailwind class sorting (disabled by default)
-* `sortPackageJson`: Configure package.json sorting (enabled by default)
-
-For a complete list of fields, see the [Config file reference](./config-file-reference).
-
-## JSON schema
-
-Add a `$schema` field for editor validation and autocomplete:
-
-```json [.oxfmtrc.json]
-{
-  "$schema": "./node_modules/oxfmt/configuration_schema.json"
-}
-```
-
-## `.editorconfig`
-
-Oxfmt reads these `.editorconfig` properties:
-
-* `end_of_line` → `endOfLine`
-* `indent_style` → `useTabs`
-* `indent_size` → `tabWidth`
-* `max_line_length` → `printWidth`
-* `insert_final_newline` → `insertFinalNewline`
-
-Both root section and glob-based overrides are supported.
-
-```
-[*]
-indent_size = 4
-
-[*.{js,ts}]
-indent_size = 2
-```
-
-Oxfmt uses only the nearest `.editorconfig` from the current directory:
-
-* `root = true` is not respected
-* Nested `.editorconfig` files are not merged
-
-## Overrides
-
-Use the `overrides` field to apply different formatting options to specific files:
-
-```json [.oxfmtrc.json]
-{
-  "printWidth": 100,
-  "overrides": [
-    {
-      "files": ["*.test.js", "*.spec.ts"],
-      "options": {
-        "printWidth": 120
-      }
-    },
-    {
-      "files": ["*.md", "*.html"],
-      "excludeFiles": ["*.min.js"],
-      "options": {
-        "tabWidth": 4
-      }
-    }
-  ]
-}
-```
-
-Each override entry has:
-
-* `files` (required): Glob patterns to match files
-* `excludeFiles` (optional): Glob patterns to exclude from this override
-* `options`: Formatting options to apply
-
-Glob patterns are resolved relative to the directory containing the Oxfmt config file.
-
-## Precedence
-
-Options are applied in order (lowest to highest priority):
-
-1. Defaults
-2. `.oxfmtrc.json(c)` root options
-3. `.oxfmtrc.json(c)` `overrides` options
-4. fallback to options supported by `.editorconfig` for unset fields
-
-## Oxfmt-specific options
-
-### `insertFinalNewline`
-
-Controls whether a final newline is added to formatted files. Defaults to `true`.
-
-This is a [frequently requested Prettier feature](https://github.com/prettier/prettier/issues/6360), as some environments (e.g., Salesforce) strip trailing newlines.
-
-### `printWidth`
-
-Oxfmt defaults to `printWidth: 100` (Prettier uses 80). Reasons:
-
-* TypeScript code is longer due to type annotations
-* Import statements often have many specifiers
-* Modern screens are wider
-* Fewer line breaks mean fewer LLM tokens
-
-To match Prettier's default:
-
-```json [.oxfmtrc.json]
-{
-  "printWidth": 80
-}
-```
-
-## Next steps
-
-* [Ignore files](./ignore-files): Ignore files and patterns, `.gitignore` and `.prettierignore` workflows.
-* [Inline ignore comments](./ignore-comments): Inline suppressions for specific code.
-* [Config file reference](./config-file-reference): Full schema and field documentation.
-* [CLI reference](./cli): Complete list of flags.
 
 ---
 
@@ -2279,6 +2104,184 @@ Example (monorepo + React + jsx-a11y):
 * [Nested configs](/docs/guide/usage/linter/nested-config): Monorepos and per-package configuration.
 * [Config file reference](/docs/guide/usage/linter/config-file-reference.html): Full schema and field documentation.
 * [CLI reference](/docs/guide/usage/linter/cli.html): Complete list of flags and output formats.
+
+---
+
+---
+url: /docs/guide/usage/formatter/config.md
+description: Configure Oxfmt using a .oxfmtrc.json file.
+---
+
+# Configuration
+
+Oxfmt works out of the box, but most teams commit a configuration file to keep formatting consistent across local runs, editors, and CI.
+
+This page focuses on project configuration: formatting options, ignore patterns, and experimental features.
+
+## Create a config file
+
+To generate a starter config in the current directory:
+
+```sh
+oxfmt --init
+```
+
+Oxfmt automatically looks for the following files starting from the current directory and walking up the tree:
+
+* `.oxfmtrc.json`
+* `.oxfmtrc.jsonc`
+* `oxfmt.config.ts`
+
+You can also pass a config explicitly with `-c`. This accepts any supported format (`.json`, `.jsonc`, `.ts`, `.mts`, `.cts`, `.js`, `.mjs`, `.cjs`):
+
+```sh
+oxfmt -c path/to/yourconfig.json
+```
+
+A minimal JSON configuration looks like this:
+
+```json [.oxfmtrc.json]
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 80
+}
+```
+
+JavaScript / TypeScript config files use a default export. `defineConfig` is optional but gives you type checking and editor autocomplete:
+
+```ts [oxfmt.config.ts]
+import { defineConfig } from "oxfmt";
+
+export default defineConfig({
+  printWidth: 80,
+});
+```
+
+## Configuration file format
+
+A configuration file is a JSON object. The most common top-level fields are:
+
+* `printWidth`: Line width limit (default: 100)
+* `tabWidth`: Spaces per indentation level (default: 2)
+* `useTabs`: Use tabs instead of spaces (default: false)
+* `semi`: Add semicolons (default: true)
+* `singleQuote`: Use single quotes (default: false)
+* `trailingComma`: Trailing commas in multi-line structures (default: "all")
+* `ignorePatterns`: Glob patterns to exclude from formatting
+* `sortImports`: Configure import sorting (disabled by default)
+* `sortTailwindcss`: Configure Tailwind class sorting (disabled by default)
+* `sortPackageJson`: Configure package.json sorting (enabled by default)
+
+For a complete list of fields, see the [Config file reference](./config-file-reference).
+
+## JSON schema
+
+Add a `$schema` field for editor validation and autocomplete:
+
+```json [.oxfmtrc.json]
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json"
+}
+```
+
+## `.editorconfig`
+
+Oxfmt reads these `.editorconfig` properties:
+
+* `end_of_line` → `endOfLine`
+* `indent_style` → `useTabs`
+* `indent_size` → `tabWidth`
+* `max_line_length` → `printWidth`
+* `insert_final_newline` → `insertFinalNewline`
+
+Both root section and glob-based overrides are supported.
+
+```
+[*]
+indent_size = 4
+
+[*.{js,ts}]
+indent_size = 2
+```
+
+Oxfmt uses only the nearest `.editorconfig` from the current directory:
+
+* `root = true` is not respected
+* Nested `.editorconfig` files are not merged
+
+## Overrides
+
+Use the `overrides` field to apply different formatting options to specific files:
+
+```json [.oxfmtrc.json]
+{
+  "printWidth": 100,
+  "overrides": [
+    {
+      "files": ["*.test.js", "*.spec.ts"],
+      "options": {
+        "printWidth": 120
+      }
+    },
+    {
+      "files": ["*.md", "*.html"],
+      "excludeFiles": ["*.min.js"],
+      "options": {
+        "tabWidth": 4
+      }
+    }
+  ]
+}
+```
+
+Each override entry has:
+
+* `files` (required): Glob patterns to match files
+* `excludeFiles` (optional): Glob patterns to exclude from this override
+* `options`: Formatting options to apply
+
+Glob patterns are resolved relative to the directory containing the Oxfmt config file.
+
+## Precedence
+
+Options are applied in order (lowest to highest priority):
+
+1. Defaults
+2. `.oxfmtrc.json(c)` root options
+3. `.oxfmtrc.json(c)` `overrides` options
+4. fallback to options supported by `.editorconfig` for unset fields
+
+## Oxfmt-specific options
+
+### `insertFinalNewline`
+
+Controls whether a final newline is added to formatted files. Defaults to `true`.
+
+This is a [frequently requested Prettier feature](https://github.com/prettier/prettier/issues/6360), as some environments (e.g., Salesforce) strip trailing newlines.
+
+### `printWidth`
+
+Oxfmt defaults to `printWidth: 100` (Prettier uses 80). Reasons:
+
+* TypeScript code is longer due to type annotations
+* Import statements often have many specifiers
+* Modern screens are wider
+* Fewer line breaks mean fewer LLM tokens
+
+To match Prettier's default:
+
+```json [.oxfmtrc.json]
+{
+  "printWidth": 80
+}
+```
+
+## Next steps
+
+* [Ignore files](./ignore-files): Ignore files and patterns, `.gitignore` and `.prettierignore` workflows.
+* [Inline ignore comments](./ignore-comments): Inline suppressions for specific code.
+* [Config file reference](./config-file-reference): Full schema and field documentation.
+* [CLI reference](./cli): Complete list of flags.
 
 ---
 
@@ -5169,7 +5172,7 @@ url: /docs/guide/usage/linter/rules/eslint/array-callback-return.md
 
 ### What it does
 
-Enforce return statements in callbacks of array methods
+Enforce return statements in callbacks of array methods.
 
 ### Why is this bad?
 
@@ -7447,7 +7450,7 @@ url: /docs/guide/usage/linter/rules/eslint/grouped-accessor-pairs.md
 
 ### What it does
 
-Require grouped accessor pairs in object literals and classes
+Require grouped accessor pairs in object literals and classes.
 
 ### Why is this bad?
 
@@ -8031,7 +8034,7 @@ url: /docs/guide/usage/linter/rules/eslint/max-classes-per-file.md
 
 ### What it does
 
-Enforce a maximum number of classes per file
+Enforce a maximum number of classes per file.
 
 ### Why is this bad?
 
@@ -9179,12 +9182,12 @@ url: /docs/guide/usage/linter/rules/eslint/no-alert.md
 
 ### What it does
 
-Disallow the use of alert, confirm, and prompt
+Disallow the use of `alert`, `confirm`, and `prompt`.
 
 ### Why is this bad?
 
-JavaScript’s alert, confirm, and prompt functions are widely considered to be obtrusive as UI elements and should be replaced by a more appropriate custom UI implementation.
-Furthermore, alert is often used while debugging code, which should be removed before deployment to production.
+JavaScript’s `alert`, `confirm`, and `prompt` functions are widely considered to be obtrusive as UI elements and should be replaced by a more appropriate custom UI implementation.
+Furthermore, `alert` is often used while debugging code, which should be removed before deployment to production.
 
 ### Examples
 
@@ -9459,7 +9462,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-bitwise.md
 
 ### What it does
 
-Disallow bitwise operators
+Disallow bitwise operators.
 
 ### Why is this bad?
 
@@ -9904,7 +9907,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-cond-assign.md
 
 ### What it does
 
-Disallow assignment operators in conditional expressions
+Disallow assignment operators in conditional expressions.
 
 ### Why is this bad?
 
@@ -10131,7 +10134,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-constant-binary-expression.md
 
 ### What it does
 
-Disallow expressions where the operation doesn't affect the value
+Disallow expressions where the operation doesn't affect the value.
 
 ### Why is this bad?
 
@@ -10201,7 +10204,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-constant-condition.md
 
 ### What it does
 
-Disallow constant expressions in conditions
+Disallow constant expressions in conditions.
 
 ### Why is this bad?
 
@@ -10294,7 +10297,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-constructor-return.md
 
 ### What it does
 
-Disallow returning value from constructor
+Disallow returning value from constructor.
 
 ### Why is this bad?
 
@@ -10355,7 +10358,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-continue.md
 
 ### What it does
 
-Disallow `continue` statements
+Disallow `continue` statements.
 
 ### Why is this bad?
 
@@ -10491,7 +10494,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-debugger.md
 
 ### What it does
 
-Checks for usage of the `debugger` statement
+Checks for usage of the `debugger` statement.
 
 ### Why is this bad?
 
@@ -10735,7 +10738,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-dupe-else-if.md
 
 ### What it does
 
-Disallow duplicate conditions in if-else-if chains
+Disallow duplicate conditions in if-else-if chains.
 
 ### Why is this bad?
 
@@ -10917,7 +10920,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-duplicate-case.md
 
 ### What it does
 
-Disallow duplicate case labels
+Disallow duplicate case labels.
 
 ### Why is this bad?
 
@@ -11134,7 +11137,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-else-return.md
 
 ### What it does
 
-Disallow `else` blocks after `return` statements in `if` statements
+Disallow `else` blocks after `return` statements in `if` statements.
 
 ### Why is this bad?
 
@@ -11325,7 +11328,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-empty.md
 
 ### What it does
 
-Disallows empty block statements
+Disallows empty block statements.
 
 ### Why is this bad?
 
@@ -11393,7 +11396,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-empty-character-class.md
 
 ### What it does
 
-Disallow empty character classes in regular expressions
+Disallow empty character classes in regular expressions.
 
 ### Why is this bad?
 
@@ -11770,7 +11773,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-empty-static-block.md
 
 ### What it does
 
-Disallows the usages of empty static blocks
+Disallows the usages of empty static blocks.
 
 ### Why is this bad?
 
@@ -12004,7 +12007,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-ex-assign.md
 
 ### What it does
 
-Disallow reassigning exceptions in catch clauses
+Disallow reassigning exceptions in catch clauses.
 
 ### Why is this bad?
 
@@ -12153,14 +12156,14 @@ url: /docs/guide/usage/linter/rules/eslint/no-extra-bind.md
 
 ### What it does
 
-Disallow unnecessary calls to .bind()
+Disallow unnecessary calls to `.bind()`.
 
 ### Why is this bad?
 
-This rule is aimed at avoiding the unnecessary use of bind()
-and as such will warn whenever an immediately-invoked function expression (IIFE) is using bind()
-and doesn’t have an appropriate this value.
-This rule won’t flag usage of bind() that includes function argument binding.
+This rule is aimed at avoiding the unnecessary use of `bind()`
+and as such will warn whenever an immediately-invoked function expression (IIFE) is using `bind()`
+and doesn’t have an appropriate `this` value.
+This rule won’t flag usage of `bind()` that includes function argument binding.
 
 ### Examples
 
@@ -13567,7 +13570,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-lonely-if.md
 
 ### What it does
 
-Disallow `if` statements as the only statement in `else` blocks
+Disallow `if` statements as the only statement in `else` blocks.
 
 ### Why is this bad?
 
@@ -14637,12 +14640,12 @@ url: /docs/guide/usage/linter/rules/eslint/no-new-wrappers.md
 
 ### What it does
 
-Disallow `new` operators with the `String`, `Number`, and `Boolean` objects
+Disallow `new` operators with the `String`, `Number`, and `Boolean` objects.
 
 ### Why is this bad?
 
 The first problem is that primitive wrapper objects are, in fact,
-objects. That means typeof will return `"object"` instead of `"string"`,
+objects. That means `typeof` will return `"object"` instead of `"string"`,
 `"number"`, or `"boolean"`. The second problem comes with boolean
 objects. Every object is truthy, that means an instance of `Boolean`
 always resolves to `true` even when its actual value is `false`.
@@ -14702,7 +14705,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-nonoctal-decimal-escape.md
 
 ### What it does
 
-This rule disallows \8 and \9 escape sequences in string literals
+This rule disallows \8 and \9 escape sequences in string literals.
 
 ### Why is this bad?
 
@@ -14828,7 +14831,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-object-constructor.md
 
 ### What it does
 
-Disallow calls to the Object constructor without an argument
+Disallow calls to the Object constructor without an argument.
 
 ### Why is this bad?
 
@@ -15237,17 +15240,17 @@ url: /docs/guide/usage/linter/rules/eslint/no-prototype-builtins.md
 
 ### What it does
 
-Disallow calling some Object.prototype methods directly on objects
+Disallow calling some `Object.prototype` methods directly on objects.
 
 ### Why is this bad?
 
-In ECMAScript 5.1, Object.create was added, which enables the creation of objects with a specified \[\[Prototype]].
-Object.create(null) is a common pattern used to create objects that will be used as a Map.
-This can lead to errors when it is assumed that objects will have properties from Object.prototype. This rule prevents calling some Object.prototype methods directly from an object.
-Additionally, objects can have properties that shadow the builtins on Object.prototype, potentially causing unintended behavior or denial-of-service security vulnerabilities.
-For example, it would be unsafe for a webserver to parse JSON input from a client and call hasOwnProperty directly on the resulting object, because a malicious client could send a JSON value like {"hasOwnProperty": 1} and cause the server to crash.
+In ECMAScript 5.1, `Object.create` was added, which enables the creation of objects with a specified \[\[Prototype]].
+`Object.create(null)` is a common pattern used to create objects that will be used as a Map.
+This can lead to errors when it is assumed that objects will have properties from `Object.prototype`. This rule prevents calling some `Object.prototype` methods directly from an object.
+Additionally, objects can have properties that shadow the builtins on `Object.prototype`, potentially causing unintended behavior or denial-of-service security vulnerabilities.
+For example, it would be unsafe for a webserver to parse JSON input from a client and call `hasOwnProperty` directly on the resulting object, because a malicious client could send a JSON value like {"hasOwnProperty": 1} and cause the server to crash.
 
-To avoid subtle bugs like this, it’s better to always call these methods from Object.prototype. For example, foo.hasOwnProperty("bar") should be replaced with Object.prototype.hasOwnProperty.call(foo, "bar").
+To avoid subtle bugs like this, it’s better to always call these methods from `Object.prototype`. For example, `foo.hasOwnProperty("bar")` should be replaced with `Object.prototype.hasOwnProperty.call(foo, "bar")`.
 
 ### Examples
 
@@ -15914,7 +15917,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-script-url.md
 
 ### What it does
 
-Disallow javascript: urls
+Disallow `javascript:` URLs.
 
 ### Why is this bad?
 
@@ -16070,7 +16073,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-self-compare.md
 
 ### What it does
 
-Disallow comparisons where both sides are exactly the same
+Disallow comparisons where both sides are exactly the same.
 
 ### Why is this bad?
 
@@ -16415,7 +16418,7 @@ writing:
 var undefined = "foo";
 ```
 
-Then any code used within the same scope would not get the global undefined, but rather the
+Then any code used within the same scope would not get the global `undefined`, but rather the
 local version with a very different meaning.
 
 ### Examples
@@ -16640,7 +16643,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-ternary.md
 
 ### What it does
 
-Disallow ternary operators
+Disallow ternary operators.
 
 ### Why is this bad?
 
@@ -16855,12 +16858,12 @@ url: /docs/guide/usage/linter/rules/eslint/no-unassigned-vars.md
 
 ### What it does
 
-Disallow let or var variables that are read but never assigned
+Disallow let or var variables that are read but never assigned.
 
 ### Why is this bad?
 
 This rule flags let or var declarations that are never assigned a value but are still read or used in the code.
-Since these variables will always be undefined, their usage is likely a programming mistake.
+Since these variables will always be `undefined`, their usage is likely a programming mistake.
 
 ### Examples
 
@@ -16979,12 +16982,12 @@ url: /docs/guide/usage/linter/rules/eslint/no-undefined.md
 
 ### What it does
 
-Disallow the use of `undefined` as an identifier
+Disallow the use of `undefined` as an identifier.
 
 ### Why is this bad?
 
-Using undefined directly can lead to bugs, since it can be shadowed or overwritten in JavaScript.
-It's safer and more intentional to use null or rely on implicit undefined (e.g., missing return) to avoid accidental issues.
+Using `undefined` directly can lead to bugs, since it can be shadowed or overwritten in JavaScript.
+It's safer and more intentional to use `null` or rely on implicit `undefined` (e.g., missing return) to avoid accidental issues.
 
 ### Examples
 
@@ -17185,7 +17188,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-unneeded-ternary.md
 
 ### What it does
 
-Disallow ternary operators when simpler alternatives exist
+Disallow ternary operators when simpler alternatives exist.
 
 ### Why is this bad?
 
@@ -17464,11 +17467,11 @@ url: /docs/guide/usage/linter/rules/eslint/no-unsafe-optional-chaining.md
 
 ### What it does
 
-Disallow use of optional chaining in contexts where the undefined value is not allowed
+Disallow use of optional chaining in contexts where the `undefined` value is not allowed.
 
 ### Why is this bad?
 
-The optional chaining (`?.`) expression can short-circuit with a return value of undefined.
+The optional chaining (`?.`) expression can short-circuit with a return value of `undefined`.
 Therefore, treating an evaluated optional chaining expression as a function, object, number, etc.,
 can cause TypeError or unexpected results. For example:
 
@@ -17682,7 +17685,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-unused-private-class-members.md
 
 ### What it does
 
-Disallow unused private class members
+Disallow unused private class members.
 
 ### Why is this bad?
 
@@ -18580,7 +18583,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-useless-catch.md
 
 ### What it does
 
-Disallow unnecessary catch clauses
+Disallow unnecessary catch clauses.
 
 ### Why is this bad?
 
@@ -18639,7 +18642,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-useless-computed-key.md
 
 ### What it does
 
-Disallow unnecessary computed property keys in objects and classes
+Disallow unnecessary computed property keys in objects and classes.
 
 ### Why is this bad?
 
@@ -19632,7 +19635,7 @@ url: /docs/guide/usage/linter/rules/eslint/prefer-destructuring.md
 
 ### What it does
 
-Require destructuring from arrays and/or objects
+Require destructuring from arrays and/or objects.
 
 ### Why is this bad?
 
@@ -19750,12 +19753,12 @@ url: /docs/guide/usage/linter/rules/eslint/prefer-exponentiation-operator.md
 
 ### What it does
 
-Disallow the use of Math.pow in favor of the \*\* operator
+Disallow the use of `Math.pow` in favor of the `**` operator.
 
 ### Why is this bad?
 
-Introduced in ES2016, the infix exponentiation operator \*\* is an alternative for the
-standard Math.pow function. Infix notation is considered to be more readable and thus more
+Introduced in ES2016, the infix exponentiation operator `**` is an alternative for the
+standard `Math.pow` function. Infix notation is considered to be more readable and thus more
 preferable than the function notation.
 
 ### Examples
@@ -19804,15 +19807,15 @@ url: /docs/guide/usage/linter/rules/eslint/prefer-numeric-literals.md
 
 ### What it does
 
-Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal
+Disallow `parseInt()` and `Number.parseInt()` in favor of binary, octal, and hexadecimal
 literals.
 
 ### Why is this bad?
 
-The parseInt() and Number.parseInt() functions can be used to turn binary, octal, and
+The `parseInt()` and `Number.parseInt()` functions can be used to turn binary, octal, and
 hexadecimal strings into integers. As binary, octal, and hexadecimal literals are supported
-in ES2015, this rule encourages use of those numeric literals instead of parseInt() or
-Number.parseInt().
+in ES2015, this rule encourages use of those numeric literals instead of `parseInt()` or
+`Number.parseInt()`.
 
 ### Examples
 
@@ -19872,8 +19875,8 @@ if (Object.prototype.hasOwnProperty.call(object, "foo")) {
 }
 ```
 
-This is a common practice because methods on Object.prototype can sometimes be unavailable or redefined (see the no-prototype-builtins rule).
-Introduced in ES2022, Object.hasOwn() is a shorter alternative to Object.prototype.hasOwnProperty.call():
+This is a common practice because methods on `Object.prototype` can sometimes be unavailable or redefined (see the no-prototype-builtins rule).
+Introduced in ES2022, `Object.hasOwn()` is a shorter alternative to `Object.prototype.hasOwnProperty.call()`:
 
 ```javascript
 if (Object.hasOwn(object, "foo")) {
@@ -19931,7 +19934,7 @@ url: /docs/guide/usage/linter/rules/eslint/prefer-object-spread.md
 
 ### What it does
 
-Disallow using `Object.assign` with an object literal as the first argument and prefer the use of object spread instead
+Disallow using `Object.assign` with an object literal as the first argument and prefer the use of object spread instead.
 
 ### Why is this bad?
 
@@ -20991,22 +20994,22 @@ url: /docs/guide/usage/linter/rules/eslint/use-isnan.md
 
 ### What it does
 
-Disallows checking against NaN without using `isNaN()` call.
+Disallows checking against `NaN` without using `isNaN()` call.
 
 ### Why is this bad?
 
-In JavaScript, NaN is a special value of the Number type.
+In JavaScript, `NaN` is a special value of the Number type.
 It’s used to represent any of the “not-a-number” values represented
 by the double-precision 64-bit format as specified by the IEEE Standard
 for Binary Floating-Point Arithmetic.
 
-Because NaN is unique in JavaScript by not being equal to anything, including itself,
-the results of comparisons to NaN are confusing:
+Because `NaN` is unique in JavaScript by not being equal to anything, including itself,
+the results of comparisons to `NaN` are confusing:
 
 * `NaN === NaN` or `NaN == NaN` evaluate to false
 * `NaN !== NaN` or `NaN != NaN` evaluate to true
 
-Therefore, use `Number.isNaN()` or global `isNaN()` functions to test whether a value is NaN.
+Therefore, use `Number.isNaN()` or global `isNaN()` functions to test whether a value is `NaN`.
 
 ### Examples
 
@@ -26695,7 +26698,7 @@ url: /docs/guide/usage/linter/rules/jest/no-confusing-set-timeout.md
 
 ### What it does
 
-Disallow confusing usages of jest.setTimeout
+Disallow confusing usages of `jest.setTimeout`.
 
 ### Why is this bad?
 
@@ -33239,7 +33242,7 @@ url: /docs/guide/usage/linter/rules/jsx_a11y/html-has-lang.md
 
 ### What it does
 
-Ensures that every HTML document has a lang attribute
+Ensures that every HTML document has a lang attribute.
 
 ### Why is this bad?
 
@@ -37600,7 +37603,7 @@ url: /docs/guide/usage/linter/rules/node/global-require.md
 
 ### What it does
 
-Require `require()` calls to be placed at top-level module scope
+Require `require()` calls to be placed at top-level module scope.
 
 ### Why is this bad?
 
@@ -37705,6 +37708,105 @@ To **enable** this rule using the config file or in the CLI, you can use:
 
 ```bash [CLI]
 oxlint --deny node/global-require --node-plugin
+```
+
+:::
+
+## References
+
+* Rule Source
+
+---
+
+---
+url: /docs/guide/usage/linter/rules/node/handle-callback-err.md
+---
+
+### What it does
+
+This rule expects that when you're using the callback pattern in Node.js you'll handle the error.
+
+### Why is this bad?
+
+In Node.js, a common pattern for dealing with asynchronous behavior is called the callback pattern.
+This pattern expects an `Error` object or `null` as the first argument of the callback.
+Forgetting to handle these errors can lead to some really strange behavior in your application.
+
+```js
+function loadData(err, data) {
+  doSomething(); // forgot to handle error
+}
+```
+
+### Examples
+
+Examples of **incorrect** code for this rule with the default `"err"` parameter name:
+
+```js
+function loadData(err, data) {
+  doSomething();
+}
+```
+
+Examples of **correct** code for this rule with the default `"err"` parameter name:
+
+```js
+function loadData(err, data) {
+  if (err) {
+    console.log(err.stack);
+  }
+  doSomething();
+}
+
+function generateError(err) {
+  if (err) {
+  }
+}
+```
+
+Examples of correct code for this rule with a sample `"error"` parameter name:
+
+```js
+function loadData(error, data) {
+  if (error) {
+    console.log(error.stack);
+  }
+  doSomething();
+}
+```
+
+## Configuration
+
+The rule takes a single string option: the name of the error parameter.
+
+This can be either:
+
+* an exact name (e.g. `"err"`, `"error"`)
+* a regexp pattern (e.g. `"^(err|error)$"`)
+
+If the configured name of the error variable begins with a `^` it is considered to be a regexp pattern.
+
+Default: `"err"`.
+
+type: `string`
+
+## How to use
+
+To **enable** this rule using the config file or in the CLI, you can use:
+
+::: code-group
+
+```json [Config (.oxlintrc.json)]
+{
+  "plugins": ["node"],
+  "rules": {
+    "node/handle-callback-err": "error"
+  }
+}
+```
+
+```bash [CLI]
+oxlint --deny node/handle-callback-err --node-plugin
 ```
 
 :::
@@ -40004,7 +40106,7 @@ This rule applies when an Array function has a callback argument used for an arr
 
 ### Why is this bad?
 
-When the Array constructor is called with a single number argument, an array with the specified number of empty slots (not actual undefined values) is constructed.
+When the Array constructor is called with a single number argument, an array with the specified number of empty slots (not actual `undefined` values) is constructed.
 If a callback function is passed to the function of this array, the callback function is never invoked because the array has no actual elements.
 
 ### Examples
@@ -44072,7 +44174,7 @@ url: /docs/guide/usage/linter/rules/promise/no-nesting.md
 
 ### What it does
 
-Disallow nested then() or catch() statements.
+Disallow nested `then()` or `catch()` statements.
 
 ### Why is this bad?
 
@@ -44267,7 +44369,7 @@ url: /docs/guide/usage/linter/rules/promise/no-return-in-finally.md
 
 ### What it does
 
-Disallow return statements in a finally() callback of a promise.
+Disallow return statements in a `finally()` callback of a promise.
 
 ### Why is this bad?
 
@@ -44608,7 +44710,7 @@ url: /docs/guide/usage/linter/rules/promise/prefer-await-to-then.md
 
 ### What it does
 
-Prefer `await` to `then()`/`catch()`/`finally()` for reading Promise values
+Prefer `await` to `then()`/`catch()`/`finally()` for reading Promise values.
 
 ### Why is this bad?
 
@@ -46167,7 +46269,7 @@ url: /docs/guide/usage/linter/rules/react/iframe-missing-sandbox.md
 
 ### What it does
 
-Enforce sandbox attribute on iframe elements
+Enforce sandbox attribute on iframe elements.
 
 ### Why is this bad?
 
@@ -46949,7 +47051,7 @@ url: /docs/guide/usage/linter/rules/react/jsx-key.md
 
 ### What it does
 
-Enforce `key` prop for elements in array
+Enforce `key` prop for elements in array.
 
 ### Why is this bad?
 
@@ -47624,7 +47726,7 @@ url: /docs/guide/usage/linter/rules/react/jsx-pascal-case.md
 
 ### What it does
 
-Enforce PascalCase for user-defined JSX components
+Enforce PascalCase for user-defined JSX components.
 
 ### Why is this bad?
 
@@ -47804,7 +47906,7 @@ url: /docs/guide/usage/linter/rules/react/jsx-props-no-spreading.md
 
 ### What it does
 
-Disallow JSX prop spreading
+Disallow JSX prop spreading.
 
 ### Why is this bad?
 
@@ -50891,6 +50993,144 @@ To automatically install the git hook when installing dependencies, considering 
 ---
 
 ---
+url: /docs/guide/usage/linter/editors.md
+description: 'Configure Oxlint in VS Code, Zed, JetBrains, and other editors.'
+---
+
+# Setup editors
+
+Editor extensions use `oxlint --lsp` from your project, so `oxlint` must be installed locally.
+
+See [Quickstart](./quickstart) to install Oxlint.
+
+## Supported editors
+
+* [VS Code](#vs-code) (and Cursor, etc.)
+* [Zed](#zed)
+* [JetBrains](#jetbrains)
+* [Neovim](#neovim)
+* [Other editors](#other-editors)
+
+## VS Code
+
+### Install
+
+Download the official Oxc VS Code extension from:
+
+* [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode)
+* [Open VSX Registry](https://open-vsx.org/extension/oxc/oxc-vscode)
+
+**The extension is compatible with other VS Code-based editors**, including Cursor.
+
+### Team setup
+
+1. Recommend the extension for contributors:
+
+`.vscode/extensions.json`:
+
+```json [.vscode/extensions.json]
+{
+  "recommendations": ["oxc.oxc-vscode"]
+}
+```
+
+2. Enable fix-on-save in `.vscode/settings.json`:
+
+```json [.vscode/settings.json]
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "always"
+  }
+}
+```
+
+3. Enable type-aware linting (optional):
+
+To enable it for the whole project, set it in the root Oxlint config:
+
+```json [.oxlintrc.json]
+{
+  "options": {
+    "typeAware": true
+  }
+}
+```
+
+Or set it in `.vscode/settings.json`:
+
+```json [.vscode/settings.json]
+{
+  "oxc.typeAware": true
+}
+```
+
+When `oxc.typeAware` is unset, the editor uses the root config's `options.typeAware` value. When set explicitly, it overrides the config value.
+
+You also need to ensure `oxlint-tsgolint` is installed in your project. See [the type-aware linting docs](/docs/guide/usage/linter/type-aware) for more details.
+
+### Reference
+
+* [oxc-project/oxc-vscode](https://github.com/oxc-project/oxc-vscode)
+
+## Zed
+
+### Install
+
+* [Oxc Zed Extension](https://zed.dev/extensions/oxc)
+
+### Reference
+
+* [oxc-project/oxc-zed](https://github.com/oxc-project/oxc-zed)
+
+## JetBrains
+
+IntelliJ IDEA and WebStorm.
+
+### Install
+
+* [Oxc in JetBrains Marketplace](https://plugins.jetbrains.com/plugin/27061-oxc)
+
+### Reference
+
+* [oxc-project/oxc-intellij-plugin](https://github.com/oxc-project/oxc-intellij-plugin)
+
+## Neovim
+
+### nvim-lspconfig
+
+```sh
+npm i -g oxlint
+```
+
+```lua
+vim.lsp.enable('oxlint')
+```
+
+* [nvim-lspconfig: oxlint](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#oxlint)
+
+### coc.nvim
+
+```vim
+:CocInstall coc-oxc
+```
+
+* [oxc-project/coc-oxc](https://github.com/oxc-project/coc-oxc)
+
+## Other editors
+
+For editors with LSP support (Emacs, Helix, Sublime), configure:
+
+```bash
+oxlint --lsp
+```
+
+## Reference
+
+* [oxc\_language\_server](https://github.com/oxc-project/oxc/tree/main/crates/oxc_language_server)
+
+---
+
+---
 url: /docs/guide/usage/formatter/editors.md
 description: 'Configure Oxfmt in VS Code, Zed, JetBrains, and other editors.'
 ---
@@ -51034,144 +51274,6 @@ Or, for editors without LSP support:
 
 ```sh
 cat foo/bar.js | oxfmt --stdin-filepath dummy.js --config ./path/to/config.json
-```
-
-## Reference
-
-* [oxc\_language\_server](https://github.com/oxc-project/oxc/tree/main/crates/oxc_language_server)
-
----
-
----
-url: /docs/guide/usage/linter/editors.md
-description: 'Configure Oxlint in VS Code, Zed, JetBrains, and other editors.'
----
-
-# Setup editors
-
-Editor extensions use `oxlint --lsp` from your project, so `oxlint` must be installed locally.
-
-See [Quickstart](./quickstart) to install Oxlint.
-
-## Supported editors
-
-* [VS Code](#vs-code) (and Cursor, etc.)
-* [Zed](#zed)
-* [JetBrains](#jetbrains)
-* [Neovim](#neovim)
-* [Other editors](#other-editors)
-
-## VS Code
-
-### Install
-
-Download the official Oxc VS Code extension from:
-
-* [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode)
-* [Open VSX Registry](https://open-vsx.org/extension/oxc/oxc-vscode)
-
-**The extension is compatible with other VS Code-based editors**, including Cursor.
-
-### Team setup
-
-1. Recommend the extension for contributors:
-
-`.vscode/extensions.json`:
-
-```json [.vscode/extensions.json]
-{
-  "recommendations": ["oxc.oxc-vscode"]
-}
-```
-
-2. Enable fix-on-save in `.vscode/settings.json`:
-
-```json [.vscode/settings.json]
-{
-  "editor.codeActionsOnSave": {
-    "source.fixAll.oxc": "always"
-  }
-}
-```
-
-3. Enable type-aware linting (optional):
-
-To enable it for the whole project, set it in the root Oxlint config:
-
-```json [.oxlintrc.json]
-{
-  "options": {
-    "typeAware": true
-  }
-}
-```
-
-Or set it in `.vscode/settings.json`:
-
-```json [.vscode/settings.json]
-{
-  "oxc.typeAware": true
-}
-```
-
-When `oxc.typeAware` is unset, the editor uses the root config's `options.typeAware` value. When set explicitly, it overrides the config value.
-
-You also need to ensure `oxlint-tsgolint` is installed in your project. See [the type-aware linting docs](/docs/guide/usage/linter/type-aware) for more details.
-
-### Reference
-
-* [oxc-project/oxc-vscode](https://github.com/oxc-project/oxc-vscode)
-
-## Zed
-
-### Install
-
-* [Oxc Zed Extension](https://zed.dev/extensions/oxc)
-
-### Reference
-
-* [oxc-project/oxc-zed](https://github.com/oxc-project/oxc-zed)
-
-## JetBrains
-
-IntelliJ IDEA and WebStorm.
-
-### Install
-
-* [Oxc in JetBrains Marketplace](https://plugins.jetbrains.com/plugin/27061-oxc)
-
-### Reference
-
-* [oxc-project/oxc-intellij-plugin](https://github.com/oxc-project/oxc-intellij-plugin)
-
-## Neovim
-
-### nvim-lspconfig
-
-```sh
-npm i -g oxlint
-```
-
-```lua
-vim.lsp.enable('oxlint')
-```
-
-* [nvim-lspconfig: oxlint](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#oxlint)
-
-### coc.nvim
-
-```vim
-:CocInstall coc-oxc
-```
-
-* [oxc-project/coc-oxc](https://github.com/oxc-project/coc-oxc)
-
-## Other editors
-
-For editors with LSP support (Emacs, Helix, Sublime), configure:
-
-```bash
-oxlint --lsp
 ```
 
 ## Reference
@@ -52932,7 +53034,7 @@ url: /docs/guide/usage/linter/rules/typescript/ban-tslint-comment.md
 
 ### What it does
 
-This rule disallows `tslint:<rule-flag>` comments
+This rule disallows `tslint:<rule-flag>` comments.
 
 ### Why is this bad?
 
@@ -54204,7 +54306,7 @@ This rule disallows using the delete operator on array values.
 
 ### Why is this bad?
 
-When using the delete operator on an array, the element is not actually removed, but instead the array slot is turned into undefined. This is usually not the intended behavior. Instead, you should use methods like Array.prototype.splice() to properly remove elements from an array.
+When using the delete operator on an array, the element is not actually removed, but instead the array slot is turned into `undefined`. This is usually not the intended behavior. Instead, you should use methods like `Array.prototype.splice()` to properly remove elements from an array.
 
 ### Examples
 
@@ -54262,11 +54364,11 @@ url: /docs/guide/usage/linter/rules/typescript/no-base-to-string.md
 
 ### What it does
 
-This rule requires toString() and toLocaleString() calls to only be called on objects which provide useful information when stringified.
+This rule requires `toString()` and `toLocaleString()` calls to only be called on objects which provide useful information when stringified.
 
 ### Why is this bad?
 
-JavaScript's toString() method returns '\[object Object]' on plain objects, which is not useful information. This rule prevents toString() and toLocaleString() from being called on objects that return less useful strings.
+JavaScript's `toString()` method returns '\[object Object]' on plain objects, which is not useful information. This rule prevents `toString()` and `toLocaleString()` from being called on objects that return less useful strings.
 
 ### Examples
 
@@ -54419,7 +54521,7 @@ This rule forbids using void expressions in confusing locations such as arrow fu
 
 ### Why is this bad?
 
-The void operator is useful when you want to execute an expression while evaluating to undefined. However, it can be confusing when used in places where the return value is meaningful, particularly in arrow functions and conditional expressions.
+The void operator is useful when you want to execute an expression while evaluating to `undefined`. However, it can be confusing when used in places where the return value is meaningful, particularly in arrow functions and conditional expressions.
 
 ### Examples
 
@@ -54978,7 +55080,7 @@ The `{}`, or "empty object" type in TypeScript is a common source of confusion f
 Often, developers writing `{}` actually mean either:
 
 * object: representing any object value
-* unknown: representing any value at all, including null and undefined
+* unknown: representing any value at all, including `null` and `undefined`
   In other words, the "empty object" type {}\` really means "any value that is defined". That includes arrays, class instances, functions, and primitives such as string and symbol.
 
 Note that this rule does not report on:
@@ -55208,7 +55310,7 @@ Disallow extra non-null assertions.
 ### Why is this bad?
 
 The `!` non-null assertion operator in TypeScript is used to assert that a value's type
-does not include null or undefined. Using the operator any more than once on a single value
+does not include `null` or `undefined`. Using the operator any more than once on a single value
 does nothing.
 
 ### Examples
@@ -55750,7 +55852,7 @@ This rule disallows the use of eval-like methods.
 
 ### Why is this bad?
 
-It's considered a good practice to avoid using eval() in JavaScript. There are security and performance implications involved with doing so, which is why many linters recommend disallowing eval(). However, there are some other ways to pass a string and have it interpreted as JavaScript code that have similar concerns.
+It's considered a good practice to avoid using `eval()` in JavaScript. There are security and performance implications involved with doing so, which is why many linters recommend disallowing `eval()`. However, there are some other ways to pass a string and have it interpreted as JavaScript code that have similar concerns.
 
 ### Examples
 
@@ -55902,7 +56004,7 @@ url: /docs/guide/usage/linter/rules/typescript/no-inferrable-types.md
 
 ### What it does
 
-Disallow explicit type declarations for variables or parameters initialized to a number, string, or boolean
+Disallow explicit type declarations for variables or parameters initialized to a number, string, or boolean.
 
 ### Why is this bad?
 
@@ -56058,11 +56160,11 @@ url: /docs/guide/usage/linter/rules/typescript/no-meaningless-void-operator.md
 
 ### What it does
 
-This rule disallows the void operator when its argument is already of type void or undefined.
+This rule disallows the void operator when its argument is already of type void or `undefined`.
 
 ### Why is this bad?
 
-The void operator is useful when you want to execute an expression and force it to evaluate to undefined. However, using void on expressions that are already of type void or undefined is meaningless and adds unnecessary complexity to the code.
+The void operator is useful when you want to execute an expression and force it to evaluate to `undefined`. However, using void on expressions that are already of type void or `undefined` is meaningless and adds unnecessary complexity to the code.
 
 ### Examples
 
@@ -56611,7 +56713,7 @@ Disallow TypeScript namespaces.
 
 TypeScript historically allowed a form of code organization called "custom modules" (module Example {}),
 later renamed to "namespaces" (namespace Example). Namespaces are an outdated way to organize TypeScript code.
-ES2015 module syntax is now preferred (import/export).
+ES2015 module syntax is now preferred (`import`/`export`).
 
 ### Examples
 
@@ -56746,7 +56848,7 @@ Disallow non-null assertions in the left operand of a nullish coalescing operato
 ### Why is this bad?
 
 The ?? nullish coalescing runtime operator allows providing a default value when dealing
-with null or undefined. Using a ! non-null assertion type operator in the left operand of
+with `null` or `undefined`. Using a ! non-null assertion type operator in the left operand of
 a nullish coalescing operator is redundant, and likely a sign of programmer error or
 confusion over the two operators.
 
@@ -56879,11 +56981,11 @@ url: /docs/guide/usage/linter/rules/typescript/no-non-null-assertion.md
 
 ### What it does
 
-Disallow non-null assertions using the ! postfix operator.
+Disallow non-null assertions using the `!` postfix operator.
 
 ### Why is this bad?
 
-TypeScript's ! non-null assertion operator asserts to the type system that an expression is non-nullable, as in not null or undefined. Using assertions to tell the type system new information is often a sign that code is not fully type-safe. It's generally better to structure program logic so that TypeScript understands when values may be nullable.
+TypeScript's `!` non-null assertion operator asserts to the type system that an expression is non-nullable, as in not `null` or `undefined`. Using assertions to tell the type system new information is often a sign that code is not fully type-safe. It's generally better to structure program logic so that TypeScript understands when values may be nullable.
 
 ### Examples
 
@@ -59109,7 +59211,7 @@ This rule prefers a non-null assertion over an explicit type cast for non-nullab
 
 ### Why is this bad?
 
-When you know that a value cannot be null or undefined, you can use either a non-null assertion (`!`) or a type assertion (`as Type`). The non-null assertion is more concise and clearly communicates the intent that you're asserting the value is not null/undefined.
+When you know that a value cannot be `null` or `undefined`, you can use either a non-null assertion (`!`) or a type assertion (`as Type`). The non-null assertion is more concise and clearly communicates the intent that you're asserting the value is not `null`/`undefined`.
 
 ### Examples
 
@@ -59976,7 +60078,7 @@ See: https://github.com/microsoft/TypeScript/issues/54500, https://github.com/mi
 
 ### Why is this bad?
 
-Namespaces are an outdated way to organize TypeScript code. ES2015 module syntax is now preferred (import/export).
+Namespaces are an outdated way to organize TypeScript code. ES2015 module syntax is now preferred (`import`/`export`).
 For projects still using custom modules / namespaces, it's preferred to refer to them as namespaces.
 
 ### Examples
@@ -60340,7 +60442,7 @@ url: /docs/guide/usage/linter/rules/typescript/prefer-promise-reject-errors.md
 
 ### What it does
 
-This rule enforces passing an Error object to Promise.reject().
+This rule enforces passing an Error object to `Promise.reject()`.
 
 ### Why is this bad?
 
@@ -60688,11 +60790,11 @@ url: /docs/guide/usage/linter/rules/typescript/prefer-reduce-type-parameter.md
 
 ### What it does
 
-This rule prefers using a type parameter for the accumulator in Array.reduce instead of casting.
+This rule prefers using a type parameter for the accumulator in `Array#reduce()` instead of casting.
 
 ### Why is this bad?
 
-Array.reduce can be called with a generic type parameter to specify the type of the accumulator. This is preferred over casting the result because it provides better type safety and is more explicit about the intended type.
+`Array#reduce()` can be called with a generic type parameter to specify the type of the accumulator. This is preferred over casting the result because it provides better type safety and is more explicit about the intended type.
 
 ### Examples
 
@@ -61315,11 +61417,11 @@ url: /docs/guide/usage/linter/rules/typescript/require-array-sort-compare.md
 
 ### What it does
 
-This rule requires Array.sort() to be called with a comparison function.
+This rule requires `Array#sort()` to be called with a comparison function.
 
 ### Why is this bad?
 
-When Array.sort() is called without a comparison function, it converts elements to strings and sorts them lexicographically. This often leads to unexpected results, especially with numbers where `[1, 10, 2].sort()` returns `[1, 10, 2]` instead of `[1, 2, 10]`.
+When `Array#sort()` is called without a comparison function, it converts elements to strings and sorts them lexicographically. This often leads to unexpected results, especially with numbers where `[1, 10, 2].sort()` returns `[1, 10, 2]` instead of `[1, 2, 10]`.
 
 ### Examples
 
@@ -61650,7 +61752,7 @@ This rule restricts the types allowed in template literal expressions.
 
 ### Why is this bad?
 
-Template literals will call toString() on the interpolated values. Some types don't have meaningful string representations (like objects that become "\[object Object]") or may not have a toString method at all. This rule helps ensure that only appropriate types are used in template expressions.
+Template literals will call `toString()` on the interpolated values. Some types don't have meaningful string representations (like objects that become `"[object Object]"`) or may not have a `toString` method at all. This rule helps ensure that only appropriate types are used in template expressions.
 
 ### Examples
 
@@ -63034,7 +63136,7 @@ url: /docs/guide/usage/linter/rules/unicorn/consistent-empty-array-spread.md
 
 ### What it does
 
-When spreading a ternary in an array, we can use both \[] and '' as fallbacks,
+When spreading a ternary in an array, we can use both `[]` and `''` as fallbacks,
 but it's better to have consistent types in both branches.
 
 ### Why is this bad?
@@ -64017,7 +64119,7 @@ url: /docs/guide/usage/linter/rules/unicorn/no-array-callback-reference.md
 
 ### What it does
 
-Prevents passing a function reference directly to iterator methods
+Prevents passing a function reference directly to iterator methods.
 
 ### Why is this bad?
 
@@ -64472,7 +64574,7 @@ url: /docs/guide/usage/linter/rules/unicorn/no-await-in-promise-methods.md
 
 ### What it does
 
-Disallow using `await` in `Promise` method parameters
+Disallow using `await` in `Promise` method parameters.
 
 ### Why is this bad?
 
@@ -67554,7 +67656,7 @@ url: /docs/guide/usage/linter/rules/unicorn/prefer-array-some.md
 
 ### What it does
 
-Prefers using [`Array#some()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) over [`Array#find()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find), [`Array#findLast()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findLast) with comparing to undefined,
+Prefers using [`Array#some()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) over [`Array#find()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find), [`Array#findLast()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findLast) with comparing to `undefined`,
 or [`Array#findIndex()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex), [`Array#findLastIndex()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findLastIndex)
 and a non-zero length check on the result of [`Array#filter()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)
 
@@ -69084,7 +69186,7 @@ url: /docs/guide/usage/linter/rules/unicorn/prefer-node-protocol.md
 
 ### What it does
 
-Prefer using the `node:protocol` when importing Node.js builtin modules
+Prefer using the `node:protocol` when importing Node.js builtin modules.
 
 ### Why is this bad?
 
@@ -69293,7 +69395,7 @@ url: /docs/guide/usage/linter/rules/unicorn/prefer-optional-catch-binding.md
 
 ### What it does
 
-Prefers omitting the catch binding parameter if it is unused
+Prefers omitting the catch binding parameter if it is unused.
 
 ### Why is this bad?
 
@@ -69644,7 +69746,7 @@ Prefer `Set#has()` over `Array#includes()` when checking for existence or non-ex
 
 ### Why is this bad?
 
-Set#has() is faster than Array#includes().
+`Set#has()` is faster than `Array#includes()`.
 
 ### Examples
 
@@ -69805,7 +69907,7 @@ url: /docs/guide/usage/linter/rules/unicorn/prefer-string-raw.md
 
 ### What it does
 
-Prefers use of String.raw to avoid escaping .
+Prefers use of `String.raw` to avoid escaping `\`.
 
 ### Why is this bad?
 
@@ -70075,11 +70177,11 @@ url: /docs/guide/usage/linter/rules/unicorn/prefer-structured-clone.md
 
 ### What it does
 
-Prefer using structuredClone to create a deep clone.
+Prefer using `structuredClone` to create a deep clone.
 
 ### Why is this bad?
 
-structuredClone is the modern way to create a deep clone of a value.
+`structuredClone` is the modern way to create a deep clone of a value.
 
 ### Examples
 
@@ -70406,12 +70508,12 @@ url: /docs/guide/usage/linter/rules/unicorn/require-array-join-separator.md
 
 ### What it does
 
-Enforce using the separator argument with Array#join()
+Enforce using the separator argument with `Array#join()`.
 
 ### Why is this bad?
 
-It's better to make it clear what the separator is when calling Array#join(),
-instead of relying on the default comma (',') separator.
+It's better to make it clear what the separator is when calling `Array#join()`,
+instead of relying on the default comma (`','`) separator.
 
 ### Examples
 
@@ -70459,7 +70561,7 @@ url: /docs/guide/usage/linter/rules/unicorn/require-module-attributes.md
 
 ### What it does
 
-This rule enforces non-empty attribute list in import/export statements and import() expressions.
+This rule enforces non-empty attribute list in `import`/`export` statements and `import()` expressions.
 
 ### Why is this bad?
 
@@ -70529,7 +70631,7 @@ Enforce non-empty specifier list in `import` and `export` statements.
 
 ### Why is this bad?
 
-Empty import/export specifiers add no value and can be confusing.
+Empty `import`/`export` specifiers add no value and can be confusing.
 If you want to import a module for side effects, use `import 'module'` instead.
 
 ### Examples
@@ -70583,12 +70685,12 @@ url: >-
 
 ### What it does
 
-Enforce using the digits argument with Number.toFixed()
+Enforce using the digits argument with `Number#toFixed()`.
 
 ### Why is this bad?
 
-It's better to make it clear what the value of the digits argument is when calling Number.toFixed(),
-instead of relying on the default value of 0.
+It's better to make it clear what the value of the digits argument is when calling `Number#toFixed()`,
+instead of relying on the default value of `0`.
 
 ### Examples
 
@@ -70971,67 +71073,6 @@ https://github.com/oven-sh/bun/issues/25658 to be fixed.
 ---
 
 ---
-url: /docs/guide/usage/formatter/generated-cli.md
----
-
-## Usage
-
-**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
-
-## Mode Options:
-
-* **`    --init`** —
-  Initialize `.oxfmtrc.json` with default values
-* **`    --migrate`**=*`SOURCE`* —
-  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
-* **`    --lsp`** —
-  Start language server protocol (LSP) server
-* **`    --stdin-filepath`**=*`PATH`* —
-  Specify the file name to use to infer which parser to use
-
-## Output Options:
-
-* **`    --write`** —
-  Format and write files in place (default)
-* **`    --check`** —
-  Check if files are formatted, also show statistics
-* **`    --list-different`** —
-  List files that would be changed
-
-## Config Options
-
-* **`-c`**, **`--config`**=*`PATH`* —
-  Path to the configuration file (.json, .jsonc, .ts, .mts, .cts, .js, .mjs, .cjs)
-
-## Ignore Options
-
-* **`    --ignore-path`**=*`PATH`* —
-  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
-* **`    --with-node-modules`** —
-  Format code in node\_modules directory (skipped by default)
-
-## Runtime Options
-
-* **`    --no-error-on-unmatched-pattern`** —
-  Do not exit with error when pattern is unmatched
-* **`    --threads`**=*`INT`* —
-  Number of threads to use. Set to 1 for using only 1 CPU core.
-
-## Available positional items:
-
-* *`PATH`* —
-  Single file, path or list of paths. Glob patterns are also supported. (Be sure to quote them, otherwise your shell may expand them before passing.) Exclude patterns with `!` prefix like `'!**/fixtures/*.js'` are also supported. If not provided, current working directory is used.
-
-## Available options:
-
-* **`-h`**, **`--help`** —
-  Prints help information
-* **`-V`**, **`--version`** —
-  Prints version information
-
----
-
----
 url: /docs/guide/usage/linter/generated-cli.md
 ---
 
@@ -71052,7 +71093,10 @@ url: /docs/guide/usage/linter/generated-cli.md
   If not provided, Oxlint will look for a `.oxlintrc.json`, `.oxlintrc.jsonc`, or `oxlint.config.ts` file in the current working directory.
 
 * **`    --tsconfig`**=*`<./tsconfig.json>`* —
-  TypeScript `tsconfig.json` path for reading path alias and project references for import plugin. If not provided, will look for `tsconfig.json` in the current working directory.
+  Override the TypeScript config used for import resolution. Oxlint automatically discovers the relevant `tsconfig.json` for each file. Use this only when your project uses a non-standard tsconfig name or location.
+
+  NOTE: Type checking and Type aware rules will still use the tsconfig discovered automatically, and will not be affected by this option.
+
 * **`    --init`** —
   Initialize oxlint configuration with default values
 
@@ -71090,7 +71134,7 @@ Arguments:
 * **`    --disable-typescript-plugin`** —
   Disable TypeScript plugin, which is turned on by default
 * **`    --import-plugin`** —
-  Enable import plugin and detect ESM problems. It should be used with the `--tsconfig` flag if your project has a tsconfig with a name other than `tsconfig.json`.
+  Enable import plugin and detect ESM problems.
 * **`    --react-plugin`** —
   Enable react plugin, which is turned off by default
 * **`    --jsdoc-plugin`** —
@@ -71181,6 +71225,67 @@ Arguments:
   Enable rules that require type information
 * **`    --type-check`** —
   Enable experimental type checking (includes TypeScript compiler diagnostics)
+* **`-h`**, **`--help`** —
+  Prints help information
+* **`-V`**, **`--version`** —
+  Prints version information
+
+---
+
+---
+url: /docs/guide/usage/formatter/generated-cli.md
+---
+
+## Usage
+
+**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
+
+## Mode Options:
+
+* **`    --init`** —
+  Initialize `.oxfmtrc.json` with default values
+* **`    --migrate`**=*`SOURCE`* —
+  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
+* **`    --lsp`** —
+  Start language server protocol (LSP) server
+* **`    --stdin-filepath`**=*`PATH`* —
+  Specify the file name to use to infer which parser to use
+
+## Output Options:
+
+* **`    --write`** —
+  Format and write files in place (default)
+* **`    --check`** —
+  Check if files are formatted, also show statistics
+* **`    --list-different`** —
+  List files that would be changed
+
+## Config Options
+
+* **`-c`**, **`--config`**=*`PATH`* —
+  Path to the configuration file (.json, .jsonc, .ts, .mts, .cts, .js, .mjs, .cjs)
+
+## Ignore Options
+
+* **`    --ignore-path`**=*`PATH`* —
+  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
+* **`    --with-node-modules`** —
+  Format code in node\_modules directory (skipped by default)
+
+## Runtime Options
+
+* **`    --no-error-on-unmatched-pattern`** —
+  Do not exit with error when pattern is unmatched
+* **`    --threads`**=*`INT`* —
+  Number of threads to use. Set to 1 for using only 1 CPU core.
+
+## Available positional items:
+
+* *`PATH`* —
+  Single file, path or list of paths. Glob patterns are also supported. (Be sure to quote them, otherwise your shell may expand them before passing.) Exclude patterns with `!` prefix like `'!**/fixtures/*.js'` are also supported. If not provided, current working directory is used.
+
+## Available options:
+
 * **`-h`**, **`--help`** —
   Prints help information
 * **`-V`**, **`--version`** —
@@ -71948,7 +72053,7 @@ url: /docs/guide/usage/linter/rules/vitest/prefer-describe-function-title.md
 
 ### What it does
 
-When testing a specific function, this rule aims to enforce passing a named function to describe()
+When testing a specific function, this rule aims to enforce passing a named function to `describe()`
 instead of an equivalent hardcoded string.
 
 ### Why is this bad?
@@ -72085,7 +72190,7 @@ url: /docs/guide/usage/linter/rules/vitest/prefer-import-in-mock.md
 
 ### What it does
 
-This rule enforces using a dynamic import() in `vi.mock()`, which improves type information and IntelliSense for the mocked module.
+This rule enforces using a dynamic `import()` in `vi.mock()`, which improves type information and IntelliSense for the mocked module.
 
 ### Why is this bad?
 
@@ -73652,9 +73757,9 @@ url: /docs/guide/usage/linter/rules/vue/valid-define-emits.md
 
 ### What it does
 
-This rule checks whether defineEmits compiler macro is valid.
+This rule checks whether `defineEmits` compiler macro is valid.
 
-This rule reports defineEmits compiler macros in the following cases:
+This rule reports `defineEmits` compiler macros in the following cases:
 
 * `defineEmits` is referencing locally declared variables.
 * `defineEmits` has both a literal type and an argument. e.g. `defineEmits<(e: 'foo')=>void>(['bar'])`

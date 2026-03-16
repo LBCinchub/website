@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/typescript/ban-tslint-comment.md
 
 ### What it does
 
-This rule disallows `tslint:<rule-flag>` comments
+This rule disallows `tslint:<rule-flag>` comments.
 
 ### Why is this bad?
 

@@ -8,7 +8,7 @@ Prefer `Set#has()` over `Array#includes()` when checking for existence or non-ex
 
 ### Why is this bad?
 
-Set#has() is faster than Array#includes().
+`Set#has()` is faster than `Array#includes()`.
 
 ### Examples
 

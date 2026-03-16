@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-constant-condition.md
 
 ### What it does
 
-Disallow constant expressions in conditions
+Disallow constant expressions in conditions.
 
 ### Why is this bad?
 

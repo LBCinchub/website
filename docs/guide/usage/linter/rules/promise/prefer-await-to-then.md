@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/promise/prefer-await-to-then.md
 
 ### What it does
 
-Prefer `await` to `then()`/`catch()`/`finally()` for reading Promise values
+Prefer `await` to `then()`/`catch()`/`finally()` for reading Promise values.
 
 ### Why is this bad?
 

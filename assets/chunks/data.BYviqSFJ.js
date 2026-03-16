@@ -1,1 +1,0 @@
-import{p as e}from"./client.DHhgm4RU.js";var t=e;export{t};

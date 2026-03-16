@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-continue.md
 
 ### What it does
 
-Disallow `continue` statements
+Disallow `continue` statements.
 
 ### Why is this bad?
 

@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/jsx_a11y/html-has-lang.md
 
 ### What it does
 
-Ensures that every HTML document has a lang attribute
+Ensures that every HTML document has a lang attribute.
 
 ### Why is this bad?
 

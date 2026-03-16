@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-empty.md
 
 ### What it does
 
-Disallows empty block statements
+Disallows empty block statements.
 
 ### Why is this bad?
 

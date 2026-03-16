@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-else-return.md
 
 ### What it does
 
-Disallow `else` blocks after `return` statements in `if` statements
+Disallow `else` blocks after `return` statements in `if` statements.
 
 ### Why is this bad?
 

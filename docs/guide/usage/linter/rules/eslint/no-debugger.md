@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-debugger.md
 
 ### What it does
 
-Checks for usage of the `debugger` statement
+Checks for usage of the `debugger` statement.
 
 ### Why is this bad?
 

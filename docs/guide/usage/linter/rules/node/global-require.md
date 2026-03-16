@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/node/global-require.md
 
 ### What it does
 
-Require `require()` calls to be placed at top-level module scope
+Require `require()` calls to be placed at top-level module scope.
 
 ### Why is this bad?
 

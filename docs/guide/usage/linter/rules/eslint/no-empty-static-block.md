@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-empty-static-block.md
 
 ### What it does
 
-Disallows the usages of empty static blocks
+Disallows the usages of empty static blocks.
 
 ### Why is this bad?
 

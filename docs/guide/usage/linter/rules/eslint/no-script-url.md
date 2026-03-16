@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-script-url.md
 
 ### What it does
 
-Disallow javascript: urls
+Disallow `javascript:` URLs.
 
 ### Why is this bad?
 

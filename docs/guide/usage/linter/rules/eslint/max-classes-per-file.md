@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/max-classes-per-file.md
 
 ### What it does
 
-Enforce a maximum number of classes per file
+Enforce a maximum number of classes per file.
 
 ### Why is this bad?
 

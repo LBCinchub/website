@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-lonely-if.md
 
 ### What it does
 
-Disallow `if` statements as the only statement in `else` blocks
+Disallow `if` statements as the only statement in `else` blocks.
 
 ### Why is this bad?
 

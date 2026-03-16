@@ -4,12 +4,12 @@ url: /docs/guide/usage/linter/rules/unicorn/require-array-join-separator.md
 
 ### What it does
 
-Enforce using the separator argument with Array#join()
+Enforce using the separator argument with `Array#join()`.
 
 ### Why is this bad?
 
-It's better to make it clear what the separator is when calling Array#join(),
-instead of relying on the default comma (',') separator.
+It's better to make it clear what the separator is when calling `Array#join()`,
+instead of relying on the default comma (`','`) separator.
 
 ### Examples
 

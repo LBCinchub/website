@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-constant-binary-expression.md
 
 ### What it does
 
-Disallow expressions where the operation doesn't affect the value
+Disallow expressions where the operation doesn't affect the value.
 
 ### Why is this bad?
 

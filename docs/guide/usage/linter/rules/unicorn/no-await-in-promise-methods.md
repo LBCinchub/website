@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/unicorn/no-await-in-promise-methods.md
 
 ### What it does
 
-Disallow using `await` in `Promise` method parameters
+Disallow using `await` in `Promise` method parameters.
 
 ### Why is this bad?
 

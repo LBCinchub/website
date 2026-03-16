@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/react/jsx-props-no-spreading.md
 
 ### What it does
 
-Disallow JSX prop spreading
+Disallow JSX prop spreading.
 
 ### Why is this bad?
 

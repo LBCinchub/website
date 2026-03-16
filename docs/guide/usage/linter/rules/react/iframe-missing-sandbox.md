@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/react/iframe-missing-sandbox.md
 
 ### What it does
 
-Enforce sandbox attribute on iframe elements
+Enforce sandbox attribute on iframe elements.
 
 ### Why is this bad?
 

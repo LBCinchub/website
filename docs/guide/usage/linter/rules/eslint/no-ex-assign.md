@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-ex-assign.md
 
 ### What it does
 
-Disallow reassigning exceptions in catch clauses
+Disallow reassigning exceptions in catch clauses.
 
 ### Why is this bad?
 

@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/promise/no-nesting.md
 
 ### What it does
 
-Disallow nested then() or catch() statements.
+Disallow nested `then()` or `catch()` statements.
 
 ### Why is this bad?
 

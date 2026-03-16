@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/grouped-accessor-pairs.md
 
 ### What it does
 
-Require grouped accessor pairs in object literals and classes
+Require grouped accessor pairs in object literals and classes.
 
 ### Why is this bad?
 

@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-useless-computed-key.md
 
 ### What it does
 
-Disallow unnecessary computed property keys in objects and classes
+Disallow unnecessary computed property keys in objects and classes.
 
 ### Why is this bad?
 

@@ -4,7 +4,7 @@ url: /docs/guide/usage/linter/rules/eslint/no-self-compare.md
 
 ### What it does
 
-Disallow comparisons where both sides are exactly the same
+Disallow comparisons where both sides are exactly the same.
 
 ### Why is this bad?
 
