@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://oxc.rs</id>
     <title>The Oxidation Compiler Blog</title>
-    <updated>2026-03-23T04:33:02.122Z</updated>
+    <updated>2026-03-23T09:12:29.185Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://oxc.rs"/>
     <icon>https://cdn.jsdelivr.net/gh/oxc-project/oxc-assets/square.ico</icon>
@@ -2052,13 +2052,19 @@ Additionally, known issues are distinguished by <a href="https://github.com/oxc-
 <p>Install <code>oxfmt</code> as a dev dependency:</p>
 <div class="language-sh"><button title="Copy Code" class="copy"></button><span class="lang">sh</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">pnpm</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> add</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -D</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> oxfmt</span></span></code></pre>
 </div><p>Add scripts to <code>package.json</code>:</p>
-<tr><td>package.json</td><td><div class="language-json"><button title="Copy Code" class="copy"></button><span class="lang">json</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span>
+<tr><td>package.json</td><td><div class="vp-code-block-title">
+      <div class="vp-code-block-title-bar">
+          <span class="vp-code-block-title-text" data-title="package.json">package.json</span>
+      </div>
+        <div class="language-json"><button title="Copy Code" class="copy"></button><span class="lang">json</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span>
 <span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "scripts"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span>
 <span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "fmt"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"oxfmt"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
 <span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "fmt:check"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"oxfmt --check"</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
-</div></td></tr><p>Format files:</p>
+</div>
+      </div>
+      </td></tr><p>Format files:</p>
 <div class="language-sh"><button title="Copy Code" class="copy"></button><span class="lang">sh</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">pnpm</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> fmt</span></span></code></pre>
 </div><p>Check formatting without writing files:</p>
 <div class="language-sh"><button title="Copy Code" class="copy"></button><span class="lang">sh</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">pnpm</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> fmt:check</span></span></code></pre>
@@ -2260,19 +2266,31 @@ Additionally, known issues are distinguished by <a href="https://github.com/oxc-
 <p>Install <code>oxlint</code> as a dev dependency:</p>
 <div class="language-sh"><button title="Copy Code" class="copy"></button><span class="lang">sh</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">pnpm</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> add</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -D</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> oxlint</span></span></code></pre>
 </div><p>Add a script to <code>package.json</code>:</p>
-<tr><td>package.json</td><td><div class="language-json"><button title="Copy Code" class="copy"></button><span class="lang">json</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span>
+<tr><td>package.json</td><td><div class="vp-code-block-title">
+      <div class="vp-code-block-title-bar">
+          <span class="vp-code-block-title-text" data-title="package.json">package.json</span>
+      </div>
+        <div class="language-json"><button title="Copy Code" class="copy"></button><span class="lang">json</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span>
 <span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "scripts"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span>
 <span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "lint"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"oxlint"</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
-</div></td></tr><p>Create a config file (or use <a href="#migrating-from-eslint">our migration tool</a>):</p>
-<tr><td>.oxlintrc.json</td><td><div class="language-json"><button title="Copy Code" class="copy"></button><span class="lang">json</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span>
+</div>
+      </div>
+      </td></tr><p>Create a config file (or use <a href="#migrating-from-eslint">our migration tool</a>):</p>
+<tr><td>.oxlintrc.json</td><td><div class="vp-code-block-title">
+      <div class="vp-code-block-title-bar">
+          <span class="vp-code-block-title-text" data-title=".oxlintrc.json">.oxlintrc.json</span>
+      </div>
+        <div class="language-json"><button title="Copy Code" class="copy"></button><span class="lang">json</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span>
 <span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "jsPlugins"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"eslint-plugin-testing-library"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">],</span></span>
 <span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "rules"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span>
 <span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "testing-library/no-render-in-lifecycle"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"error"</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
-</div></td></tr><p>Lint your project:</p>
+</div>
+      </div>
+      </td></tr><p>Lint your project:</p>
 <div class="language-sh"><button title="Copy Code" class="copy"></button><span class="lang">sh</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">pnpm</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> run</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> lint</span></span></code></pre>
 </div><h3 id="migrating-from-eslint" tabindex="-1">Migrating from ESLint <a class="header-anchor" href="#migrating-from-eslint" aria-label="Permalink to “Migrating from ESLint”">&#8203;</a></h3>
 <p>Most projects should find that migrating from ESLint is straightforward.</p>
@@ -2284,7 +2302,11 @@ Additionally, known issues are distinguished by <a href="https://github.com/oxc-
 <p>Oxlint already natively implements most of ESLint's built-in rules, rewritten in Rust, but not all rules are implemented yet.</p>
 <p>To bridge this gap, we provide <a href="https://www.npmjs.com/package/oxlint-plugin-eslint" target="_blank" rel="noreferrer">oxlint-plugin-eslint</a>, which contains all ESLint's built-in rules packaged as an Oxlint JS plugin.</p>
 <p>This unlocks rules like <code>no-restricted-syntax</code> which are not yet implemented natively in Oxlint.</p>
-<tr><td>.oxlintrc.json</td><td><div class="language-jsonc"><button title="Copy Code" class="copy"></button><span class="lang">jsonc</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span>
+<tr><td>.oxlintrc.json</td><td><div class="vp-code-block-title">
+      <div class="vp-code-block-title-bar">
+          <span class="vp-code-block-title-text" data-title=".oxlintrc.json">.oxlintrc.json</span>
+      </div>
+        <div class="language-jsonc"><button title="Copy Code" class="copy"></button><span class="lang">jsonc</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span>
 <span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "jsPlugins"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"oxlint-plugin-eslint"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">],</span></span>
 <span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "rules"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span>
 <span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">    // Note: "eslint-js" not "eslint"</span></span>
@@ -2297,8 +2319,14 @@ Additionally, known issues are distinguished by <a href="https://github.com/oxc-
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    ],</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  },</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
-</div></td></tr><p>Oxlint also implements a subset of rules from plugins like <a href="https://www.npmjs.com/package/eslint-plugin-jsdoc" target="_blank" rel="noreferrer">eslint-plugin-jsdoc</a> natively. For rules which aren't implemented in Oxlint itself, you can use the <code>eslint-plugin-jsdoc</code> package directly. This is the recommended pattern:</p>
-<tr><td>.oxlintrc.json</td><td><div class="language-jsonc"><button title="Copy Code" class="copy"></button><span class="lang">jsonc</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span>
+</div>
+      </div>
+      </td></tr><p>Oxlint also implements a subset of rules from plugins like <a href="https://www.npmjs.com/package/eslint-plugin-jsdoc" target="_blank" rel="noreferrer">eslint-plugin-jsdoc</a> natively. For rules which aren't implemented in Oxlint itself, you can use the <code>eslint-plugin-jsdoc</code> package directly. This is the recommended pattern:</p>
+<tr><td>.oxlintrc.json</td><td><div class="vp-code-block-title">
+      <div class="vp-code-block-title-bar">
+          <span class="vp-code-block-title-text" data-title=".oxlintrc.json">.oxlintrc.json</span>
+      </div>
+        <div class="language-jsonc"><button title="Copy Code" class="copy"></button><span class="lang">jsonc</span><pre class="shiki shiki-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e" tabindex="0" dir="ltr" v-pre=""><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span>
 <span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "jsPlugins"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: [</span></span>
 <span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">    // Set up an alias for the plugin "jsdoc-js"</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    { </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"name"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"jsdoc-js"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"specifier"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"eslint-plugin-jsdoc"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
@@ -2312,7 +2340,9 @@ Additionally, known issues are distinguished by <a href="https://github.com/oxc-
 <span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "jsdoc/require-property-description"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"error"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  },</span></span>
 <span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
-</div></td></tr><h2 id="performance" tabindex="-1">Performance <a class="header-anchor" href="#performance" aria-label="Permalink to “Performance”">&#8203;</a></h2>
+</div>
+      </div>
+      </td></tr><h2 id="performance" tabindex="-1">Performance <a class="header-anchor" href="#performance" aria-label="Permalink to “Performance”">&#8203;</a></h2>
 <p>Since the first technical preview, we have &quot;Rustified&quot; large chunks of the code powering JS plugins, which has delivered significant performance gains. In particular, plugins which rely on tokens APIs (e.g. ESLint Stylistic) are up to 5 times faster than before.</p>
 <p>As a benchmark, we migrated Node.js's repo from ESLint to Oxlint. Node.js is a large project utilizing many custom lint rules, as well as several heavy ESLint plugins (98 JS lint rules in total).</p>
 <table tabindex="0">

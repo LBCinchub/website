@@ -235,8 +235,8 @@
 - [import/no-webpack-loader-syntax](/docs/guide/usage/linter/rules/import/no-webpack-loader-syntax.md)
 - [import/prefer-default-export](/docs/guide/usage/linter/rules/import/prefer-default-export.md)
 - [import/unambiguous](/docs/guide/usage/linter/rules/import/unambiguous.md)
-- [Inline ignore comments](/docs/guide/usage/formatter/ignore-comments.md)
 - [Inline ignore comments](/docs/guide/usage/linter/ignore-comments.md): Disable specific rules inline using Oxlint ignore comments
+- [Inline ignore comments](/docs/guide/usage/formatter/ignore-comments.md)
 - [Introduction](/docs/contribute/introduction.md)
 - [Introduction](/docs/learn/parser_in_rust/intro.md)
 - [Isolated Declarations Emit](/docs/guide/usage/transformer/isolated-declarations.md)
