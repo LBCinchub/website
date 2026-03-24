@@ -31,24 +31,4 @@ obj["__proto__"] = b;
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-proto": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-proto
-```
-
-:::
-
 ## References
-
-* Rule Source

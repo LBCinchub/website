@@ -38,24 +38,4 @@ let myObject: object = "Type 'string' is not assignable to type 'object'.";
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/no-wrapper-object-types": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/no-wrapper-object-types
-```
-
-:::
-
 ## References
-
-* Rule Source

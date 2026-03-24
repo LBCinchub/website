@@ -56,25 +56,4 @@ Require `data-*` attributes to be lowercase, e.g. `data-foobar` instead of `data
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["react"],
-  "rules": {
-    "react/no-unknown-property": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny react/no-unknown-property --react-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

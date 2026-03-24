@@ -47,25 +47,4 @@ await getPromise();
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/await-thenable": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --type-aware --deny typescript/await-thenable
-```
-
-:::
-
 ## References
-
-* Rule Source
-* Rule Source (tsgolint)

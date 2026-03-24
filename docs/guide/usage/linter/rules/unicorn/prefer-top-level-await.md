@@ -38,24 +38,4 @@ try {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/prefer-top-level-await": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/prefer-top-level-await
-```
-
-:::
-
 ## References
-
-* Rule Source

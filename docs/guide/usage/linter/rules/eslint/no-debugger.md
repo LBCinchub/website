@@ -34,24 +34,4 @@ async function main() {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-debugger": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-debugger
-```
-
-:::
-
 ## References
-
-* Rule Source

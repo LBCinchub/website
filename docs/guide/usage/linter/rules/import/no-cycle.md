@@ -94,25 +94,4 @@ Maximum dependency depth to traverse
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["import"],
-  "rules": {
-    "import/no-cycle": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny import/no-cycle --import-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

@@ -26,24 +26,4 @@ const bar = [1, 2, 3].flatMap((i) => [i]);
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/prefer-array-flat-map": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/prefer-array-flat-map
-```
-
-:::
-
 ## References
-
-* Rule Source

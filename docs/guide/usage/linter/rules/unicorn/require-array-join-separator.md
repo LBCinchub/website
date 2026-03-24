@@ -27,24 +27,4 @@ foo.join(",");
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/require-array-join-separator": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/require-array-join-separator
-```
-
-:::
-
 ## References
-
-* Rule Source

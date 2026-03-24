@@ -113,25 +113,4 @@ Maximum allowed depth of nested describe calls.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["jest"],
-  "rules": {
-    "jest/max-nested-describe": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny jest/max-nested-describe --jest-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

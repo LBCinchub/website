@@ -36,24 +36,4 @@ namespace Example {}
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/prefer-namespace-keyword": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/prefer-namespace-keyword
-```
-
-:::
-
 ## References
-
-* Rule Source

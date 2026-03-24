@@ -33,24 +33,4 @@ while (!done) {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-unmodified-loop-condition": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-unmodified-loop-condition
-```
-
-:::
-
 ## References
-
-* Rule Source

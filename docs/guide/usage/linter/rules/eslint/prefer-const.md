@@ -73,24 +73,4 @@ This is mainly useful for preventing conflicts with the `typescript/no-use-befor
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "prefer-const": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny prefer-const
-```
-
-:::
-
 ## References
-
-* Rule Source

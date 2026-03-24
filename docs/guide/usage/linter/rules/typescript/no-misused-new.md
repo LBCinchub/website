@@ -50,24 +50,4 @@ interface I {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/no-misused-new": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/no-misused-new
-```
-
-:::
-
 ## References
-
-* Rule Source

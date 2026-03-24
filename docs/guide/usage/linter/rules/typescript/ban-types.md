@@ -41,24 +41,4 @@ let bar: boolean = true;
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/ban-types": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/ban-types
-```
-
-:::
-
 ## References
-
-* Rule Source

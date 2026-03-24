@@ -50,25 +50,4 @@ class Hello extends React.Component {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["react"],
-  "rules": {
-    "react/require-render-return": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny react/require-render-return --react-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

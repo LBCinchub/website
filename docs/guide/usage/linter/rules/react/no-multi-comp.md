@@ -51,25 +51,4 @@ Stateless basically just means function components, including those created via
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["react"],
-  "rules": {
-    "react/no-multi-comp": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny react/no-multi-comp --react-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

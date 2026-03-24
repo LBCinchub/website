@@ -74,24 +74,4 @@ When `true`, warns on implicit string coercion (e.g., `"" + foo`).
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-implicit-coercion": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-implicit-coercion
-```
-
-:::
-
 ## References
-
-* Rule Source

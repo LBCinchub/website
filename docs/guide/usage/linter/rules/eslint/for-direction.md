@@ -54,24 +54,4 @@ for (let i = MIN; i <= MAX; i -= 0) {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "for-direction": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny for-direction
-```
-
-:::
-
 ## References
-
-* Rule Source

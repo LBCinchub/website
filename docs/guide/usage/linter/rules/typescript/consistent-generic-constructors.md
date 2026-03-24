@@ -55,24 +55,4 @@ Type arguments that only appear on the constructor are disallowed.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/consistent-generic-constructors": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/consistent-generic-constructors
-```
-
-:::
-
 ## References
-
-* Rule Source

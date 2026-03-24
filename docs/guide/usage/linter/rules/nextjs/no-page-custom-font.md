@@ -55,25 +55,4 @@ export default Document;
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["nextjs"],
-  "rules": {
-    "nextjs/no-page-custom-font": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny nextjs/no-page-custom-font --nextjs-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

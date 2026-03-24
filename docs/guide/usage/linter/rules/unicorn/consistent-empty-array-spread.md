@@ -31,24 +31,4 @@ const array = [a, ...(foo ? "bc" : "")];
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/consistent-empty-array-spread": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/consistent-empty-array-spread
-```
-
-:::
-
 ## References
-
-* Rule Source

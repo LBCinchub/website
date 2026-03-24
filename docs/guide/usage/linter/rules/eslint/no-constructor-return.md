@@ -35,24 +35,4 @@ class C {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-constructor-return": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-constructor-return
-```
-
-:::
-
 ## References
-
-* Rule Source

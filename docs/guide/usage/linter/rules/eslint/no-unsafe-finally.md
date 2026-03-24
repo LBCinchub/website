@@ -36,24 +36,4 @@ Examples of **incorrect** code for this rule:
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-unsafe-finally": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-unsafe-finally
-```
-
-:::
-
 ## References
-
-* Rule Source

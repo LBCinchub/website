@@ -52,24 +52,4 @@ The maximum number of classes allowed per file.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "max-classes-per-file": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny max-classes-per-file
-```
-
-:::
-
 ## References
-
-* Rule Source

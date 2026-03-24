@@ -28,24 +28,4 @@ Array.from(...argumentsArray);
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/prefer-spread": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/prefer-spread
-```
-
-:::
-
 ## References
-
-* Rule Source

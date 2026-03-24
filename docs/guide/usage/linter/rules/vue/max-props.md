@@ -52,25 +52,4 @@ The maximum number of props allowed in a Vue SFC.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["vue"],
-  "rules": {
-    "vue/max-props": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny vue/max-props --vue-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

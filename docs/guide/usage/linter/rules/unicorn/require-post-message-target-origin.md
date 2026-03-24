@@ -36,24 +36,4 @@ window.postMessage(message, "*");
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/require-post-message-target-origin": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/require-post-message-target-origin
-```
-
-:::
-
 ## References
-
-* Rule Source

@@ -108,24 +108,4 @@ This is common in TypeScript: `type Foo = ...; const Foo = ...;`
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-shadow": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-shadow
-```
-
-:::
-
 ## References
-
-* Rule Source

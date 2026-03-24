@@ -44,24 +44,4 @@ const set = new Set(foo);
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/no-useless-collection-argument": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/no-useless-collection-argument
-```
-
-:::
-
 ## References
-
-* Rule Source

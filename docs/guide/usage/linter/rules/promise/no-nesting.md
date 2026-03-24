@@ -55,25 +55,4 @@ doThing().then((a) => getB(a).then((b) => getC(a, b)));
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["promise"],
-  "rules": {
-    "promise/no-nesting": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny promise/no-nesting --promise-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

@@ -49,25 +49,4 @@ class Foo extends React.Component {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["react"],
-  "rules": {
-    "react/no-this-in-sfc": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny react/no-this-in-sfc --react-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

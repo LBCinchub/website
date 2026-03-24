@@ -28,25 +28,4 @@ function quux(foo) {}
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["jsdoc"],
-  "rules": {
-    "jsdoc/require-param-type": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny jsdoc/require-param-type --jsdoc-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

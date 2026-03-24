@@ -34,25 +34,4 @@ ReactDOM.render(<App />, document.body);
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["react"],
-  "rules": {
-    "react/no-render-return-value": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny react/no-render-return-value --react-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

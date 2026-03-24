@@ -30,24 +30,4 @@ let y = 0;
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "oxc/erasing-op": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny oxc/erasing-op
-```
-
-:::
-
 ## References
-
-* Rule Source

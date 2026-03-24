@@ -37,25 +37,4 @@ export default {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["vue"],
-  "rules": {
-    "vue/require-default-export": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny vue/require-default-export --vue-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

@@ -132,25 +132,4 @@ Whether mutable methods should be treated as readonly members.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/prefer-readonly-parameter-types": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --type-aware --deny typescript/prefer-readonly-parameter-types
-```
-
-:::
-
 ## References
-
-* Rule Source
-* Rule Source (tsgolint)

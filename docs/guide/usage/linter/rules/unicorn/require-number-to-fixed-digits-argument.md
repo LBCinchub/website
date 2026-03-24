@@ -29,24 +29,4 @@ number.toFixed(2);
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/require-number-to-fixed-digits-argument": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/require-number-to-fixed-digits-argument
-```
-
-:::
-
 ## References
-
-* Rule Source

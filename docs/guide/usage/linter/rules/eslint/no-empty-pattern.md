@@ -60,24 +60,4 @@ function foo({a = []}) {}
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-empty-pattern": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-empty-pattern
-```
-
-:::
-
 ## References
-
-* Rule Source

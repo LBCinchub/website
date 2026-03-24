@@ -74,24 +74,4 @@ compared to direct calls, as they do not invoke JavaScript's scope chain.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-eval": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-eval
-```
-
-:::
-
 ## References
-
-* Rule Source

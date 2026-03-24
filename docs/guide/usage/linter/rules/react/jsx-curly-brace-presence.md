@@ -270,25 +270,4 @@ Whether to enforce or disallow curly braces for props on JSX elements.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["react"],
-  "rules": {
-    "react/jsx-curly-brace-presence": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny react/jsx-curly-brace-presence --react-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

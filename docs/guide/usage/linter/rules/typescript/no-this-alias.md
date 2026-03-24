@@ -53,24 +53,4 @@ An array of variable names that are allowed to alias `this`.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/no-this-alias": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/no-this-alias
-```
-
-:::
-
 ## References
-
-* Rule Source

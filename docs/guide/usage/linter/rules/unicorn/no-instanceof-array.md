@@ -29,24 +29,4 @@ Array.isArray([1, 2, 3]);
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/no-instanceof-array": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/no-instanceof-array
-```
-
-:::
-
 ## References
-
-* Rule Source

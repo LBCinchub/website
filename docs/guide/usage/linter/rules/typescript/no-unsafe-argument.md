@@ -51,25 +51,4 @@ takesString(unknownValue as string); // explicitly unsafe, but intentional
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/no-unsafe-argument": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --type-aware --deny typescript/no-unsafe-argument
-```
-
-:::
-
 ## References
-
-* Rule Source
-* Rule Source (tsgolint)

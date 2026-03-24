@@ -105,24 +105,4 @@ complexity by 1 irrespective of the number of `case` statements
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "complexity": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny complexity
-```
-
-:::
-
 ## References
-
-* Rule Source

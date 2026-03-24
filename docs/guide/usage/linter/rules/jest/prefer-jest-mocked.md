@@ -46,25 +46,4 @@ jest.mocked([].foo).mockReturnValue(1);
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["jest"],
-  "rules": {
-    "jest/prefer-jest-mocked": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny jest/prefer-jest-mocked --jest-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

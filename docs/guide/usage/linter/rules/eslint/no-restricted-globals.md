@@ -47,24 +47,4 @@ are restricted from use.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-restricted-globals": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-restricted-globals
-```
-
-:::
-
 ## References
-
-* Rule Source

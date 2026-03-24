@@ -37,24 +37,4 @@ This is the default option.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicode-bom": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicode-bom
-```
-
-:::
-
 ## References
-
-* Rule Source

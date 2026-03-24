@@ -68,25 +68,4 @@ Whether to ignore arrays in which all elements are strings.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/require-array-sort-compare": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --type-aware --deny typescript/require-array-sort-compare
-```
-
-:::
-
 ## References
-
-* Rule Source
-* Rule Source (tsgolint)

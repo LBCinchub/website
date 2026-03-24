@@ -43,25 +43,4 @@ Examples of **correct** code for this rule:
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["jsdoc"],
-  "rules": {
-    "jsdoc/require-property": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny jsdoc/require-property --jsdoc-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

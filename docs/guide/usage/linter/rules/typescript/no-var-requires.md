@@ -22,24 +22,4 @@ let foo = require("foo");
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/no-var-requires": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/no-var-requires
-```
-
-:::
-
 ## References
-
-* Rule Source

@@ -84,25 +84,4 @@ Component names to ignore when checking for event handler prefixes.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["react"],
-  "rules": {
-    "react/jsx-handler-names": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny react/jsx-handler-names --react-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

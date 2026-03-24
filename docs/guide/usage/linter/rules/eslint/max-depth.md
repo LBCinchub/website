@@ -76,24 +76,4 @@ The `max` enforces a maximum depth that blocks can be nested
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "max-depth": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny max-depth
-```
-
-:::
-
 ## References
-
-* Rule Source

@@ -35,24 +35,4 @@ When set to `true`, allows simple operations (like summing numbers) in `reduce` 
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/no-array-reduce": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/no-array-reduce
-```
-
-:::
-
 ## References
-
-* Rule Source

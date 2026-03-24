@@ -44,25 +44,4 @@ test("type checking", () => {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["vitest"],
-  "rules": {
-    "vitest/prefer-expect-type-of": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny vitest/prefer-expect-type-of --vitest-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

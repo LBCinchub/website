@@ -33,25 +33,4 @@ import { createApp, ref, Component } from "vue";
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["vue"],
-  "rules": {
-    "vue/prefer-import-from-vue": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny vue/prefer-import-from-vue --vue-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

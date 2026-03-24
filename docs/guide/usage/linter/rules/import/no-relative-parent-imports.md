@@ -34,25 +34,4 @@ import b from "./b";
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["import"],
-  "rules": {
-    "import/no-relative-parent-imports": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny import/no-relative-parent-imports --import-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

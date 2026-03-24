@@ -61,24 +61,4 @@ console.info("foo");
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-console": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-console
-```
-
-:::
-
 ## References
-
-* Rule Source

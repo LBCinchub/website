@@ -95,24 +95,4 @@ function doTry() {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "block-scoped-var": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny block-scoped-var
-```
-
-:::
-
 ## References
-
-* Rule Source

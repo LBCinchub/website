@@ -67,25 +67,4 @@ to use it, add the following configuration to your `.oxlintrc.json`:
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["jest"],
-  "rules": {
-    "jest/prefer-expect-resolves": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny jest/prefer-expect-resolves --jest-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

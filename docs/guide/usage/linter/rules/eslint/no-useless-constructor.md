@@ -63,24 +63,4 @@ class D extends A {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-useless-constructor": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-useless-constructor
-```
-
-:::
-
 ## References
-
-* Rule Source

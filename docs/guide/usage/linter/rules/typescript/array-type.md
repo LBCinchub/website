@@ -74,24 +74,4 @@ The array type expected for readonly cases. If omitted, the value for `default` 
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/array-type": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/array-type
-```
-
-:::
-
 ## References
-
-* Rule Source

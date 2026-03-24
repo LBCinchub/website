@@ -74,24 +74,4 @@ How to handle the `@ts-nocheck` directive.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/ban-ts-comment": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/ban-ts-comment
-```
-
-:::
-
 ## References
-
-* Rule Source

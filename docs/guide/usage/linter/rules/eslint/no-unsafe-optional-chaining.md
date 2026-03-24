@@ -40,24 +40,4 @@ If this is true, this rule warns arithmetic operations on optional chaining expr
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-unsafe-optional-chaining": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-unsafe-optional-chaining
-```
-
-:::
-
 ## References
-
-* Rule Source

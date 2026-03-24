@@ -30,24 +30,4 @@ foo.replace(pattern, bar);
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/prefer-string-replace-all": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/prefer-string-replace-all
-```
-
-:::
-
 ## References
-
-* Rule Source

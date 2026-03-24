@@ -57,25 +57,4 @@ interface Options {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["jest"],
-  "rules": {
-    "jest/valid-title": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny jest/valid-title --jest-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

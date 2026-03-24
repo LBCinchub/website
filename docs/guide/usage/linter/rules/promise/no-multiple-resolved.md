@@ -47,25 +47,4 @@ new Promise((resolve, reject) => {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["promise"],
-  "rules": {
-    "promise/no-multiple-resolved": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny promise/no-multiple-resolved --promise-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

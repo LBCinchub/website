@@ -76,24 +76,4 @@ If true, also report shadowing of `globalThis`.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-shadow-restricted-names": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-shadow-restricted-names
-```
-
-:::
-
 ## References
-
-* Rule Source

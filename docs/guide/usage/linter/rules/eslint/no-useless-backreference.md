@@ -39,24 +39,4 @@ Examples of **correct** code for this rule:
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-useless-backreference": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-useless-backreference
-```
-
-:::
-
 ## References
-
-* Rule Source

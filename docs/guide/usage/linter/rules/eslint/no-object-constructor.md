@@ -30,24 +30,4 @@ const createObject = (Object) => new Object();
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-object-constructor": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-object-constructor
-```
-
-:::
-
 ## References
-
-* Rule Source

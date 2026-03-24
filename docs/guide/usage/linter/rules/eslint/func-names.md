@@ -213,24 +213,4 @@ function* foobar(i) {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "func-names": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny func-names
-```
-
-:::
-
 ## References
-
-* Rule Source

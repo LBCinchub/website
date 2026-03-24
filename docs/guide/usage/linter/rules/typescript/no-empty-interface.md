@@ -46,24 +46,4 @@ When set to `true`, allows empty interfaces that extend a single interface.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/no-empty-interface": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/no-empty-interface
-```
-
-:::
-
 ## References
-
-* Rule Source

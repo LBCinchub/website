@@ -52,24 +52,4 @@ when what is really intended is `!(a < b)`.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-unsafe-negation": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-unsafe-negation
-```
-
-:::
-
 ## References
-
-* Rule Source

@@ -94,25 +94,4 @@ var x = require("x"),
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["node"],
-  "rules": {
-    "node/global-require": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny node/global-require --node-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

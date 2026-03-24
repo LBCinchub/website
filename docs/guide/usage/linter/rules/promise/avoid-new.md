@@ -34,25 +34,4 @@ const bar = await Promise.all([baz(), bang()]);
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["promise"],
-  "rules": {
-    "promise/avoid-new": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny promise/avoid-new --promise-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

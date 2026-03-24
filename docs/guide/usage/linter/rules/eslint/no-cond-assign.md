@@ -50,24 +50,4 @@ Disallow all assignments in conditional expressions.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-cond-assign": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-cond-assign
-```
-
-:::
-
 ## References
-
-* Rule Source

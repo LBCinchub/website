@@ -41,24 +41,4 @@ export const value = "Hello, world!";
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/no-useless-empty-export": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/no-useless-empty-export
-```
-
-:::
-
 ## References
-
-* Rule Source

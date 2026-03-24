@@ -41,24 +41,4 @@ for (i = 0; i < 10; i++) {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-continue": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-continue
-```
-
-:::
-
 ## References
-
-* Rule Source

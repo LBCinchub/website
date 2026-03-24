@@ -110,25 +110,4 @@ Whether to skip compound assignments (e.g., `a += b`).
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/restrict-plus-operands": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --type-aware --deny typescript/restrict-plus-operands
-```
-
-:::
-
 ## References
-
-* Rule Source
-* Rule Source (tsgolint)

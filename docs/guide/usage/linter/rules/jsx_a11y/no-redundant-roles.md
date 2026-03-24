@@ -38,25 +38,4 @@ Examples of **correct** code for this rule:
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["jsx-a11y"],
-  "rules": {
-    "jsx-a11y/no-redundant-roles": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny jsx-a11y/no-redundant-roles --jsx-a11y-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

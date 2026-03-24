@@ -39,25 +39,4 @@ const a = <a />;
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["react"],
-  "rules": {
-    "react/react-in-jsx-scope": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny react/react-in-jsx-scope --react-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

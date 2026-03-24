@@ -37,24 +37,4 @@ When set to `true`, warns on undefined variables used in a `typeof` expression.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-undef": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-undef
-```
-
-:::
-
 ## References
-
-* Rule Source

@@ -61,24 +61,4 @@ function foo(n) {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-caller": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-caller
-```
-
-:::
-
 ## References
-
-* Rule Source

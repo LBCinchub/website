@@ -94,25 +94,4 @@ to use it, add the following configuration to your `.oxlintrc.json`:
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["jest"],
-  "rules": {
-    "jest/no-duplicate-hooks": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny jest/no-duplicate-hooks --jest-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

@@ -28,24 +28,4 @@ someCode();
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/ban-tslint-comment": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/ban-tslint-comment
-```
-
-:::
-
 ## References
-
-* Rule Source

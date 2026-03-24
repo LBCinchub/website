@@ -52,24 +52,4 @@ When set to `true`, ignores type annotations on class properties.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/no-inferrable-types": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/no-inferrable-types
-```
-
-:::
-
 ## References
-
-* Rule Source

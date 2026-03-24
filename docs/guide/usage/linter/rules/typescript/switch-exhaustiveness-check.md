@@ -138,25 +138,4 @@ When true, switches with non-exhaustive union types must have a default case.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/switch-exhaustiveness-check": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --type-aware --deny typescript/switch-exhaustiveness-check
-```
-
-:::
-
 ## References
-
-* Rule Source
-* Rule Source (tsgolint)

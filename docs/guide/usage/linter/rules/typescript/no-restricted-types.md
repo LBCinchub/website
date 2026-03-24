@@ -52,24 +52,4 @@ A mapping of type names to ban configurations.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/no-restricted-types": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/no-restricted-types
-```
-
-:::
-
 ## References
-
-* Rule Source

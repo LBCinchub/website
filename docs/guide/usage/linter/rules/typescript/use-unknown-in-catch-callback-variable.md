@@ -80,25 +80,4 @@ try {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/use-unknown-in-catch-callback-variable": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --type-aware --deny typescript/use-unknown-in-catch-callback-variable
-```
-
-:::
-
 ## References
-
-* Rule Source
-* Rule Source (tsgolint)

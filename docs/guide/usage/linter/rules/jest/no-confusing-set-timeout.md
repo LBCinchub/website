@@ -44,25 +44,4 @@ describe("unit test", () => {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["jest"],
-  "rules": {
-    "jest/no-confusing-set-timeout": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny jest/no-confusing-set-timeout --jest-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

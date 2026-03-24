@@ -31,25 +31,4 @@ test([])("foo", () => {});
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["vitest"],
-  "rules": {
-    "vitest/warn-todo": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny vitest/warn-todo --vitest-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

@@ -45,24 +45,4 @@ function sum(...args) {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "oxc/bad-array-method-on-arguments": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny oxc/bad-array-method-on-arguments
-```
-
-:::
-
 ## References
-
-* Rule Source

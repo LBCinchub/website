@@ -28,24 +28,4 @@ foo.addEventListener("click", () => {});
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/prefer-add-event-listener": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/prefer-add-event-listener
-```
-
-:::
-
 ## References
-
-* Rule Source

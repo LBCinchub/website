@@ -34,25 +34,4 @@ type: `boolean`
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["vitest"],
-  "rules": {
-    "vitest/prefer-import-in-mock": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny vitest/prefer-import-in-mock --vitest-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

@@ -33,24 +33,4 @@ Object.assign(mod_ns, { foo: "foo" }); // ERROR: The members of 'mod_ns' are rea
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-import-assign": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-import-assign
-```
-
-:::
-
 ## References
-
-* Rule Source

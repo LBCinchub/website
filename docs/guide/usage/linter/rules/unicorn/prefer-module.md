@@ -30,24 +30,4 @@ export default foo;
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/prefer-module": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/prefer-module
-```
-
-:::
-
 ## References
-
-* Rule Source

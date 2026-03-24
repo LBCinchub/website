@@ -33,24 +33,4 @@ const request = new Request("/", { method: "POST", body: "foo=bar" });
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/no-invalid-fetch-options": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/no-invalid-fetch-options
-```
-
-:::
-
 ## References
-
-* Rule Source

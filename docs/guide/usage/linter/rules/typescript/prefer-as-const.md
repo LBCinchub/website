@@ -38,24 +38,4 @@ let foo = { bar: "baz" };
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/prefer-as-const": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/prefer-as-const
-```
-
-:::
-
 ## References
-
-* Rule Source

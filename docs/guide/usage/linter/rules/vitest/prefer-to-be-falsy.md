@@ -31,25 +31,4 @@ expectTypeOf(foo).toBeFalsy();
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["vitest"],
-  "rules": {
-    "vitest/prefer-to-be-falsy": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny vitest/prefer-to-be-falsy --vitest-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

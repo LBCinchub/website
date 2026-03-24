@@ -59,25 +59,4 @@ Requires using a variable to store props and prohibits destructuring
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["vue"],
-  "rules": {
-    "vue/define-props-destructuring": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny vue/define-props-destructuring --vue-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

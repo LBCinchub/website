@@ -26,24 +26,4 @@ var re = /foo   bar/;
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-regex-spaces": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-regex-spaces
-```
-
-:::
-
 ## References
-
-* Rule Source

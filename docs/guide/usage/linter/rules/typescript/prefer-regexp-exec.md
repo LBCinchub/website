@@ -29,25 +29,4 @@ const text = "value";
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/prefer-regexp-exec": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --type-aware --deny typescript/prefer-regexp-exec
-```
-
-:::
-
 ## References
-
-* Rule Source
-* Rule Source (tsgolint)

@@ -26,24 +26,4 @@ const buffer = Buffer.alloc(10);
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/no-new-buffer": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/no-new-buffer
-```
-
-:::
-
 ## References
-
-* Rule Source

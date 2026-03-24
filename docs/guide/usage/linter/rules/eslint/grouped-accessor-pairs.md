@@ -158,24 +158,4 @@ type Bar = {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "grouped-accessor-pairs": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny grouped-accessor-pairs
-```
-
-:::
-
 ## References
-
-* Rule Source

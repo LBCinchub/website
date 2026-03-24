@@ -110,25 +110,4 @@ myPromise()
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["promise"],
-  "rules": {
-    "promise/no-return-wrap": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny promise/no-return-wrap --promise-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

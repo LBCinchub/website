@@ -32,25 +32,4 @@ class MyComponent extends Component {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["react"],
-  "rules": {
-    "react/no-find-dom-node": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny react/no-find-dom-node --react-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

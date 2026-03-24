@@ -44,25 +44,4 @@ Determines if developer-created components are checked.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["jsx-a11y"],
-  "rules": {
-    "jsx-a11y/no-autofocus": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny jsx-a11y/no-autofocus --jsx-a11y-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

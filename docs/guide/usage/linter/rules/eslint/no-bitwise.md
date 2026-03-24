@@ -78,24 +78,4 @@ const b = a | 0;
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-bitwise": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-bitwise
-```
-
-:::
-
 ## References
-
-* Rule Source

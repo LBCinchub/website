@@ -201,24 +201,4 @@ Whether to report unused fallthrough comments.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-fallthrough": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-fallthrough
-```
-
-:::
-
 ## References
-
-* Rule Source

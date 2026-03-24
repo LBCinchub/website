@@ -26,24 +26,4 @@ foo.flat();
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/no-unnecessary-array-flat-depth": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/no-unnecessary-array-flat-depth
-```
-
-:::
-
 ## References
-
-* Rule Source

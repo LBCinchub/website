@@ -43,25 +43,4 @@ Allow fragments with a single expression child.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["react"],
-  "rules": {
-    "react/jsx-no-useless-fragment": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny react/jsx-no-useless-fragment --react-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

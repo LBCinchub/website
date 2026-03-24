@@ -68,24 +68,4 @@ Useful for ignoring common comment decorations like `*` in JSDoc-style comments.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-warning-comments": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-warning-comments
-```
-
-:::
-
 ## References
-
-* Rule Source

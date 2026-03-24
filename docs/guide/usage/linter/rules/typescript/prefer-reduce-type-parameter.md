@@ -57,25 +57,4 @@ const counts = ["a", "b", "a"].reduce<Count>((acc, item) => {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/prefer-reduce-type-parameter": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --type-aware --deny typescript/prefer-reduce-type-parameter
-```
-
-:::
-
 ## References
-
-* Rule Source
-* Rule Source (tsgolint)

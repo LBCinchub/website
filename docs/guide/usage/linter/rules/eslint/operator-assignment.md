@@ -65,24 +65,4 @@ Disallows assignment operator shorthand.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "operator-assignment": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny operator-assignment
-```
-
-:::
-
 ## References
-
-* Rule Source

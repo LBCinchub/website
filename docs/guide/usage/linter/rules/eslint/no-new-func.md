@@ -33,24 +33,4 @@ let x = function (a, b) {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-new-func": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-new-func
-```
-
-:::
-
 ## References
-
-* Rule Source

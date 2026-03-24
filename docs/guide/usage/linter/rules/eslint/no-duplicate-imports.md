@@ -98,24 +98,4 @@ export * from "module";
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-duplicate-imports": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-duplicate-imports
-```
-
-:::
-
 ## References
-
-* Rule Source

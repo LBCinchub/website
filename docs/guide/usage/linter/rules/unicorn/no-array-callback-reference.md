@@ -38,24 +38,4 @@ const bar = array.filter(Boolean);
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/no-array-callback-reference": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/no-array-callback-reference
-```
-
-:::
-
 ## References
-
-* Rule Source

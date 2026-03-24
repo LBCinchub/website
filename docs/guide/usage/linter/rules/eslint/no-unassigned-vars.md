@@ -35,24 +35,4 @@ console.log(user.name);
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-unassigned-vars": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-unassigned-vars
-```
-
-:::
-
 ## References
-
-* Rule Source

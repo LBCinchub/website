@@ -155,24 +155,4 @@ parts of the extension rather than parts of the filename.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/filename-case": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/filename-case
-```
-
-:::
-
 ## References
-
-* Rule Source

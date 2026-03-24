@@ -39,24 +39,4 @@ class Bar {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-empty-static-block": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-empty-static-block
-```
-
-:::
-
 ## References
-
-* Rule Source

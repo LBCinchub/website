@@ -61,25 +61,4 @@ avoid unsafe lifecycle methods.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["react"],
-  "rules": {
-    "react/no-unsafe": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny react/no-unsafe --react-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

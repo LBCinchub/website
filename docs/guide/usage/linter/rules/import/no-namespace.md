@@ -59,25 +59,4 @@ For example, `["*.json"]` will ignore all JSON imports.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["import"],
-  "rules": {
-    "import/no-namespace": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny import/no-namespace --import-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

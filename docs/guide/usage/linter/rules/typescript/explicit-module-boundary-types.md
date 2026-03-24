@@ -128,24 +128,4 @@ return values checked.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/explicit-module-boundary-types": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/explicit-module-boundary-types
-```
-
-:::
-
 ## References
-
-* Rule Source

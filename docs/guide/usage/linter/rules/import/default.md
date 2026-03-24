@@ -42,25 +42,4 @@ import { bar } from "./bar"; // correct usage of named import
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["import"],
-  "rules": {
-    "import/default": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny import/default --import-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

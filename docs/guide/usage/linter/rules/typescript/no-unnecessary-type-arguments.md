@@ -63,25 +63,4 @@ const container2: Container<string> = { value: "hello" };
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/no-unnecessary-type-arguments": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --type-aware --deny typescript/no-unnecessary-type-arguments
-```
-
-:::
-
 ## References
-
-* Rule Source
-* Rule Source (tsgolint)

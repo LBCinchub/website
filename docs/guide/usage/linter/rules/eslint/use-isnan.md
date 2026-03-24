@@ -54,24 +54,4 @@ Whether to disallow NaN in switch cases and discriminants
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "use-isnan": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny use-isnan
-```
-
-:::
-
 ## References
-
-* Rule Source

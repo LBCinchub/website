@@ -63,25 +63,4 @@ Maximum number of dependencies allowed in a file.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["import"],
-  "rules": {
-    "import/max-dependencies": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny import/max-dependencies --import-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

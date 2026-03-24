@@ -52,25 +52,4 @@ Whether to include components from settings.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["react"],
-  "rules": {
-    "react/jsx-no-script-url": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny react/jsx-no-script-url --react-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

@@ -26,24 +26,4 @@ withSpaces.replaceAll(/\s+/g, ",");
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "oxc/bad-replace-all-arg": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny oxc/bad-replace-all-arg
-```
-
-:::
-
 ## References
-
-* Rule Source

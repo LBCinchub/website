@@ -40,25 +40,4 @@ function quux() {}
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["jsdoc"],
-  "rules": {
-    "jsdoc/implements-on-classes": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny jsdoc/implements-on-classes --jsdoc-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

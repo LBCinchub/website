@@ -150,25 +150,4 @@ Whether to allow throwing values typed as `unknown`.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/only-throw-error": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --type-aware --deny typescript/only-throw-error
-```
-
-:::
-
 ## References
-
-* Rule Source
-* Rule Source (tsgolint)

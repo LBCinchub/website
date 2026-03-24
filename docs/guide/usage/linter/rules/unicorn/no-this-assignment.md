@@ -42,24 +42,4 @@ new Bar(this).method();
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/no-this-assignment": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/no-this-assignment
-```
-
-:::
-
 ## References
-
-* Rule Source

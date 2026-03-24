@@ -74,24 +74,4 @@ class C {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-unused-private-class-members": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-unused-private-class-members
-```
-
-:::
-
 ## References
-
-* Rule Source

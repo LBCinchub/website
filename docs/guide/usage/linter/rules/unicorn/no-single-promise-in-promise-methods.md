@@ -38,24 +38,4 @@ async function good() {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/no-single-promise-in-promise-methods": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/no-single-promise-in-promise-methods
-```
-
-:::
-
 ## References
-
-* Rule Source

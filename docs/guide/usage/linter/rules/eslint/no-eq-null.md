@@ -43,24 +43,4 @@ if (bang === undefined) {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-eq-null": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-eq-null
-```
-
-:::
-
 ## References
-
-* Rule Source

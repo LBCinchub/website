@@ -34,25 +34,4 @@ export const bar = "bar";
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["import"],
-  "rules": {
-    "import/no-default-export": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny import/no-default-export --import-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

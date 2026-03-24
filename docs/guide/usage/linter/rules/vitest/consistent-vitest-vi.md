@@ -43,25 +43,4 @@ Decides whether to prefer vitest function accessor
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["vitest"],
-  "rules": {
-    "vitest/consistent-vitest-vi": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny vitest/consistent-vitest-vi --vitest-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

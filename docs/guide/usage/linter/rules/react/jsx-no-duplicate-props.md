@@ -35,25 +35,4 @@ is allowed). This is intentional, as props are case-sensitive in JSX.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["react"],
-  "rules": {
-    "react/jsx-no-duplicate-props": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny react/jsx-no-duplicate-props --react-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

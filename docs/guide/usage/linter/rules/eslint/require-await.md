@@ -61,24 +61,4 @@ async function foo() {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "require-await": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny require-await
-```
-
-:::
-
 ## References
-
-* Rule Source

@@ -75,25 +75,4 @@ export default function Page() {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["nextjs"],
-  "rules": {
-    "nextjs/inline-script-id": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny nextjs/inline-script-id --nextjs-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

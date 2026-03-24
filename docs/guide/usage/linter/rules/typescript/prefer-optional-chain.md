@@ -115,25 +115,4 @@ Skip operands that are not typed with `null` and/or `undefined` when inspecting
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/prefer-optional-chain": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --type-aware --deny typescript/prefer-optional-chain
-```
-
-:::
-
 ## References
-
-* Rule Source
-* Rule Source (tsgolint)

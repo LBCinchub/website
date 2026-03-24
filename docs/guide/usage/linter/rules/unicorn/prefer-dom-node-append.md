@@ -26,24 +26,4 @@ foo.append(bar);
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/prefer-dom-node-append": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/prefer-dom-node-append
-```
-
-:::
-
 ## References
-
-* Rule Source

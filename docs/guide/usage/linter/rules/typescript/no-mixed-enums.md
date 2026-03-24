@@ -55,25 +55,4 @@ enum Color {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/no-mixed-enums": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --type-aware --deny typescript/no-mixed-enums
-```
-
-:::
-
 ## References
-
-* Rule Source
-* Rule Source (tsgolint)

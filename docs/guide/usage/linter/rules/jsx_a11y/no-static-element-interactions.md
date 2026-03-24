@@ -52,25 +52,4 @@ An array of event handler names that should trigger this rule (e.g., `onClick`, 
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["jsx-a11y"],
-  "rules": {
-    "jsx-a11y/no-static-element-interactions": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny jsx-a11y/no-static-element-interactions --jsx-a11y-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

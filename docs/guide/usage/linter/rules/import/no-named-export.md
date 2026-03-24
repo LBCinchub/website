@@ -33,25 +33,4 @@ export { foo as default }
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["import"],
-  "rules": {
-    "import/no-named-export": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny import/no-named-export --import-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

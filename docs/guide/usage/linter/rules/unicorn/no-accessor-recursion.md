@@ -48,24 +48,4 @@ const baz = {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/no-accessor-recursion": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/no-accessor-recursion
-```
-
-:::
-
 ## References
-
-* Rule Source

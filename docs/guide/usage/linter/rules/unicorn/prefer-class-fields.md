@@ -56,24 +56,4 @@ class Foo {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/prefer-class-fields": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/prefer-class-fields
-```
-
-:::
-
 ## References
-
-* Rule Source

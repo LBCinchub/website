@@ -81,24 +81,4 @@ new RegExp("[\\u{1F1EF}\\u{1F1F5}]", "u");
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-misleading-character-class": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-misleading-character-class
-```
-
-:::
-
 ## References
-
-* Rule Source

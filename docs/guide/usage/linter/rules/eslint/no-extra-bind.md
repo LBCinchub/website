@@ -40,24 +40,4 @@ const y = function (a) {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-extra-bind": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-extra-bind
-```
-
-:::
-
 ## References
-
-* Rule Source

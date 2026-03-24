@@ -42,24 +42,4 @@ When set `true`, it flags redeclaring built-in globals (e.g., `let Object = 1;`)
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-redeclare": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-redeclare
-```
-
-:::
-
 ## References
-
-* Rule Source

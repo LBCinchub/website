@@ -52,25 +52,4 @@ import styles from './Button.module.css'
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["nextjs"],
-  "rules": {
-    "nextjs/no-css-tags": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny nextjs/no-css-tags --nextjs-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

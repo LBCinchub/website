@@ -32,25 +32,4 @@ promisify(doSomething)().then(doSomethingElse).then(console.log).catch(console.e
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["promise"],
-  "rules": {
-    "promise/no-promise-in-callback": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny promise/no-promise-in-callback --promise-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

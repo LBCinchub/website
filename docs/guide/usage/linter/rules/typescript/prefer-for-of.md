@@ -32,24 +32,4 @@ for (const item of arr) {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/prefer-for-of": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/prefer-for-of
-```
-
-:::
-
 ## References
-
-* Rule Source

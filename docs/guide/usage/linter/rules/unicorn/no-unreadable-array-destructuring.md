@@ -34,24 +34,4 @@ const [, foo] = parts;
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/no-unreadable-array-destructuring": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/no-unreadable-array-destructuring
-```
-
-:::
-
 ## References
-
-* Rule Source

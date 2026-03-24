@@ -69,24 +69,4 @@ Whether to allow `++` and `--` in for loop afterthoughts.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-plusplus": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-plusplus
-```
-
-:::
-
 ## References
-
-* Rule Source

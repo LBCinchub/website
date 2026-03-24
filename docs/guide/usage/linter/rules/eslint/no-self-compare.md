@@ -24,24 +24,4 @@ if (x === x) {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-self-compare": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-self-compare
-```
-
-:::
-
 ## References
-
-* Rule Source

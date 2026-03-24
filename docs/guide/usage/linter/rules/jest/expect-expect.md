@@ -57,25 +57,4 @@ NOTE: The default value is `["expect"]` for Jest and
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["jest"],
-  "rules": {
-    "jest/expect-expect": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny jest/expect-expect --jest-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

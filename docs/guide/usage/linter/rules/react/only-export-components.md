@@ -129,25 +129,4 @@ identifiers here to avoid false positives.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["react"],
-  "rules": {
-    "react/only-export-components": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny react/only-export-components --react-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

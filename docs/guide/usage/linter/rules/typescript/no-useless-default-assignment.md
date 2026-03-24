@@ -27,25 +27,4 @@ Examples of **correct** code for this rule:
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/no-useless-default-assignment": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --type-aware --deny typescript/no-useless-default-assignment
-```
-
-:::
-
 ## References
-
-* Rule Source
-* Rule Source (tsgolint)

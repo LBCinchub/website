@@ -57,24 +57,4 @@ These functions will be checked for `.at(-1)` usage.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/prefer-at": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/prefer-at
-```
-
-:::
-
 ## References
-
-* Rule Source

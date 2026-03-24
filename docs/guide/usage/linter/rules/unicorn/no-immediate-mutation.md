@@ -47,24 +47,4 @@ const map = new Map([
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/no-immediate-mutation": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/no-immediate-mutation
-```
-
-:::
-
 ## References
-
-* Rule Source

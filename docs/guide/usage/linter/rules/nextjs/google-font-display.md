@@ -47,25 +47,4 @@ export default Test = () => {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["nextjs"],
-  "rules": {
-    "nextjs/google-font-display": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny nextjs/google-font-display --nextjs-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

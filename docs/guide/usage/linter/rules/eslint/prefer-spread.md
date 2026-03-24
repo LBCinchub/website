@@ -53,24 +53,4 @@ obj.foo.apply(obj, [1, 2, 3]);
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "prefer-spread": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny prefer-spread
-```
-
-:::
-
 ## References
-
-* Rule Source

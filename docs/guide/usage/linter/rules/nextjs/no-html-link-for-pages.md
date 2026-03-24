@@ -64,25 +64,4 @@ function HomePage() {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["nextjs"],
-  "rules": {
-    "nextjs/no-html-link-for-pages": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny nextjs/no-html-link-for-pages --nextjs-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

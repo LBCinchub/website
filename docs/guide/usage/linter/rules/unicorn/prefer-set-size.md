@@ -26,24 +26,4 @@ const size = new Set([1, 2, 3]).size;
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/prefer-set-size": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/prefer-set-size
-```
-
-:::
-
 ## References
-
-* Rule Source

@@ -43,24 +43,4 @@ var pattern8 = new RegExp("\\n");
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-control-regex": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-control-regex
-```
-
-:::
-
 ## References
-
-* Rule Source

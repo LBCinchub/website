@@ -49,25 +49,4 @@ Optionally provide a regex of additional hooks to check.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["react"],
-  "rules": {
-    "react/exhaustive-deps": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny react/exhaustive-deps --react-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

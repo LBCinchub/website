@@ -45,24 +45,4 @@ const hasProperty = Object.hasOwn(object, property);
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "prefer-object-has-own": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny prefer-object-has-own
-```
-
-:::
-
 ## References
-
-* Rule Source

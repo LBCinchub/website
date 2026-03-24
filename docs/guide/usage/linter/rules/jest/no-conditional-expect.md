@@ -88,25 +88,4 @@ to use it, add the following configuration to your `.oxlintrc.json`:
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["jest"],
-  "rules": {
-    "jest/no-conditional-expect": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny jest/no-conditional-expect --jest-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

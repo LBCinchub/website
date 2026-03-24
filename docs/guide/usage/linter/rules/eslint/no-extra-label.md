@@ -75,24 +75,4 @@ C: switch (a) {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-extra-label": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-extra-label
-```
-
-:::
-
 ## References
-
-* Rule Source

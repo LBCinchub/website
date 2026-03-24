@@ -129,24 +129,4 @@ Will enforce that you always use `import Foo from '...'`
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/consistent-type-imports": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/consistent-type-imports
-```
-
-:::
-
 ## References
-
-* Rule Source

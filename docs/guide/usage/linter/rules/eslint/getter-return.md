@@ -55,24 +55,4 @@ When set to `true`, allows getters to implicitly return `undefined` with a `retu
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "getter-return": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny getter-return
-```
-
-:::
-
 ## References
-
-* Rule Source

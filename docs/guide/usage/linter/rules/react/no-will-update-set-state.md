@@ -49,25 +49,4 @@ type: `"allowed" | "disallow-in-func"`
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["react"],
-  "rules": {
-    "react/no-will-update-set-state": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny react/no-will-update-set-state --react-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

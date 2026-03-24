@@ -66,24 +66,4 @@ When set to true, rule will also report forEach callbacks that return a value.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "array-callback-return": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny array-callback-return
-```
-
-:::
-
 ## References
-
-* Rule Source

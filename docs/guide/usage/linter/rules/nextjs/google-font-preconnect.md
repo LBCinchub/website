@@ -29,25 +29,4 @@ Examples of **correct** code for this rule:
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["nextjs"],
-  "rules": {
-    "nextjs/google-font-preconnect": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny nextjs/google-font-preconnect --nextjs-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

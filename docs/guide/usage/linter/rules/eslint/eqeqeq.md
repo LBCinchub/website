@@ -190,24 +190,4 @@ Ignore null comparisons, allow either `== null`/`!= null` or `=== null`/`!== nul
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "eqeqeq": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny eqeqeq
-```
-
-:::
-
 ## References
-
-* Rule Source

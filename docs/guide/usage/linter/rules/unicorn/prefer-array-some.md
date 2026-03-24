@@ -35,24 +35,4 @@ foo.some((element) => element.bar === 1);
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/prefer-array-some": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/prefer-array-some
-```
-
-:::
-
 ## References
-
-* Rule Source

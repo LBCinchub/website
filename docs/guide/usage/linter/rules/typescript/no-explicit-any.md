@@ -68,24 +68,4 @@ Whether to ignore rest parameter arrays.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/no-explicit-any": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/no-explicit-any
-```
-
-:::
-
 ## References
-
-* Rule Source

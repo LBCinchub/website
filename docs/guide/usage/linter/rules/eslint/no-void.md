@@ -42,24 +42,4 @@ If set to `true`, using `void` as a standalone statement is allowed.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-void": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-void
-```
-
-:::
-
 ## References
-
-* Rule Source

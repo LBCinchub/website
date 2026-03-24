@@ -41,24 +41,4 @@ a <= b;
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "oxc/const-comparisons": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny oxc/const-comparisons
-```
-
-:::
-
 ## References
-
-* Rule Source

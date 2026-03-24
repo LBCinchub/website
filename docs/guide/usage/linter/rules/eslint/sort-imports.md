@@ -76,24 +76,4 @@ type: `"none" | "all" | "multiple" | "single"`
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "sort-imports": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny sort-imports
-```
-
-:::
-
 ## References
-
-* Rule Source

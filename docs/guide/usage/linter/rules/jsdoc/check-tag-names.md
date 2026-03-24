@@ -102,25 +102,4 @@ If typed is `true`, disallow tags that are unnecessary/duplicative of TypeScript
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["jsdoc"],
-  "rules": {
-    "jsdoc/check-tag-names": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny jsdoc/check-tag-names --jsdoc-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

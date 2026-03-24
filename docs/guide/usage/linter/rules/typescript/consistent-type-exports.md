@@ -46,25 +46,4 @@ Enables an autofix strategy that rewrites mixed exports using inline `type` spec
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/consistent-type-exports": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --type-aware --deny typescript/consistent-type-exports
-```
-
-:::
-
 ## References
-
-* Rule Source
-* Rule Source (tsgolint)

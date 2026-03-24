@@ -75,24 +75,4 @@ to be available.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/no-instanceof-builtins": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/no-instanceof-builtins
-```
-
-:::
-
 ## References
-
-* Rule Source

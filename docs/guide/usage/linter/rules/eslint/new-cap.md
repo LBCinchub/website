@@ -372,24 +372,4 @@ default: `true`
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "new-cap": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny new-cap
-```
-
-:::
-
 ## References
-
-* Rule Source

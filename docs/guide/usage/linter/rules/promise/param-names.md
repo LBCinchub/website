@@ -52,25 +52,4 @@ is used instead of the default `^_?resolve$` check.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["promise"],
-  "rules": {
-    "promise/param-names": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny promise/param-names --promise-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

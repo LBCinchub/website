@@ -75,24 +75,4 @@ const x = 0;
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/no-empty-file": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/no-empty-file
-```
-
-:::
-
 ## References
-
-* Rule Source

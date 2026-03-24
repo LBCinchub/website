@@ -37,24 +37,4 @@ foo.bar!;
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/no-non-null-asserted-optional-chain": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/no-non-null-asserted-optional-chain
-```
-
-:::
-
 ## References
-
-* Rule Source

@@ -59,24 +59,4 @@ A list of objects which are allowed to be exceptions to the rule.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-extend-native": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-extend-native
-```
-
-:::
-
 ## References
-
-* Rule Source

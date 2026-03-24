@@ -212,24 +212,4 @@ class Foo extends Base {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-empty-function": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-empty-function
-```
-
-:::
-
 ## References
-
-* Rule Source

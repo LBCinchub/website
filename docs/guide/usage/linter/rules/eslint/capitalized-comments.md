@@ -112,24 +112,4 @@ A regex pattern. Comments that match the pattern will not cause violations.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "capitalized-comments": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny capitalized-comments
-```
-
-:::
-
 ## References
-
-* Rule Source

@@ -39,24 +39,4 @@ async function good() {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/prefer-blob-reading-methods": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/prefer-blob-reading-methods
-```
-
-:::
-
 ## References
-
-* Rule Source

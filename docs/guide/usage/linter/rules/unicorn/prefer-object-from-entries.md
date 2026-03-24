@@ -49,24 +49,4 @@ Additional functions to treat as equivalents to `Object.fromEntries`.
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/prefer-object-from-entries": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/prefer-object-from-entries
-```
-
-:::
-
 ## References
-
-* Rule Source

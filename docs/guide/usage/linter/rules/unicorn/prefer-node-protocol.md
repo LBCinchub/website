@@ -26,24 +26,4 @@ import fs from "node:fs";
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/prefer-node-protocol": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/prefer-node-protocol
-```
-
-:::
-
 ## References
-
-* Rule Source

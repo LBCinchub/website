@@ -54,24 +54,4 @@ class Baz<T> {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/no-unnecessary-type-constraint": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/no-unnecessary-type-constraint
-```
-
-:::
-
 ## References
-
-* Rule Source

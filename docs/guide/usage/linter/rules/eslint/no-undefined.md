@@ -49,24 +49,4 @@ bar(void 0, "lorem");
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "no-undefined": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny no-undefined
-```
-
-:::
-
 ## References
-
-* Rule Source

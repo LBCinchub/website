@@ -53,25 +53,4 @@ export default {
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "plugins": ["vue"],
-  "rules": {
-    "vue/no-arrow-functions-in-watch": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny vue/no-arrow-functions-in-watch --vue-plugin
-```
-
-:::
-
 ## References
-
-* Rule Source

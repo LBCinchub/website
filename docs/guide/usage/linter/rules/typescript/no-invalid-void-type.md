@@ -52,24 +52,4 @@ type: `string`
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "typescript/no-invalid-void-type": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny typescript/no-invalid-void-type
-```
-
-:::
-
 ## References
-
-* Rule Source

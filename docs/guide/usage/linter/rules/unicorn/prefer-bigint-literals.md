@@ -40,24 +40,4 @@ BigInt("1.23");
 
 ## How to use
 
-To **enable** this rule using the config file or in the CLI, you can use:
-
-::: code-group
-
-```json [Config (.oxlintrc.json)]
-{
-  "rules": {
-    "unicorn/prefer-bigint-literals": "error"
-  }
-}
-```
-
-```bash [CLI]
-oxlint --deny unicorn/prefer-bigint-literals
-```
-
-:::
-
 ## References
-
-* Rule Source
