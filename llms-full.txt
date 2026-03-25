@@ -2502,7 +2502,7 @@ export default defineConfig({
 ---
 
 ---
-url: /docs/guide/usage/formatter/config-file-reference.md
+url: /docs/guide/usage/formatter/generated-config.md
 ---
 
 # Configuration options for the Oxfmt.
@@ -3728,7 +3728,7 @@ Whether or not to indent the code inside `<script>` and `<style>` tags in Vue fi
 ---
 
 ---
-url: /docs/guide/usage/formatter/generated-config.md
+url: /docs/guide/usage/formatter/config-file-reference.md
 ---
 
 # Configuration options for the Oxfmt.
@@ -5546,10 +5546,6 @@ url: /docs/guide/usage/formatter/embedded-formatting.md
 ---
 # Embedded Formatting
 
-:::warning
-See tracking issues for details: [xxx-in-js](https://github.com/oxc-project/oxc/issues/15180), [js-in-xxx](https://github.com/oxc-project/oxc/issues/16608).
-:::
-
 Formats code embedded in JS/TS files (CSS in template literals, GraphQL in template literals, JavaScript/TypeScript/CSS/etc in Markdown).
 
 ## Configuration
@@ -5627,7 +5623,7 @@ HTML inside a tagged template literal:
 const template = html`
   <div class="container">
     <h1>Hello</h1>
-    <p>World</p>
+    <p>${world}</p>
   </div>
 `;
 ```
@@ -33692,9 +33688,9 @@ Oxfmt includes built-in features that typically require external Prettier plugin
 
 Oxfmt integrates into existing Prettier-based workflows.
 
-The `oxfmt` CLI behaves similarly to Prettier by default, allowing adoption with minimal changes to scripts and tooling.
+The Oxfmt CLI follows Prettier's conventions closely enough that most scripts and tooling require little or no modification, though some defaults and CLI options differ.
 
-Oxfmt matches Prettier’s JavaScript formatting. When migrating from recent versions of Prettier, formatting differences should not occur; any differences are considered bugs.
+Oxfmt matches Prettier’s JavaScript formatting. When migrating from recent versions of Prettier, formatting differences should not occur; any formatting differences are considered bugs.
 
 Oxfmt now passes 100% of Prettier's JavaScript and TypeScript conformance tests. For any remaining formatting inconsistencies, we have [reported them to the Prettier team](https://github.com/oxc-project/oxc/issues/18717) and are collaborating to converge on expected behavior.
 
@@ -35521,70 +35517,6 @@ Test results are stored in snapshot files for tracking changes:
 ---
 
 ---
-url: /docs/guide/usage/parser.md
----
-
-# Parser
-
-This is production ready.
-
-## Features
-
-* 3x faster than swc parser ([benchmark][url-benchmark]).
-* Parses `.js(x)` and `.ts(x)`.
-* Passes all parser tests from Test262 and 99% from Babel and TypeScript.
-* Returns ESM information directly, no need for [`es-module-lexer`](https://npmx.dev/package/es-module-lexer).
-* [✅ works with checker.ts](https://x.com/robpalmer2/status/1805502964435505559)
-
-## Installation
-
-### Node.js
-
-* Use the node binding [oxc-parser][url-oxc-parser-npm].
-* Try on [stackblitz](https://stackblitz.com/edit/oxc-parser).
-
-### Rust
-
-Use the umbrella crate [oxc][url-oxc-crate] or the individual [oxc\_ast][url-oxc-ast-crate] and [oxc\_parser][url-oxc-parser-crate] crates.
-
-Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_parser/examples/parser.rs).
-
-## Print
-
-After parsing and transforming, you can print code.
-
-Here's a direct example using [esrap](https://npmx.dev/package/esrap) *(`parse` in reverse!)*:
-
-```js
-import { print } from "esrap";
-import ts from "esrap/languages/ts";
-import { parseSync } from "oxc-parser";
-
-const { program } = parseSync("test.js", 'alert("hello oxc & esrap");');
-const { code } = print(program, ts());
-
-console.log(code); // alert("hello oxc & esrap");
-```
-
-:::info
-Today, comments are not printed. *It will be supported thanks to [oxc-parser #13285](https://github.com/oxc-project/oxc/pull/13285).*
-:::
-
-[url-swc]: https://swc.rs
-
-[url-benchmark]: https://github.com/oxc-project/bench-javascript-parser-written-in-rust
-
-[url-oxc-crate]: https://docs.rs/oxc
-
-[url-oxc-ast-crate]: https://docs.rs/oxc_ast
-
-[url-oxc-parser-crate]: https://docs.rs/oxc_parser
-
-[url-oxc-parser-npm]: https://npmx.dev/package/oxc-parser
-
----
-
----
 url: /docs/learn/architecture/parser.md
 ---
 
@@ -35760,6 +35692,70 @@ The parser provides:
 * **Zero-copy parsing**: Eliminate unnecessary string copies
 
 [estree]: https://github.com/estree/estree
+
+---
+
+---
+url: /docs/guide/usage/parser.md
+---
+
+# Parser
+
+This is production ready.
+
+## Features
+
+* 3x faster than swc parser ([benchmark][url-benchmark]).
+* Parses `.js(x)` and `.ts(x)`.
+* Passes all parser tests from Test262 and 99% from Babel and TypeScript.
+* Returns ESM information directly, no need for [`es-module-lexer`](https://npmx.dev/package/es-module-lexer).
+* [✅ works with checker.ts](https://x.com/robpalmer2/status/1805502964435505559)
+
+## Installation
+
+### Node.js
+
+* Use the node binding [oxc-parser][url-oxc-parser-npm].
+* Try on [stackblitz](https://stackblitz.com/edit/oxc-parser).
+
+### Rust
+
+Use the umbrella crate [oxc][url-oxc-crate] or the individual [oxc\_ast][url-oxc-ast-crate] and [oxc\_parser][url-oxc-parser-crate] crates.
+
+Rust usage example can be found [here](https://github.com/oxc-project/oxc/blob/main/crates/oxc_parser/examples/parser.rs).
+
+## Print
+
+After parsing and transforming, you can print code.
+
+Here's a direct example using [esrap](https://npmx.dev/package/esrap) *(`parse` in reverse!)*:
+
+```js
+import { print } from "esrap";
+import ts from "esrap/languages/ts";
+import { parseSync } from "oxc-parser";
+
+const { program } = parseSync("test.js", 'alert("hello oxc & esrap");');
+const { code } = print(program, ts());
+
+console.log(code); // alert("hello oxc & esrap");
+```
+
+:::info
+Today, comments are not printed. *It will be supported thanks to [oxc-parser #13285](https://github.com/oxc-project/oxc/pull/13285).*
+:::
+
+[url-swc]: https://swc.rs
+
+[url-benchmark]: https://github.com/oxc-project/bench-javascript-parser-written-in-rust
+
+[url-oxc-crate]: https://docs.rs/oxc
+
+[url-oxc-ast-crate]: https://docs.rs/oxc_ast
+
+[url-oxc-parser-crate]: https://docs.rs/oxc_parser
+
+[url-oxc-parser-npm]: https://npmx.dev/package/oxc-parser
 
 ---
 
@@ -58435,7 +58431,7 @@ url: /docs/guide/usage/formatter/unsupported-features.md
 # Unsupported features
 
 :::info
-These features are planned. Follow our [milestone](https://github.com/oxc-project/oxc/milestone/15).
+These features are planned. Follow our [milestone](https://github.com/oxc-project/oxc/milestone/19).
 :::
 
 ## Configuration limitations
@@ -58443,7 +58439,6 @@ These features are planned. Follow our [milestone](https://github.com/oxc-projec
 Not currently supported:
 
 * `prettier` field in `package.json`
-* Config file format other than `.json` and `.jsonc`
 * Nested configs in sub directories
 * Nested `.editorconfig` in sub directories
 * `experimentalTernaries` and `experimentalOperatorPosition` options
@@ -58463,8 +58458,72 @@ Not supported. However, Oxfmt provides built-in alternatives:
 * `sortPackageJson`
   * Based on `prettier-plugin-packagejson`
   * Enabled by default
+* `jsdoc`
+  * Based on `prettier-plugin-jsdoc`
+  * Disabled by default
 
 See [Configuration file reference](./config-file-reference) for details.
+
+---
+
+---
+url: /docs/guide/usage/formatter/generated-cli.md
+---
+
+## Usage
+
+**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
+
+## Mode Options:
+
+* **`    --init`** —
+  Initialize `.oxfmtrc.json` with default values
+* **`    --migrate`**=*`SOURCE`* —
+  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
+* **`    --lsp`** —
+  Start language server protocol (LSP) server
+* **`    --stdin-filepath`**=*`PATH`* —
+  Specify the file name to use to infer which parser to use
+
+## Output Options:
+
+* **`    --write`** —
+  Format and write files in place (default)
+* **`    --check`** —
+  Check if files are formatted, also show statistics
+* **`    --list-different`** —
+  List files that would be changed
+
+## Config Options
+
+* **`-c`**, **`--config`**=*`PATH`* —
+  Path to the configuration file (.json, .jsonc, .ts, .mts, .cts, .js, .mjs, .cjs)
+
+## Ignore Options
+
+* **`    --ignore-path`**=*`PATH`* —
+  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
+* **`    --with-node-modules`** —
+  Format code in node\_modules directory (skipped by default)
+
+## Runtime Options
+
+* **`    --no-error-on-unmatched-pattern`** —
+  Do not exit with error when pattern is unmatched
+* **`    --threads`**=*`INT`* —
+  Number of threads to use. Set to 1 for using only 1 CPU core.
+
+## Available positional items:
+
+* *`PATH`* —
+  Single file, path or list of paths. Glob patterns are also supported. (Be sure to quote them, otherwise your shell may expand them before passing.) Exclude patterns with `!` prefix like `'!**/fixtures/*.js'` are also supported. If not provided, current working directory is used.
+
+## Available options:
+
+* **`-h`**, **`--help`** —
+  Prints help information
+* **`-V`**, **`--version`** —
+  Prints version information
 
 ---
 
@@ -58621,67 +58680,6 @@ Arguments:
   Enable rules that require type information
 * **`    --type-check`** —
   Enable experimental type checking (includes TypeScript compiler diagnostics)
-* **`-h`**, **`--help`** —
-  Prints help information
-* **`-V`**, **`--version`** —
-  Prints version information
-
----
-
----
-url: /docs/guide/usage/formatter/generated-cli.md
----
-
-## Usage
-
-**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
-
-## Mode Options:
-
-* **`    --init`** —
-  Initialize `.oxfmtrc.json` with default values
-* **`    --migrate`**=*`SOURCE`* —
-  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
-* **`    --lsp`** —
-  Start language server protocol (LSP) server
-* **`    --stdin-filepath`**=*`PATH`* —
-  Specify the file name to use to infer which parser to use
-
-## Output Options:
-
-* **`    --write`** —
-  Format and write files in place (default)
-* **`    --check`** —
-  Check if files are formatted, also show statistics
-* **`    --list-different`** —
-  List files that would be changed
-
-## Config Options
-
-* **`-c`**, **`--config`**=*`PATH`* —
-  Path to the configuration file (.json, .jsonc, .ts, .mts, .cts, .js, .mjs, .cjs)
-
-## Ignore Options
-
-* **`    --ignore-path`**=*`PATH`* —
-  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
-* **`    --with-node-modules`** —
-  Format code in node\_modules directory (skipped by default)
-
-## Runtime Options
-
-* **`    --no-error-on-unmatched-pattern`** —
-  Do not exit with error when pattern is unmatched
-* **`    --threads`**=*`INT`* —
-  Number of threads to use. Set to 1 for using only 1 CPU core.
-
-## Available positional items:
-
-* *`PATH`* —
-  Single file, path or list of paths. Glob patterns are also supported. (Be sure to quote them, otherwise your shell may expand them before passing.) Exclude patterns with `!` prefix like `'!**/fixtures/*.js'` are also supported. If not provided, current working directory is used.
-
-## Available options:
-
 * **`-h`**, **`--help`** —
   Prints help information
 * **`-V`**, **`--version`** —
