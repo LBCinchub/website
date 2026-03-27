@@ -1,0 +1,1 @@
+import{t as e}from"./preload-helper.BHWv5-Ae.js";var t={root:()=>e(()=>import(`./@localSearchIndexroot.CupWlAVA.js`),[])};export{t as default};

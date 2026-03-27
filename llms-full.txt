@@ -1394,7 +1394,7 @@ This table lists the built-in plugins and where they come from.
 | `vitest`     | No      | [@vitest/eslint-plugin](https://github.com/vitest-dev/eslint-plugin-vitest) aka eslint-plugin-vitest                                                                                                                                                         |
 | `vue`        | No      | [eslint-plugin-vue](https://eslint.vuejs.org/) rules that work with script tags                                                                                                                                                                              |
 
-For the current status of rule coverage, see the linter [product plan issue](https://github.com/oxc-project/oxc/issues/481).
+For the current status of rule coverage, see the linter [product plan issue](https://github.com/oxc-project/oxc/issues/481). For framework and file type support, see the [compatibility matrix](/compatibility).
 
 ## Adding new plugins
 
@@ -1527,6 +1527,69 @@ import styled from "styled-components/primitives";
 
 * JSX css prop transformation
 * Custom import path handling
+
+---
+
+---
+url: /docs/guide/usage/formatter/cli.md
+---
+
+# Command-line Interface
+
+## Usage
+
+**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
+
+## Mode Options:
+
+* **`    --init`** —
+  Initialize `.oxfmtrc.json` with default values
+* **`    --migrate`**=*`SOURCE`* —
+  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
+* **`    --lsp`** —
+  Start language server protocol (LSP) server
+* **`    --stdin-filepath`**=*`PATH`* —
+  Specify the file name to use to infer which parser to use
+
+## Output Options:
+
+* **`    --write`** —
+  Format and write files in place (default)
+* **`    --check`** —
+  Check if files are formatted, also show statistics
+* **`    --list-different`** —
+  List files that would be changed
+
+## Config Options
+
+* **`-c`**, **`--config`**=*`PATH`* —
+  Path to the configuration file (.json, .jsonc, .ts, .mts, .cts, .js, .mjs, .cjs)
+
+## Ignore Options
+
+* **`    --ignore-path`**=*`PATH`* —
+  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
+* **`    --with-node-modules`** —
+  Format code in node\_modules directory (skipped by default)
+
+## Runtime Options
+
+* **`    --no-error-on-unmatched-pattern`** —
+  Do not exit with error when pattern is unmatched
+* **`    --threads`**=*`INT`* —
+  Number of threads to use. Set to 1 for using only 1 CPU core.
+
+## Available positional items:
+
+* *`PATH`* —
+  Single file, path or list of paths. Glob patterns are also supported. (Be sure to quote them, otherwise your shell may expand them before passing.) Exclude patterns with `!` prefix like `'!**/fixtures/*.js'` are also supported. If not provided, current working directory is used.
+
+## Available options:
+
+* **`-h`**, **`--help`** —
+  Prints help information
+* **`-V`**, **`--version`** —
+  Prints version information
 
 ---
 
@@ -1685,69 +1748,6 @@ Arguments:
   Enable rules that require type information
 * **`    --type-check`** —
   Enable experimental type checking (includes TypeScript compiler diagnostics)
-* **`-h`**, **`--help`** —
-  Prints help information
-* **`-V`**, **`--version`** —
-  Prints version information
-
----
-
----
-url: /docs/guide/usage/formatter/cli.md
----
-
-# Command-line Interface
-
-## Usage
-
-**`oxfmt`** \[**`-c`**=*`PATH`*] \[*`PATH`*]...
-
-## Mode Options:
-
-* **`    --init`** —
-  Initialize `.oxfmtrc.json` with default values
-* **`    --migrate`**=*`SOURCE`* —
-  Migrate configuration to `.oxfmtrc.json` from specified source Available sources: prettier, biome
-* **`    --lsp`** —
-  Start language server protocol (LSP) server
-* **`    --stdin-filepath`**=*`PATH`* —
-  Specify the file name to use to infer which parser to use
-
-## Output Options:
-
-* **`    --write`** —
-  Format and write files in place (default)
-* **`    --check`** —
-  Check if files are formatted, also show statistics
-* **`    --list-different`** —
-  List files that would be changed
-
-## Config Options
-
-* **`-c`**, **`--config`**=*`PATH`* —
-  Path to the configuration file (.json, .jsonc, .ts, .mts, .cts, .js, .mjs, .cjs)
-
-## Ignore Options
-
-* **`    --ignore-path`**=*`PATH`* —
-  Path to ignore file(s). Can be specified multiple times. If not specified, .gitignore and .prettierignore in the current directory are used.
-* **`    --with-node-modules`** —
-  Format code in node\_modules directory (skipped by default)
-
-## Runtime Options
-
-* **`    --no-error-on-unmatched-pattern`** —
-  Do not exit with error when pattern is unmatched
-* **`    --threads`**=*`INT`* —
-  Number of threads to use. Set to 1 for using only 1 CPU core.
-
-## Available positional items:
-
-* *`PATH`* —
-  Single file, path or list of paths. Glob patterns are also supported. (Be sure to quote them, otherwise your shell may expand them before passing.) Exclude patterns with `!` prefix like `'!**/fixtures/*.js'` are also supported. If not provided, current working directory is used.
-
-## Available options:
-
 * **`-h`**, **`--help`** —
   Prints help information
 * **`-V`**, **`--version`** —
@@ -2502,7 +2502,7 @@ export default defineConfig({
 ---
 
 ---
-url: /docs/guide/usage/formatter/config-file-reference.md
+url: /docs/guide/usage/formatter/generated-config.md
 ---
 
 # Configuration options for the Oxfmt.
@@ -3728,7 +3728,7 @@ Whether or not to indent the code inside `<script>` and `<style>` tags in Vue fi
 ---
 
 ---
-url: /docs/guide/usage/formatter/generated-config.md
+url: /docs/guide/usage/formatter/config-file-reference.md
 ---
 
 # Configuration options for the Oxfmt.
@@ -22107,51 +22107,6 @@ export {}; // simple way to mark side-effects-only file as 'module' without any 
 ---
 
 ---
-url: /docs/guide/usage/formatter/ignore-comments.md
----
-# Inline ignore comments
-
-For JS/TS files, use `oxfmt-ignore` to skip formatting the next statement:
-
-```js
-// oxfmt-ignore
-const a    = 42;
-
-/* oxfmt-ignore */
-const x = () => { return 2; };
-
-<>
-  {/* oxfmt-ignore */}
-  <span   ugly   format=""   />
-</>;
-```
-
-For JS-in-Vue, use `oxfmt-ignore` inside the `<script>` tag:
-
-```vue
-<script>
-// oxfmt-ignore
-const a    = 42;
-</script>
-```
-
-Trailing ignore comments are also supported:
-
-```js
-const a    = 42; // oxfmt-ignore
-```
-
-For other files and non-JS parts of Vue files (e.g., `<template>`, `<style>`), use `prettier-ignore` comment. See also Prettier's [ignore documentation](https://prettier.io/docs/ignore#html).
-
-Currently, TOML files do not support ignore comments.
-
-## Prettier compatibility
-
-* `prettier-ignore` comment is also supported
-
----
-
----
 url: /docs/guide/usage/linter/ignore-comments.md
 description: Disable specific rules inline using Oxlint ignore comments
 ---
@@ -22262,6 +22217,51 @@ export default defineConfig({
 ```
 
 :::
+
+---
+
+---
+url: /docs/guide/usage/formatter/ignore-comments.md
+---
+# Inline ignore comments
+
+For JS/TS files, use `oxfmt-ignore` to skip formatting the next statement:
+
+```js
+// oxfmt-ignore
+const a    = 42;
+
+/* oxfmt-ignore */
+const x = () => { return 2; };
+
+<>
+  {/* oxfmt-ignore */}
+  <span   ugly   format=""   />
+</>;
+```
+
+For JS-in-Vue, use `oxfmt-ignore` inside the `<script>` tag:
+
+```vue
+<script>
+// oxfmt-ignore
+const a    = 42;
+</script>
+```
+
+Trailing ignore comments are also supported:
+
+```js
+const a    = 42; // oxfmt-ignore
+```
+
+For other files and non-JS parts of Vue files (e.g., `<template>`, `<style>`), use `prettier-ignore` comment. See also Prettier's [ignore documentation](https://prettier.io/docs/ignore#html).
+
+Currently, TOML files do not support ignore comments.
+
+## Prettier compatibility
+
+* `prettier-ignore` comment is also supported
 
 ---
 
@@ -29815,7 +29815,7 @@ This guide is for existing JavaScript and TypeScript projects that currently use
 
 Oxlint and ESLint share similar configuration concepts, but they differ in supported rules and config formats.
 
-Oxlint already supports more than 650 rules from ESLint core and various popular plugins. We intend to support nearly all existing ESLint core rules, and this work is ongoing.
+Oxlint already supports more than 700 rules from ESLint core and various popular plugins. We intend to support nearly all existing ESLint core rules, and this work is ongoing. Check the [compatibility matrix](/compatibility) to verify support for your frameworks and file types.
 
 When migrating, expect the following:
 
@@ -30012,7 +30012,7 @@ Key differences:
 * Prettier plugins are not supported (though some popular plugins have been implemented natively)
 * Some options are not supported (see [config reference](/docs/guide/usage/formatter/config-file-reference.html))
 
-See [Unsupported features](/docs/guide/usage/formatter/unsupported-features) for details.
+See [Unsupported features](/docs/guide/usage/formatter/unsupported-features) for details, and the [compatibility matrix](/compatibility) for file type support.
 
 ## Step 1: Upgrade Prettier to v3.8 (optional)
 
@@ -33682,7 +33682,9 @@ Oxfmt (`/oʊ-ɛks-fɔːr-mæt/`) is a high-performance formatter for the JavaScr
 
 ## Supported languages
 
-JavaScript, JSX, TypeScript, TSX, JSON, JSONC, JSON5, YAML, TOML, HTML, Angular, Vue, CSS, SCSS, Less, Markdown, MDX, GraphQL, Ember, Handlebars
+Support includes JavaScript, JSX, TypeScript, TSX, JSON, JSONC, JSON5, YAML, TOML, HTML, Angular, Vue, CSS, SCSS, Less, Markdown, MDX, GraphQL, Ember, Handlebars, and more.
+
+See the [compatibility matrix](/compatibility) for detailed framework and file type support.
 
 ## Built for scale
 
@@ -33871,6 +33873,8 @@ Oxlint supports:
 * JSX and TSX (`.jsx`, `.tsx`)
 * Framework files (`.vue`, `.svelte`, `.astro`) by linting only their `<script>` blocks
 
+See the [compatibility matrix](/compatibility) for detailed framework support.
+
 ## Features
 
 * [Native plugins](/docs/guide/usage/linter/plugins) for broad rule coverage with {{ ruleCount }} built-in rules, without a large JavaScript dependency tree.
@@ -33905,6 +33909,16 @@ Oxlint is used in production by popular projects such as:
 * [CLI reference](/docs/guide/usage/linter/cli)
 * [Config file reference](/docs/guide/usage/linter/config-file-reference)
 * [Versioning policy](/docs/guide/usage/linter/versioning)
+
+---
+
+---
+url: /compatibility.md
+description: >-
+  Check which JavaScript frameworks and file types are supported by Oxlint
+  (linting) and Oxfmt (formatting).
+---
+
 
 ---
 
@@ -38325,6 +38339,7 @@ console.log(code); // "let a = 42"
 * [Setup editors](./editors)
 * [Setup CI](./ci)
 * Learn advanced features: [sorting](./sorting), [embedded formatting](./embedded-formatting)
+* [Compatibility matrix](/compatibility)
 * Check [CLI reference](./cli)
 
 ---
@@ -38590,6 +38605,7 @@ The full list is in the [Rules reference](/docs/guide/usage/linter/rules).
 * [Setup CI](/docs/guide/usage/linter/ci)
 * Learn advanced features: [Multi-file analysis](/docs/guide/usage/linter/multi-file-analysis), [Type-aware linting](/docs/guide/usage/linter/type-aware), [JS plugins](/docs/guide/usage/linter/js-plugins)
 * Migrate: [From ESLint](/docs/guide/usage/linter/migrate-from-eslint)&#x20;
+* [Compatibility matrix](/compatibility)
 * [CLI reference](/docs/guide/usage/linter/cli)
 
 ---
@@ -42653,152 +42669,6 @@ Upon visit, we can call `enter_scope` and `leave_scope` accordingly to build the
 ---
 
 ---
-url: /docs/guide/usage/linter/ci.md
-description: Run Oxlint in CI or as a git hook.
----
-
-# Setup CI and other integrations
-
-You can - and should - setup your CI pipeline to run Oxlint and fail the build on lint errors.
-
-This page also covers other integrations you may want to include, like git pre-commit hooks.
-
-## CI
-
-These instructions assume you have already set up Oxlint in your project by adding `oxlint` to your devDependencies in your `package.json`, and already have an oxlint configuration file in the repo.
-
-### GitHub Actions
-
-First, add a `lint` script to your `package.json` if you don't have one already:
-
-```json [package.json]
-{
-  "scripts": {
-    "lint": "oxlint"
-  }
-}
-```
-
-Then create `.github/workflows/oxlint.yml`:
-
-```yaml [.github/workflows/oxlint.yml]
-name: Lint
-
-on:
-  pull_request:
-  push:
-    branches: [main]
-
-permissions: {}
-
-jobs:
-  oxlint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version: lts/*
-          cache: pnpm
-
-      # alternatively use npm install / yarn install here
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm run lint
-```
-
-You can, alternatively, output using the github format option, for [better warning/error annotations](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#setting-an-error-message):
-
-```json [package.json]
-{
-  "scripts": {
-    "lint:github": "oxlint --format=github"
-  }
-}
-```
-
-### GitLab CI
-
-If you use GitLab CI, you can set up Oxlint with `--format=gitlab` and [GitLab's Code Quality feature](https://docs.gitlab.com/ci/testing/code_quality/#code-quality-report-format) to get inline annotations for lint violations in merge requests.
-
-To set this up, you can add a script to your `package.json` to output the gitlab format and save it to a file, like so:
-
-```json [package.json]
-{
-  "scripts": {
-    "lint:gitlab": "oxlint --format=gitlab > gitlab-oxlint-report.json"
-  }
-}
-```
-
-And then add a job to your `.gitlab-ci.yml`, to run the script and upload the report as a Code Quality artifact:
-
-```yml [.gitlab-ci.yml]
-oxlint:
-  image: node:lts
-  stage: test
-  before_script:
-    # alternatively use pnpm install / yarn install here
-    - npm install
-  script:
-    - npm run lint:gitlab
-  artifacts:
-    reports:
-      codequality:
-        # This is relative to your repository root, so adjust if your repo has a different structure or you put the report in a different location
-        - gitlab-oxlint-report.json
-```
-
-If you do not want to use the Code Quality feature, you can simply run oxlint without `--format=gitlab` in the CI job instead.
-
-You should ensure type-aware rules are enabled if you want to use them, and consider caching `node_modules` to speed up the installation of dependencies.
-
-## Git hooks
-
-### lint-staged
-
-For JS/TS projects using [lint-staged](https://npmx.dev/package/lint-staged), you can set up oxlint to run as a pre-commit hook as follows:
-
-```json [package.json]
-{
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,mjs,cjs}": "pnpm run lint"
-  }
-}
-```
-
-To automatically install the git hook when installing dependencies, considering also using [husky](https://typicode.github.io/husky/get-started.html).
-
-### pre-commit
-
-If you use [pre-commit](https://pre-commit.com/) to manage git hooks, you can set up Oxlint as follows:
-
-```yaml [.pre-commit-config.yaml]
-repos:
-  - repo: https://github.com/oxc-project/mirrors-oxlint
-    rev: v0.0.0
-    hooks:
-      - id: oxlint
-        verbose: true
-```
-
-Replace `v0.0.0` with the latest version.
-
-## Other integrations
-
-### Unplugin
-
-Unplugin is supported via a [third-party package](https://npmx.dev/package/unplugin-oxlint)
-
-### Vite plugin
-
-A Vite plugin is supported via a [third-party package](https://npmx.dev/package/vite-plugin-oxlint)
-
----
-
----
 url: /docs/guide/usage/formatter/ci.md
 description: Run Oxfmt in CI or as a git hook.
 ---
@@ -42942,6 +42812,152 @@ For [lint-staged](https://npmx.dev/package/lint-staged), add to `package.json`:
 ```
 
 To automatically install the git hook when installing dependencies, considering also using [husky](https://typicode.github.io/husky/get-started.html).
+
+---
+
+---
+url: /docs/guide/usage/linter/ci.md
+description: Run Oxlint in CI or as a git hook.
+---
+
+# Setup CI and other integrations
+
+You can - and should - setup your CI pipeline to run Oxlint and fail the build on lint errors.
+
+This page also covers other integrations you may want to include, like git pre-commit hooks.
+
+## CI
+
+These instructions assume you have already set up Oxlint in your project by adding `oxlint` to your devDependencies in your `package.json`, and already have an oxlint configuration file in the repo.
+
+### GitHub Actions
+
+First, add a `lint` script to your `package.json` if you don't have one already:
+
+```json [package.json]
+{
+  "scripts": {
+    "lint": "oxlint"
+  }
+}
+```
+
+Then create `.github/workflows/oxlint.yml`:
+
+```yaml [.github/workflows/oxlint.yml]
+name: Lint
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  oxlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: pnpm
+
+      # alternatively use npm install / yarn install here
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run lint
+```
+
+You can, alternatively, output using the github format option, for [better warning/error annotations](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#setting-an-error-message):
+
+```json [package.json]
+{
+  "scripts": {
+    "lint:github": "oxlint --format=github"
+  }
+}
+```
+
+### GitLab CI
+
+If you use GitLab CI, you can set up Oxlint with `--format=gitlab` and [GitLab's Code Quality feature](https://docs.gitlab.com/ci/testing/code_quality/#code-quality-report-format) to get inline annotations for lint violations in merge requests.
+
+To set this up, you can add a script to your `package.json` to output the gitlab format and save it to a file, like so:
+
+```json [package.json]
+{
+  "scripts": {
+    "lint:gitlab": "oxlint --format=gitlab > gitlab-oxlint-report.json"
+  }
+}
+```
+
+And then add a job to your `.gitlab-ci.yml`, to run the script and upload the report as a Code Quality artifact:
+
+```yml [.gitlab-ci.yml]
+oxlint:
+  image: node:lts
+  stage: test
+  before_script:
+    # alternatively use pnpm install / yarn install here
+    - npm install
+  script:
+    - npm run lint:gitlab
+  artifacts:
+    reports:
+      codequality:
+        # This is relative to your repository root, so adjust if your repo has a different structure or you put the report in a different location
+        - gitlab-oxlint-report.json
+```
+
+If you do not want to use the Code Quality feature, you can simply run oxlint without `--format=gitlab` in the CI job instead.
+
+You should ensure type-aware rules are enabled if you want to use them, and consider caching `node_modules` to speed up the installation of dependencies.
+
+## Git hooks
+
+### lint-staged
+
+For JS/TS projects using [lint-staged](https://npmx.dev/package/lint-staged), you can set up oxlint to run as a pre-commit hook as follows:
+
+```json [package.json]
+{
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs}": "pnpm run lint"
+  }
+}
+```
+
+To automatically install the git hook when installing dependencies, considering also using [husky](https://typicode.github.io/husky/get-started.html).
+
+### pre-commit
+
+If you use [pre-commit](https://pre-commit.com/) to manage git hooks, you can set up Oxlint as follows:
+
+```yaml [.pre-commit-config.yaml]
+repos:
+  - repo: https://github.com/oxc-project/mirrors-oxlint
+    rev: v0.0.0
+    hooks:
+      - id: oxlint
+        verbose: true
+```
+
+Replace `v0.0.0` with the latest version.
+
+## Other integrations
+
+### Unplugin
+
+Unplugin is supported via a [third-party package](https://npmx.dev/package/unplugin-oxlint)
+
+### Vite plugin
+
+A Vite plugin is supported via a [third-party package](https://npmx.dev/package/vite-plugin-oxlint)
 
 ---
 
@@ -58480,6 +58496,8 @@ Not supported. However, Oxfmt provides built-in alternatives:
   * Disabled by default
 
 See [Configuration file reference](./config-file-reference) for details.
+
+For what Oxfmt does support across frameworks and file types, see the [compatibility matrix](/compatibility).
 
 ---
 
