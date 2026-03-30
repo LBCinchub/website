@@ -23,7 +23,7 @@ Examples of **incorrect** code for this rule:
  */
 
 /**
- * @namespace {Object} SomeNamesoace
+ * @namespace {Object} SomeNamespace
  */
 ```
 

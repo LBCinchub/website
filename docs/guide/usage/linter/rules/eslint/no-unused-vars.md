@@ -286,7 +286,7 @@ Fine-grained auto-fix controls for `no-unused-vars`.
 
 #### fix.imports
 
-type: `"off" | "suggestion" | "fix"`
+type: `"off" | "suggestion" | "fix" | "safe-fix"`
 
 ##### `"off"`
 
@@ -299,10 +299,15 @@ Emit suggestion-style fixes (current behavior).
 ##### `"fix"`
 
 Emit fix-style fixes.
+
+##### `"safe-fix"`
+
+Like `Fix`, but does not mark them as dangerous.
+Only applicable for imports, unavailable for variables.
 
 #### fix.variables
 
-type: `"off" | "suggestion" | "fix"`
+type: `"off" | "suggestion" | "fix" | "safe-fix"`
 
 ##### `"off"`
 
@@ -315,6 +320,11 @@ Emit suggestion-style fixes (current behavior).
 ##### `"fix"`
 
 Emit fix-style fixes.
+
+##### `"safe-fix"`
+
+Like `Fix`, but does not mark them as dangerous.
+Only applicable for imports, unavailable for variables.
 
 ### ignoreClassWithStaticInitBlock
 

@@ -2584,7 +2584,7 @@ Whether to insert a final newline at the end of the file.
 
 ## jsdoc
 
-type: `object`
+type: `object | boolean`
 
 Enable JSDoc comment formatting.
 
@@ -2592,7 +2592,7 @@ When enabled, JSDoc comments are normalized and reformatted:
 tag aliases are canonicalized, descriptions are capitalized,
 long lines are wrapped, and short comments are collapsed to single-line.
 
-Pass an object (`jsdoc: {}`) to enable with defaults, or omit to disable.
+Pass `true` or an object to enable with defaults, or omit/set `false` to disable.
 
 * Default: Disabled
 
@@ -2808,7 +2808,7 @@ Whether to insert a final newline at the end of the file.
 
 ##### overrides\[n].options.jsdoc
 
-type: `object`
+type: `object | boolean`
 
 Enable JSDoc comment formatting.
 
@@ -2816,7 +2816,7 @@ When enabled, JSDoc comments are normalized and reformatted:
 tag aliases are canonicalized, descriptions are capitalized,
 long lines are wrapped, and short comments are collapsed to single-line.
 
-Pass an object (`jsdoc: {}`) to enable with defaults, or omit to disable.
+Pass `true` or an object to enable with defaults, or omit/set `false` to disable.
 
 * Default: Disabled
 
@@ -2996,12 +2996,14 @@ For JSX, you can set the `jsxSingleQuote` option.
 
 ##### overrides\[n].options.sortImports
 
-type: `object`
+type: `object | boolean`
 
 Sort import statements.
 
 Using the similar algorithm as [eslint-plugin-perfectionist/sort-imports](https://perfectionist.dev/rules/sort-imports).
 For details, see each field's documentation.
+
+Pass `true` or an object to enable with defaults, or omit/set `false` to disable.
 
 * Default: Disabled
 
@@ -3227,13 +3229,15 @@ Sort the `scripts` field alphabetically.
 
 ##### overrides\[n].options.sortTailwindcss
 
-type: `object`
+type: `object | boolean`
 
 Sort Tailwind CSS classes.
 
 Using the same algorithm as [prettier-plugin-tailwindcss](https://github.com/tailwindlabs/prettier-plugin-tailwindcss).
 Option names omit the `tailwind` prefix used in the original plugin (e.g., `config` instead of `tailwindConfig`).
 For details, see each field's documentation.
+
+Pass `true` or an object to enable with defaults, or omit/set `false` to disable.
 
 * Default: Disabled
 
@@ -3390,12 +3394,14 @@ For JSX, you can set the `jsxSingleQuote` option.
 
 ## sortImports
 
-type: `object`
+type: `object | boolean`
 
 Sort import statements.
 
 Using the similar algorithm as [eslint-plugin-perfectionist/sort-imports](https://perfectionist.dev/rules/sort-imports).
 For details, see each field's documentation.
+
+Pass `true` or an object to enable with defaults, or omit/set `false` to disable.
 
 * Default: Disabled
 
@@ -3621,13 +3627,15 @@ Sort the `scripts` field alphabetically.
 
 ## sortTailwindcss
 
-type: `object`
+type: `object | boolean`
 
 Sort Tailwind CSS classes.
 
 Using the same algorithm as [prettier-plugin-tailwindcss](https://github.com/tailwindlabs/prettier-plugin-tailwindcss).
 Option names omit the `tailwind` prefix used in the original plugin (e.g., `config` instead of `tailwindConfig`).
 For details, see each field's documentation.
+
+Pass `true` or an object to enable with defaults, or omit/set `false` to disable.
 
 * Default: Disabled
 
@@ -3810,7 +3818,7 @@ Whether to insert a final newline at the end of the file.
 
 ## jsdoc
 
-type: `object`
+type: `object | boolean`
 
 Enable JSDoc comment formatting.
 
@@ -3818,7 +3826,7 @@ When enabled, JSDoc comments are normalized and reformatted:
 tag aliases are canonicalized, descriptions are capitalized,
 long lines are wrapped, and short comments are collapsed to single-line.
 
-Pass an object (`jsdoc: {}`) to enable with defaults, or omit to disable.
+Pass `true` or an object to enable with defaults, or omit/set `false` to disable.
 
 * Default: Disabled
 
@@ -4034,7 +4042,7 @@ Whether to insert a final newline at the end of the file.
 
 ##### overrides\[n].options.jsdoc
 
-type: `object`
+type: `object | boolean`
 
 Enable JSDoc comment formatting.
 
@@ -4042,7 +4050,7 @@ When enabled, JSDoc comments are normalized and reformatted:
 tag aliases are canonicalized, descriptions are capitalized,
 long lines are wrapped, and short comments are collapsed to single-line.
 
-Pass an object (`jsdoc: {}`) to enable with defaults, or omit to disable.
+Pass `true` or an object to enable with defaults, or omit/set `false` to disable.
 
 * Default: Disabled
 
@@ -4222,12 +4230,14 @@ For JSX, you can set the `jsxSingleQuote` option.
 
 ##### overrides\[n].options.sortImports
 
-type: `object`
+type: `object | boolean`
 
 Sort import statements.
 
 Using the similar algorithm as [eslint-plugin-perfectionist/sort-imports](https://perfectionist.dev/rules/sort-imports).
 For details, see each field's documentation.
+
+Pass `true` or an object to enable with defaults, or omit/set `false` to disable.
 
 * Default: Disabled
 
@@ -4453,13 +4463,15 @@ Sort the `scripts` field alphabetically.
 
 ##### overrides\[n].options.sortTailwindcss
 
-type: `object`
+type: `object | boolean`
 
 Sort Tailwind CSS classes.
 
 Using the same algorithm as [prettier-plugin-tailwindcss](https://github.com/tailwindlabs/prettier-plugin-tailwindcss).
 Option names omit the `tailwind` prefix used in the original plugin (e.g., `config` instead of `tailwindConfig`).
 For details, see each field's documentation.
+
+Pass `true` or an object to enable with defaults, or omit/set `false` to disable.
 
 * Default: Disabled
 
@@ -4616,12 +4628,14 @@ For JSX, you can set the `jsxSingleQuote` option.
 
 ## sortImports
 
-type: `object`
+type: `object | boolean`
 
 Sort import statements.
 
 Using the similar algorithm as [eslint-plugin-perfectionist/sort-imports](https://perfectionist.dev/rules/sort-imports).
 For details, see each field's documentation.
+
+Pass `true` or an object to enable with defaults, or omit/set `false` to disable.
 
 * Default: Disabled
 
@@ -4847,13 +4861,15 @@ Sort the `scripts` field alphabetically.
 
 ## sortTailwindcss
 
-type: `object`
+type: `object | boolean`
 
 Sort Tailwind CSS classes.
 
 Using the same algorithm as [prettier-plugin-tailwindcss](https://github.com/tailwindlabs/prettier-plugin-tailwindcss).
 Option names omit the `tailwind` prefix used in the original plugin (e.g., `config` instead of `tailwindConfig`).
 For details, see each field's documentation.
+
+Pass `true` or an object to enable with defaults, or omit/set `false` to disable.
 
 * Default: Disabled
 
@@ -16114,7 +16130,7 @@ Fine-grained auto-fix controls for `no-unused-vars`.
 
 #### fix.imports
 
-type: `"off" | "suggestion" | "fix"`
+type: `"off" | "suggestion" | "fix" | "safe-fix"`
 
 ##### `"off"`
 
@@ -16127,10 +16143,15 @@ Emit suggestion-style fixes (current behavior).
 ##### `"fix"`
 
 Emit fix-style fixes.
+
+##### `"safe-fix"`
+
+Like `Fix`, but does not mark them as dangerous.
+Only applicable for imports, unavailable for variables.
 
 #### fix.variables
 
-type: `"off" | "suggestion" | "fix"`
+type: `"off" | "suggestion" | "fix" | "safe-fix"`
 
 ##### `"off"`
 
@@ -16143,6 +16164,11 @@ Emit suggestion-style fixes (current behavior).
 ##### `"fix"`
 
 Emit fix-style fixes.
+
+##### `"safe-fix"`
+
+Like `Fix`, but does not mark them as dangerous.
+Only applicable for imports, unavailable for variables.
 
 ### ignoreClassWithStaticInitBlock
 
@@ -18818,44 +18844,6 @@ The Oxc formatter is built around the same core concepts as Prettier but with si
 ---
 
 ---
-url: /docs/guide/introduction.md
----
-
-# Getting Started
-
-[What is Oxc?](/docs/guide/what-is-oxc)
-
-## Lint or format a codebase
-
-* Lint: [Oxlint](/docs/guide/usage/linter)
-* Format: [Oxfmt](/docs/guide/usage/formatter)
-
-## Build tooling on top of Oxc
-
-* Parse JavaScript and TypeScript: [Parser](/docs/guide/usage/parser)
-* Transform TypeScript, JSX, and modern JavaScript: [Transformer](/docs/guide/usage/transformer)
-* Minify JavaScript for production builds: [Minifier](/docs/guide/usage/minifier)
-* Resolve modules for JavaScript and TypeScript: [Resolver](/docs/guide/usage/resolver)
-
-## Contribute or learn
-
-* [Contribute](/docs/contribute/introduction)
-* [Learn](/docs/learn/parser_in_rust/intro.html)
-
-## Other resources
-
-* [Troubleshooting](/docs/guide/troubleshooting)
-* [Benchmarks](/docs/guide/benchmarks)
-* [Projects using Oxc](/docs/guide/projects)
-* [Talks and media](/docs/guide/media)
-* [Team](/team)
-* [Endorsements](/endorsements)
-* [Release Blog](/blog/)
-* [Releases](https://github.com/oxc-project/oxc/releases)
-
----
-
----
 url: /docs/contribute/development.md
 ---
 
@@ -18936,6 +18924,44 @@ macOS has an antivirus feature called XProtect that scans executables for malwar
 **Note:** This disables an OS security feature. Only do this if you're comfortable with the trade-off.
 
 More details: https://nnethercote.github.io/2025/09/04/faster-rust-builds-on-mac.html
+
+---
+
+---
+url: /docs/guide/introduction.md
+---
+
+# Getting Started
+
+[What is Oxc?](/docs/guide/what-is-oxc)
+
+## Lint or format a codebase
+
+* Lint: [Oxlint](/docs/guide/usage/linter)
+* Format: [Oxfmt](/docs/guide/usage/formatter)
+
+## Build tooling on top of Oxc
+
+* Parse JavaScript and TypeScript: [Parser](/docs/guide/usage/parser)
+* Transform TypeScript, JSX, and modern JavaScript: [Transformer](/docs/guide/usage/transformer)
+* Minify JavaScript for production builds: [Minifier](/docs/guide/usage/minifier)
+* Resolve modules for JavaScript and TypeScript: [Resolver](/docs/guide/usage/resolver)
+
+## Contribute or learn
+
+* [Contribute](/docs/contribute/introduction)
+* [Learn](/docs/learn/parser_in_rust/intro.html)
+
+## Other resources
+
+* [Troubleshooting](/docs/guide/troubleshooting)
+* [Benchmarks](/docs/guide/benchmarks)
+* [Projects using Oxc](/docs/guide/projects)
+* [Talks and media](/docs/guide/media)
+* [Team](/team)
+* [Endorsements](/endorsements)
+* [Release Blog](/blog/)
+* [Releases](https://github.com/oxc-project/oxc/releases)
 
 ---
 
@@ -25655,6 +25681,17 @@ expect(uncalledFunction).not.toBeCalled();
 expect(method.mock.calls[0][0]).toStrictEqual(value);
 ```
 
+This rule is compatible with [eslint-plugin-vitest](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/prefer-to-have-been-called-times.md),
+to use it, add the following configuration to your `.oxlintrc.json`:
+
+```json
+{
+  "rules": {
+    "vitest/prefer-to-have-been-called-times": "error"
+  }
+}
+```
+
 ## How to use
 
 ## References
@@ -27010,7 +27047,7 @@ Examples of **incorrect** code for this rule:
  */
 
 /**
- * @namespace {Object} SomeNamesoace
+ * @namespace {Object} SomeNamespace
  */
 ```
 
@@ -34131,6 +34168,25 @@ Basic usage with a local plugin path.
 }
 ```
 
+Basic usage with a TypeScript plugin and a local plugin path.
+
+TypeScript plugin files are supported in the following environments:
+
+* Deno and Bun: TypeScript files are supported natively.
+* Node.js >=22.18.0 and Node.js ^20.19.0: TypeScript files are supported natively with built-in
+  type-stripping enabled by default.
+
+For older Node.js versions, TypeScript plugins are not supported. Please use JavaScript plugins or upgrade your Node version.
+
+```json
+{
+  "jsPlugins": ["./custom-plugin.ts"],
+  "rules": {
+    "custom/rule-name": "warn"
+  }
+}
+```
+
 Using a built-in Rust plugin alongside a JS plugin with the same name
 by giving the JS plugin an alias.
 
@@ -34889,6 +34945,25 @@ Basic usage with a local plugin path.
 }
 ```
 
+Basic usage with a TypeScript plugin and a local plugin path.
+
+TypeScript plugin files are supported in the following environments:
+
+* Deno and Bun: TypeScript files are supported natively.
+* Node.js >=22.18.0 and Node.js ^20.19.0: TypeScript files are supported natively with built-in
+  type-stripping enabled by default.
+
+For older Node.js versions, TypeScript plugins are not supported. Please use JavaScript plugins or upgrade your Node version.
+
+```json
+{
+  "jsPlugins": ["./custom-plugin.ts"],
+  "rules": {
+    "custom/rule-name": "warn"
+  }
+}
+```
+
 Using a built-in Rust plugin alongside a JS plugin with the same name
 by giving the JS plugin an alias.
 
@@ -35612,6 +35687,185 @@ Today, comments are not printed. *It will be supported thanks to [oxc-parser #13
 ---
 
 ---
+url: /docs/learn/architecture/parser.md
+---
+
+# Parser Architecture
+
+Oxc maintains its own AST and parser, which is by far the fastest and most conformant JavaScript and TypeScript (including JSX and TSX) parser written in Rust.
+
+As the parser often represents a key performance bottleneck in JavaScript tooling,
+any minor improvements can have a cascading effect on our downstream tools.
+By developing our parser, we have the opportunity to explore and implement well-researched performance techniques.
+
+## AST Design Philosophy
+
+While many existing JavaScript tools rely on [estree] as their AST specification,
+a notable drawback is its abundance of ambiguous nodes.
+This ambiguity often leads to confusion during development with [estree].
+
+The Oxc AST differs from the [estree] AST by removing ambiguous nodes and introducing distinct types.
+For example, instead of using a generic [estree] `Identifier`,
+the Oxc AST provides specific types such as `BindingIdentifier`, `IdentifierReference`, and `IdentifierName`.
+
+This clear distinction greatly enhances the development experience by aligning more closely with the ECMAScript specification.
+
+### AST Node Types
+
+```rust
+// Instead of generic Identifier
+pub struct BindingIdentifier<'a> {
+    pub span: Span,
+    pub name: Atom<'a>,
+}
+
+pub struct IdentifierReference<'a> {
+    pub span: Span,
+    pub name: Atom<'a>,
+    pub reference_id: Cell<Option<ReferenceId>>,
+}
+
+pub struct IdentifierName<'a> {
+    pub span: Span,
+    pub name: Atom<'a>,
+}
+```
+
+### Semantic Clarity
+
+This approach provides semantic clarity:
+
+* **`BindingIdentifier`**: Variable declarations (`let x = 1`)
+* **`IdentifierReference`**: Variable usage (`console.log(x)`)
+* **`IdentifierName`**: Property names (`obj.property`)
+
+## Performance Architecture
+
+### How is it so fast
+
+* **Memory Arena**: AST is allocated in a [memory arena](https://crates.io/crates/bumpalo) for fast allocation and deallocation
+* **String Optimization**: Short strings are inlined by [CompactString](https://crates.io/crates/compact_str)
+* **Minimal Heap Usage**: No other heap allocations are done except the above two
+* **Separation of Concerns**: Scope binding, symbol resolution and some syntax errors are delegated to the semantic analyzer
+
+### Memory Management Details
+
+#### Arena Allocation
+
+```rust
+use oxc_allocator::Allocator;
+
+// All AST nodes are allocated in this arena
+let allocator = Allocator::default();
+let ast_node = allocator.alloc(Expression::NumericLiteral(
+    allocator.alloc(NumericLiteral { value: 42.0, span: SPAN })
+));
+```
+
+Benefits:
+
+* **O(1) allocation**: Simple pointer bump
+* **O(1) deallocation**: Drop entire arena at once
+* **Cache-friendly**: Linear memory layout
+* **No fragmentation**: Continuous memory usage
+
+#### String Interning with CompactString
+
+```rust
+// Strings ≤ 24 bytes are stored inline (no heap allocation)
+let short_name = CompactString::from("variableName");  // Stack allocated
+let long_name = CompactString::from("a_very_long_variable_name_that_exceeds_limit");  // Heap allocated
+```
+
+This reduces memory allocations for the majority of JavaScript identifiers and string literals.
+
+## Parser Architecture
+
+### Two-Phase Design
+
+The Oxc parser follows a two-phase approach:
+
+1. **Parsing Phase**: Build AST structure with minimal semantic analysis
+2. **Semantic Phase**: Perform scope analysis, symbol resolution, and advanced error checking
+
+```rust
+// Phase 1: Parse to AST
+let parser_result = Parser::new(&allocator, &source_text, source_type).parse();
+
+// Phase 2: Semantic analysis
+let semantic_result = SemanticBuilder::new()
+    // Enable additional syntax checks not performed by the parser
+    .with_check_syntax_error(true)
+    .build(&parser_result.program);
+```
+
+### Parser Components
+
+#### Lexer
+
+* **Token generation**: Converts source text to structured tokens
+* **SIMD optimization**: Uses SIMD instructions for whitespace skipping
+* **Context-aware**: Handles regex vs division operator disambiguation
+
+#### Recursive Descent Parser
+
+* **Hand-written**: Custom implementation for maximum performance
+* **Error recovery**: Advanced error handling with meaningful messages
+* **Grammar compliance**: Follows ECMAScript specification precisely
+
+#### AST Builder
+
+* **Type safety**: Leverages Rust's type system for correctness
+* **Memory efficiency**: Direct arena allocation
+* **Builder pattern**: Convenient node construction methods
+
+## Conformance Strategy
+
+### Test Suite Coverage
+
+* **Test262**: 100% pass rate on ECMAScript conformance tests
+* **Babel**: 99.62% compatibility with Babel parser tests
+* **TypeScript**: 99.86% compatibility with TypeScript compiler tests
+
+### Error Handling Philosophy
+
+```rust
+// Meaningful error messages with source location
+pub struct OxcDiagnostic {
+    pub message: String,
+    pub span: Span,
+    pub severity: Severity,
+    pub help: Option<String>,
+}
+```
+
+The parser provides:
+
+* **Precise error locations**: Exact source positions
+* **Recovery strategies**: Continue parsing after errors
+* **Helpful suggestions**: Actionable error messages
+
+## Advanced Features
+
+### TypeScript Support
+
+* **Type stripping**: Removes TypeScript-specific syntax
+* **Decorator parsing**: Handles experimental decorators
+* **Namespace support**: Full module and namespace parsing
+* **JSX integration**: TypeScript + JSX (TSX) support
+
+### Research Areas
+
+* **SIMD text processing**: Vectorized string operations
+* **Cache optimization**: Minimize memory access patterns
+* **Branch prediction**: Optimize hot parsing paths
+* **Zero-copy parsing**: Eliminate unnecessary string copies
+
+[estree]: https://github.com/estree/estree
+
+---
+
+---
 url: /docs/learn/parser_in_rust/parser.md
 ---
 
@@ -36018,185 +36272,6 @@ function isParenthesizedArrowFunctionExpression(): Tristate {
 ```
 
 In summary, the TypeScript parser uses a combination of lookahead (fast path) and backtracking to parse arrow functions.
-
----
-
----
-url: /docs/learn/architecture/parser.md
----
-
-# Parser Architecture
-
-Oxc maintains its own AST and parser, which is by far the fastest and most conformant JavaScript and TypeScript (including JSX and TSX) parser written in Rust.
-
-As the parser often represents a key performance bottleneck in JavaScript tooling,
-any minor improvements can have a cascading effect on our downstream tools.
-By developing our parser, we have the opportunity to explore and implement well-researched performance techniques.
-
-## AST Design Philosophy
-
-While many existing JavaScript tools rely on [estree] as their AST specification,
-a notable drawback is its abundance of ambiguous nodes.
-This ambiguity often leads to confusion during development with [estree].
-
-The Oxc AST differs from the [estree] AST by removing ambiguous nodes and introducing distinct types.
-For example, instead of using a generic [estree] `Identifier`,
-the Oxc AST provides specific types such as `BindingIdentifier`, `IdentifierReference`, and `IdentifierName`.
-
-This clear distinction greatly enhances the development experience by aligning more closely with the ECMAScript specification.
-
-### AST Node Types
-
-```rust
-// Instead of generic Identifier
-pub struct BindingIdentifier<'a> {
-    pub span: Span,
-    pub name: Atom<'a>,
-}
-
-pub struct IdentifierReference<'a> {
-    pub span: Span,
-    pub name: Atom<'a>,
-    pub reference_id: Cell<Option<ReferenceId>>,
-}
-
-pub struct IdentifierName<'a> {
-    pub span: Span,
-    pub name: Atom<'a>,
-}
-```
-
-### Semantic Clarity
-
-This approach provides semantic clarity:
-
-* **`BindingIdentifier`**: Variable declarations (`let x = 1`)
-* **`IdentifierReference`**: Variable usage (`console.log(x)`)
-* **`IdentifierName`**: Property names (`obj.property`)
-
-## Performance Architecture
-
-### How is it so fast
-
-* **Memory Arena**: AST is allocated in a [memory arena](https://crates.io/crates/bumpalo) for fast allocation and deallocation
-* **String Optimization**: Short strings are inlined by [CompactString](https://crates.io/crates/compact_str)
-* **Minimal Heap Usage**: No other heap allocations are done except the above two
-* **Separation of Concerns**: Scope binding, symbol resolution and some syntax errors are delegated to the semantic analyzer
-
-### Memory Management Details
-
-#### Arena Allocation
-
-```rust
-use oxc_allocator::Allocator;
-
-// All AST nodes are allocated in this arena
-let allocator = Allocator::default();
-let ast_node = allocator.alloc(Expression::NumericLiteral(
-    allocator.alloc(NumericLiteral { value: 42.0, span: SPAN })
-));
-```
-
-Benefits:
-
-* **O(1) allocation**: Simple pointer bump
-* **O(1) deallocation**: Drop entire arena at once
-* **Cache-friendly**: Linear memory layout
-* **No fragmentation**: Continuous memory usage
-
-#### String Interning with CompactString
-
-```rust
-// Strings ≤ 24 bytes are stored inline (no heap allocation)
-let short_name = CompactString::from("variableName");  // Stack allocated
-let long_name = CompactString::from("a_very_long_variable_name_that_exceeds_limit");  // Heap allocated
-```
-
-This reduces memory allocations for the majority of JavaScript identifiers and string literals.
-
-## Parser Architecture
-
-### Two-Phase Design
-
-The Oxc parser follows a two-phase approach:
-
-1. **Parsing Phase**: Build AST structure with minimal semantic analysis
-2. **Semantic Phase**: Perform scope analysis, symbol resolution, and advanced error checking
-
-```rust
-// Phase 1: Parse to AST
-let parser_result = Parser::new(&allocator, &source_text, source_type).parse();
-
-// Phase 2: Semantic analysis
-let semantic_result = SemanticBuilder::new()
-    // Enable additional syntax checks not performed by the parser
-    .with_check_syntax_error(true)
-    .build(&parser_result.program);
-```
-
-### Parser Components
-
-#### Lexer
-
-* **Token generation**: Converts source text to structured tokens
-* **SIMD optimization**: Uses SIMD instructions for whitespace skipping
-* **Context-aware**: Handles regex vs division operator disambiguation
-
-#### Recursive Descent Parser
-
-* **Hand-written**: Custom implementation for maximum performance
-* **Error recovery**: Advanced error handling with meaningful messages
-* **Grammar compliance**: Follows ECMAScript specification precisely
-
-#### AST Builder
-
-* **Type safety**: Leverages Rust's type system for correctness
-* **Memory efficiency**: Direct arena allocation
-* **Builder pattern**: Convenient node construction methods
-
-## Conformance Strategy
-
-### Test Suite Coverage
-
-* **Test262**: 100% pass rate on ECMAScript conformance tests
-* **Babel**: 99.62% compatibility with Babel parser tests
-* **TypeScript**: 99.86% compatibility with TypeScript compiler tests
-
-### Error Handling Philosophy
-
-```rust
-// Meaningful error messages with source location
-pub struct OxcDiagnostic {
-    pub message: String,
-    pub span: Span,
-    pub severity: Severity,
-    pub help: Option<String>,
-}
-```
-
-The parser provides:
-
-* **Precise error locations**: Exact source positions
-* **Recovery strategies**: Continue parsing after errors
-* **Helpful suggestions**: Actionable error messages
-
-## Advanced Features
-
-### TypeScript Support
-
-* **Type stripping**: Removes TypeScript-specific syntax
-* **Decorator parsing**: Handles experimental decorators
-* **Namespace support**: Full module and namespace parsing
-* **JSX integration**: TypeScript + JSX (TSX) support
-
-### Research Areas
-
-* **SIMD text processing**: Vectorized string operations
-* **Cache optimization**: Minimize memory access patterns
-* **Branch prediction**: Optimize hot parsing paths
-* **Zero-copy parsing**: Eliminate unnecessary string copies
-
-[estree]: https://github.com/estree/estree
 
 ---
 
@@ -38172,6 +38247,179 @@ Promise.resolve(1);
 ---
 
 ---
+url: /docs/guide/usage/formatter/quickstart.md
+description: Install Oxfmt and learn the common workflows.
+---
+
+# Quickstart
+
+Recommended setup and common workflows.
+
+## Install
+
+Install `oxfmt` as a dev dependency:
+
+::: code-group
+
+```sh [npm]
+$ npm add -D oxfmt
+```
+
+```sh [pnpm]
+$ pnpm add -D oxfmt
+```
+
+```sh [yarn]
+$ yarn add -D oxfmt
+```
+
+```sh [bun]
+$ bun add -D oxfmt
+```
+
+:::
+
+Add scripts to `package.json`:
+
+```json [package.json]
+{
+  "scripts": {
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check"
+  }
+}
+```
+
+Format files:
+
+::: code-group
+
+```sh [npm]
+npm run fmt
+```
+
+```sh [pnpm]
+pnpm run fmt
+```
+
+```sh [yarn]
+yarn run fmt
+```
+
+```sh [bun]
+bun run fmt
+```
+
+:::
+
+Check formatting without writing files:
+
+::: code-group
+
+```sh [npm]
+npm run fmt:check
+```
+
+```sh [pnpm]
+pnpm run fmt:check
+```
+
+```sh [yarn]
+yarn run fmt:check
+```
+
+```sh [bun]
+bun run fmt:check
+```
+
+:::
+
+## Usage
+
+```sh
+oxfmt [OPTIONS] [PATH]...
+```
+
+Running `oxfmt` without arguments formats the current directory (equivalent to `prettier --write .`).
+
+CLI options like `--no-semi` are not supported. Use the configuration file instead to ensure consistent settings across CLI and editor integrations.
+
+To use glob patterns in positional paths, be sure to quote them. Otherwise, they may or may not be expanded depending on your environment.
+
+For the complete list of options, see the [CLI reference](/docs/guide/usage/formatter/cli.html).
+
+## Common workflows
+
+### Pre-commit with lint-staged
+
+```json [package.json]
+{
+  "lint-staged": {
+    "*": "oxfmt --no-error-on-unmatched-pattern"
+  }
+}
+```
+
+`--no-error-on-unmatched-pattern` prevents errors when no files match the pattern.
+
+### Create a config file
+
+Initialize `.oxfmtrc.json` with defaults:
+
+```sh
+oxfmt --init
+```
+
+### Migrate from Prettier
+
+```sh
+oxfmt --migrate prettier
+```
+
+See [migrate from prettier](./migrate-from-prettier) for details.
+
+### List files that differ
+
+```sh
+oxfmt --list-different
+```
+
+This is useful for configuring [files to ignore](./ignore-files).
+
+### Piping file contents
+
+```sh
+echo 'const   x   =   1' | oxfmt --stdin-filepath test.ts
+```
+
+Prints `const x = 1;`
+
+### Node.js API
+
+```ts
+import { format, type FormatOptions } from "oxfmt";
+
+const input = `let a=42;`;
+const options: FormatOptions = {
+  semi: false,
+};
+
+const { code } = await format("a.js", input, options);
+console.log(code); // "let a = 42"
+```
+
+## Next steps
+
+* [Change configuration](./config)
+* [Setup editors](./editors)
+* [Setup CI](./ci)
+* Learn advanced features: [sorting](./sorting), [embedded formatting](./embedded-formatting)
+* [Compatibility matrix](/compatibility)
+* Check [CLI reference](./cli)
+
+---
+
+---
 url: /docs/guide/usage/linter/quickstart.md
 description: Install Oxlint and learn the common workflows.
 ---
@@ -38434,179 +38682,6 @@ The full list is in the [Rules reference](/docs/guide/usage/linter/rules).
 * Migrate: [From ESLint](/docs/guide/usage/linter/migrate-from-eslint)&#x20;
 * [Compatibility matrix](/compatibility)
 * [CLI reference](/docs/guide/usage/linter/cli)
-
----
-
----
-url: /docs/guide/usage/formatter/quickstart.md
-description: Install Oxfmt and learn the common workflows.
----
-
-# Quickstart
-
-Recommended setup and common workflows.
-
-## Install
-
-Install `oxfmt` as a dev dependency:
-
-::: code-group
-
-```sh [npm]
-$ npm add -D oxfmt
-```
-
-```sh [pnpm]
-$ pnpm add -D oxfmt
-```
-
-```sh [yarn]
-$ yarn add -D oxfmt
-```
-
-```sh [bun]
-$ bun add -D oxfmt
-```
-
-:::
-
-Add scripts to `package.json`:
-
-```json [package.json]
-{
-  "scripts": {
-    "fmt": "oxfmt",
-    "fmt:check": "oxfmt --check"
-  }
-}
-```
-
-Format files:
-
-::: code-group
-
-```sh [npm]
-npm run fmt
-```
-
-```sh [pnpm]
-pnpm run fmt
-```
-
-```sh [yarn]
-yarn run fmt
-```
-
-```sh [bun]
-bun run fmt
-```
-
-:::
-
-Check formatting without writing files:
-
-::: code-group
-
-```sh [npm]
-npm run fmt:check
-```
-
-```sh [pnpm]
-pnpm run fmt:check
-```
-
-```sh [yarn]
-yarn run fmt:check
-```
-
-```sh [bun]
-bun run fmt:check
-```
-
-:::
-
-## Usage
-
-```sh
-oxfmt [OPTIONS] [PATH]...
-```
-
-Running `oxfmt` without arguments formats the current directory (equivalent to `prettier --write .`).
-
-CLI options like `--no-semi` are not supported. Use the configuration file instead to ensure consistent settings across CLI and editor integrations.
-
-To use glob patterns in positional paths, be sure to quote them. Otherwise, they may or may not be expanded depending on your environment.
-
-For the complete list of options, see the [CLI reference](/docs/guide/usage/formatter/cli.html).
-
-## Common workflows
-
-### Pre-commit with lint-staged
-
-```json [package.json]
-{
-  "lint-staged": {
-    "*": "oxfmt --no-error-on-unmatched-pattern"
-  }
-}
-```
-
-`--no-error-on-unmatched-pattern` prevents errors when no files match the pattern.
-
-### Create a config file
-
-Initialize `.oxfmtrc.json` with defaults:
-
-```sh
-oxfmt --init
-```
-
-### Migrate from Prettier
-
-```sh
-oxfmt --migrate prettier
-```
-
-See [migrate from prettier](./migrate-from-prettier) for details.
-
-### List files that differ
-
-```sh
-oxfmt --list-different
-```
-
-This is useful for configuring [files to ignore](./ignore-files).
-
-### Piping file contents
-
-```sh
-echo 'const   x   =   1' | oxfmt --stdin-filepath test.ts
-```
-
-Prints `const x = 1;`
-
-### Node.js API
-
-```ts
-import { format, type FormatOptions } from "oxfmt";
-
-const input = `let a=42;`;
-const options: FormatOptions = {
-  semi: false,
-};
-
-const { code } = await format("a.js", input, options);
-console.log(code); // "let a = 42"
-```
-
-## Next steps
-
-* [Change configuration](./config)
-* [Setup editors](./editors)
-* [Setup CI](./ci)
-* Learn advanced features: [sorting](./sorting), [embedded formatting](./embedded-formatting)
-* [Compatibility matrix](/compatibility)
-* Check [CLI reference](./cli)
 
 ---
 
@@ -59201,6 +59276,48 @@ test("foo", () => {
 ---
 
 ---
+url: /docs/guide/usage/linter/rules/vitest/prefer-called-exactly-once-with.md
+---
+
+### What it does
+
+It checks when a target is expected with `toHaveBeenCalledOnce` and `toHaveBeenCalledWith` instead of
+`toHaveBeenCalledExactlyOnceWith`.
+
+### Why is this bad?
+
+The user must deduct from both expects that the spy function is called once and with a specific arguments.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```js
+test("foo", () => {
+  const mock = vi.fn();
+  mock("foo");
+  expect(mock).toHaveBeenCalledOnce();
+  expect(mock).toHaveBeenCalledWith("foo");
+});
+```
+
+Examples of **correct** code for this rule:
+
+```js
+test("foo", () => {
+  const mock = vi.fn();
+  mock("foo");
+  expect(mock).toHaveBeenCalledExactlyOnceWith("foo");
+});
+```
+
+## How to use
+
+## References
+
+---
+
+---
 url: /docs/guide/usage/linter/rules/vitest/prefer-called-once.md
 ---
 
@@ -59388,7 +59505,7 @@ url: /docs/guide/usage/linter/rules/vitest/prefer-import-in-mock.md
 
 ### What it does
 
-This rule enforces using a dynamic `import()` in `vi.mock()`, which improves type information and IntelliSense for the mocked module.
+This rule enforces using a dynamic `import()` in `vi.mock()` or `vi.doMock()`, which improves type information and IntelliSense for the mocked module.
 
 ### Why is this bad?
 
@@ -59400,12 +59517,14 @@ Examples of **incorrect** code for this rule:
 
 ```js
 vi.mock("./path/to/module");
+vi.doMock("./path/to/module");
 ```
 
 Examples of **correct** code for this rule:
 
 ```js
 vi.mock(import("./path/to/module"));
+vi.doMock(import("./path/to/module"));
 ```
 
 ## Configuration
@@ -59573,6 +59692,53 @@ expectTypeOf(foo).toBeTruthy();
 ---
 
 ---
+url: /docs/guide/usage/linter/rules/vitest/require-awaited-expect-poll.md
+---
+
+### What it does
+
+This rule ensures that promises returned by `expect.poll` and `expect.element` calls are handled properly.
+
+### Why is this bad?
+
+`expect.poll` and `expect.element` return promises. If not awaited or returned,
+the test completes before the assertion resolves, meaning the test will pass
+regardless of whether the assertion succeeds or fails.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```js
+test("element exists", () => {
+  asyncInjectElement();
+
+  expect.poll(() => document.querySelector(".element")).toBeInTheDocument();
+});
+```
+
+Examples of **correct** code for this rule:
+
+```js
+test("element exists", () => {
+  asyncInjectElement();
+
+  return expect.poll(() => document.querySelector(".element")).toBeInTheDocument();
+});
+test("element exists", async () => {
+  asyncInjectElement();
+
+  await expect.poll(() => document.querySelector(".element")).toBeInTheDocument();
+});
+```
+
+## How to use
+
+## References
+
+---
+
+---
 url: >-
   /docs/guide/usage/linter/rules/vitest/require-local-test-context-for-concurrent-snapshots.md
 ---
@@ -59614,6 +59780,143 @@ test.concurrent("myLogic", ({ expect }) => {
 
 test.concurrent("myLogic", (context) => {
   context.expect(true).toMatchSnapshot();
+});
+```
+
+## How to use
+
+## References
+
+---
+
+---
+url: /docs/guide/usage/linter/rules/vitest/require-mock-type-parameters.md
+---
+
+### What it does
+
+Enforces the use of type parameters on vi.fn(), and optionally on vi.importActual() and vi.importMock().
+
+By default, only vi.fn() is checked. Set checkImportFunctions to true to also check vi.importActual() and vi.importMock().
+
+### Why is this bad?
+
+Without explicit type parameters, vi.fn() creates a mock typed as (...args: any\[]) => any.
+This disables type checking between the mock and the real implementation, which can lead to two problems:
+
+* tests that fail due to incorrect mock usage when they should pass, or worse, tests that pass while the mock silently diverges from the actual runtime behavior.
+
+### Examples
+
+Examples of **incorrect** code for this rule configured as `{ "checkImportFunctions": false }`:
+
+```js
+import { vi } from "vitest";
+
+test("foo", () => {
+  const myMockedFn = vi.fn();
+});
+```
+
+Examples of **incorrect** code for this rule configured as `{ "checkImportFunctions": true }`:
+
+```js
+import { vi } from "vitest";
+
+vi.mock("./example.js", async () => {
+  const originalModule = await vi.importActual("./example.js");
+
+  return { ...originalModule };
+});
+const fs = await vi.importMock("fs");
+```
+
+Examples of **correct** code for this rule configured as `{ "checkImportFunctions": false }`:
+
+```js
+import { vi } from 'vitest'
+
+ test('foo', () => {
+   const myMockedFnOne = vi.fn<(arg1: string, arg2: boolean) => number>()
+   const myMockedFnTwo = vi.fn<() => void>()
+   const myMockedFnThree = vi.fn<any>()
+ })
+```
+
+Examples of **correct** code for this rule configured as `{ "checkImportFunctions": true }`:
+
+```js
+import { vi } from "vitest";
+
+vi.mock("./example.js", async () => {
+  const originalModule = (await vi.importActual) < any > "./example.js";
+
+  return { ...originalModule };
+});
+const fs = (await vi.importMock) < any > "fs";
+```
+
+## Configuration
+
+This rule accepts a configuration object with the following properties:
+
+### checkImportFunctions
+
+type: `boolean`
+
+default: `false`
+
+Also require type parameters for `importActual` and `importMock`.
+
+## How to use
+
+## References
+
+---
+
+---
+url: /docs/guide/usage/linter/rules/vitest/require-test-timeout.md
+---
+
+### What it does
+
+Requires every test to have a timeout specified, either as a numeric third
+argument, a `{ timeout }` option, or via `vi.setConfig({ testTimeout: ... })`.
+
+### Why is this bad?
+
+Tests without an explicit timeout rely on the default, which may be too
+generous to catch performance regressions or too short for slow CI
+environments, leading to flaky failures.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```js
+it("slow test", async () => {
+  await doSomethingSlow();
+});
+```
+
+Examples of **correct** code for this rule:
+
+```js
+// good (numeric timeout)
+test("slow test", async () => {
+  await doSomethingSlow();
+}, 1000);
+
+// good (options object)
+test("slow test", { timeout: 1000 }, async () => {
+  await doSomethingSlow();
+});
+
+// good (file-level)
+vi.setConfig({ testTimeout: 1000 });
+
+test("slow test", async () => {
+  await doSomethingSlow();
 });
 ```
 
