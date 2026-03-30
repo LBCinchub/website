@@ -1,1 +1,0 @@
-import{p as e}from"./client.C5u131r0.js";var t=e;export{t};

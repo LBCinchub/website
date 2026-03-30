@@ -1,0 +1,1 @@
+import{p as e}from"./client.Cbn9S6Fk.js";var t=e;export{t};
