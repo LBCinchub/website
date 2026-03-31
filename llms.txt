@@ -417,8 +417,8 @@
 - [Oxlint Configuration File](/docs/guide/usage/linter/config-file-reference.md)
 - [Oxlint Configuration File](/docs/guide/usage/linter/generated-config.md)
 - [Parser](/docs/contribute/parser.md)
-- [Parser](/docs/guide/usage/parser.md)
 - [Parser](/docs/learn/architecture/parser.md)
+- [Parser](/docs/guide/usage/parser.md)
 - [Parser](/docs/learn/parser_in_rust/parser.md)
 - [Performance](/docs/learn/performance.md)
 - [PR Rules and Policies](/docs/contribute/rules.md)
@@ -440,8 +440,8 @@
 - [promise/prefer-catch](/docs/guide/usage/linter/rules/promise/prefer-catch.md)
 - [promise/spec-only](/docs/guide/usage/linter/rules/promise/spec-only.md)
 - [promise/valid-params](/docs/guide/usage/linter/rules/promise/valid-params.md)
-- [Quickstart](/docs/guide/usage/linter/quickstart.md): Install Oxlint and learn the common workflows.
 - [Quickstart](/docs/guide/usage/formatter/quickstart.md): Install Oxfmt and learn the common workflows.
+- [Quickstart](/docs/guide/usage/linter/quickstart.md): Install Oxlint and learn the common workflows.
 - [react-perf/jsx-no-jsx-as-prop](/docs/guide/usage/linter/rules/react_perf/jsx-no-jsx-as-prop.md)
 - [react-perf/jsx-no-new-array-as-prop](/docs/guide/usage/linter/rules/react_perf/jsx-no-new-array-as-prop.md)
 - [react-perf/jsx-no-new-function-as-prop](/docs/guide/usage/linter/rules/react_perf/jsx-no-new-function-as-prop.md)
