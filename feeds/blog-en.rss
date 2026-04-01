@@ -4,7 +4,7 @@
         <title>The Oxidation Compiler Blog</title>
         <link>https://oxc.rs</link>
         <description></description>
-        <lastBuildDate>Tue, 31 Mar 2026 22:16:17 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 01 Apr 2026 02:27:43 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -427,7 +427,7 @@ and the benchmarks are shown in its <a href="https://github.com/oxc-project/benc
 </tr>
 <tr>
 <td><code>@babel/core</code> + <code>@babel/preset-env</code> + <code>@babel/preset-react</code> + <code>@babel/preset-typescript</code></td>
-<td><a href="https://npmx.dev/package/@oxc-transform/binding-darwin-arm64" target="_blank" rel="noreferrer">21 MB and 170 packages</a></td>
+<td><a href="https://npmx.dev/package/@babel/core" target="_blank" rel="noreferrer">21 MB and 170 packages</a></td>
 </tr>
 </tbody>
 </table>

@@ -21,7 +21,7 @@ url: /docs/guide/introduction.md
 ## Contribute or learn
 
 * [Contribute](/docs/contribute/introduction)
-* [Learn](/docs/learn/parser_in_rust/intro.html)
+* [Learn](/docs/learn/parser_in_rust/intro)
 
 ## Other resources
 
