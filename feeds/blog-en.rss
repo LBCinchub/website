@@ -4,7 +4,7 @@
         <title>The Oxidation Compiler Blog</title>
         <link>https://oxc.rs</link>
         <description></description>
-        <lastBuildDate>Wed, 01 Apr 2026 02:55:36 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 03 Apr 2026 09:15:42 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -1259,7 +1259,10 @@ We accept this risk and will fix breaking changes when upgrading <code>typescrip
             <link>https://oxc.rs/blog/2025-10-09-oxlint-js-plugins</link>
             <guid isPermaLink="false">https://oxc.rs/blog/2025-10-09-oxlint-js-plugins</guid>
             <pubDate>Thu, 09 Oct 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[<AppBlogPostHeader /><br>
+            <description><![CDATA[<AppBlogPostHeader /><Alert type="info">
+<p><strong>This post announces the preview release of Oxlint JS Plugins.</strong> JS Plugins have since reached alpha! See the <a href="/blog/2026-03-11-oxlint-js-plugins-alpha.html">Oxlint JS Plugins Alpha announcement</a> for the latest features and improvements.</p>
+</Alert>
+<br>
 <p>Earlier this year <a href="https://github.com/oxc-project/oxc/discussions/10342" target="_blank" rel="noreferrer">we asked for input from the community</a>
 to inform design for Oxlint support for custom JS plugins. Today, we are pleased to announce the result of many months
 of research, prototyping, and finally building:</p>
@@ -1335,7 +1338,10 @@ But token-related APIs are absent, so stylistic (formatting) rules will not.</p>
 <span class="line"><span>  : ^^^^^^^^^</span></span>
 <span class="line"><span>  `</span></span></code></pre>
 </div>]]></description>
-            <content:encoded><![CDATA[<AppBlogPostHeader /><br>
+            <content:encoded><![CDATA[<AppBlogPostHeader /><Alert type="info">
+<p><strong>This post announces the preview release of Oxlint JS Plugins.</strong> JS Plugins have since reached alpha! See the <a href="/blog/2026-03-11-oxlint-js-plugins-alpha.html">Oxlint JS Plugins Alpha announcement</a> for the latest features and improvements.</p>
+</Alert>
+<br>
 <p>Earlier this year <a href="https://github.com/oxc-project/oxc/discussions/10342" target="_blank" rel="noreferrer">we asked for input from the community</a>
 to inform design for Oxlint support for custom JS plugins. Today, we are pleased to announce the result of many months
 of research, prototyping, and finally building:</p>
@@ -1654,7 +1660,10 @@ for pointing out the error.</p>
             <link>https://oxc.rs/blog/2025-12-01-oxfmt-alpha</link>
             <guid isPermaLink="false">https://oxc.rs/blog/2025-12-01-oxfmt-alpha</guid>
             <pubDate>Mon, 01 Dec 2025 00:00:00 GMT</pubDate>
-            <content:encoded><![CDATA[<AppBlogPostHeader /><p>We’re excited to announce the alpha release of <strong>Oxfmt</strong>, a Rust-powered, Prettier-compatible code formatter. This first release focuses on JavaScript and TypeScript, with support for additional languages coming soon.</p>
+            <content:encoded><![CDATA[<AppBlogPostHeader /><Alert type="info">
+<p><strong>This post announces the alpha release of Oxfmt.</strong> Oxfmt has since reached beta! See the <a href="/blog/2026-02-24-oxfmt-beta.html">Oxfmt Beta announcement</a> for the latest features and improvements.</p>
+</Alert>
+<p>We’re excited to announce the alpha release of <strong>Oxfmt</strong>, a Rust-powered, Prettier-compatible code formatter. This first release focuses on JavaScript and TypeScript, with support for additional languages coming soon.</p>
 <p>Oxfmt is designed with these goals in mind:</p>
 <ul>
 <li><strong>Performance:</strong> More than 30× faster than Prettier and more than 3× faster than Biome on an initial run without a cache (<a href="https://github.com/oxc-project/bench-formatter" target="_blank" rel="noreferrer"><strong>benchmark</strong></a>).</li>
