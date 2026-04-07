@@ -23,7 +23,7 @@ url: /docs/guide/usage/linter/cli.md
 * **`    --tsconfig`**=*`<./tsconfig.json>`* —
   Override the TypeScript config used for import resolution. Oxlint automatically discovers the relevant `tsconfig.json` for each file. Use this only when your project uses a non-standard tsconfig name or location.
 
-  NOTE: Type checking and Type aware rules will still use the tsconfig discovered automatically, and will not be affected by this option.
+  ::: warning Avoid using this option. It can cause differences between import resolution, and type-aware linting. Type aware linting **does not** respect this option, and will always discover the appropriate `tsconfig.json` for each file automatically. :::
 
 * **`    --init`** —
   Initialize oxlint configuration with default values

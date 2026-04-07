@@ -1,1 +1,0 @@
-import{p as e}from"./client.D-K847SN.js";var t=e;export{t};
