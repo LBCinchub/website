@@ -51,6 +51,8 @@ This rule accepts a configuration object with the following properties:
 
 ### countThis
 
+type: `"always" | "never" | "except-void"`
+
 This option controls when to count a `this` parameter.
 
 * "always": always count `this`

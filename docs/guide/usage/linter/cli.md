@@ -124,6 +124,8 @@ Arguments:
 
 * **`    --silent`** —
   Do not display any diagnostics
+* **`    --no-error-on-unmatched-pattern`** —
+  Do not exit with an error when no files are selected for linting (for example, after applying ignore patterns)
 * **`    --threads`**=*`INT`* —
   Number of threads to use. Set to 1 for using only 1 CPU core.
 * **`    --print-config`** —

@@ -252,6 +252,8 @@ Require braces when the block is nested or spans multiple lines
 
 ### The 2nd option
 
+type: `"consistent"`
+
 ## How to use
 
 ## References

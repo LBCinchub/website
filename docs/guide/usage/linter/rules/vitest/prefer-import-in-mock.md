@@ -34,6 +34,10 @@ This rule accepts a configuration object with the following properties:
 
 type: `boolean`
 
+default: `true`
+
+Whether the rule should generate fixes or not.
+
 ## How to use
 
 ## References

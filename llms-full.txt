@@ -1719,6 +1719,8 @@ Arguments:
 
 * **`    --silent`** —
   Do not display any diagnostics
+* **`    --no-error-on-unmatched-pattern`** —
+  Do not exit with an error when no files are selected for linting (for example, after applying ignore patterns)
 * **`    --threads`**=*`INT`* —
   Number of threads to use. Set to 1 for using only 1 CPU core.
 * **`    --print-config`** —
@@ -2993,6 +2995,7 @@ Use single quotes instead of double quotes.
 For JSX, you can set the `jsxSingleQuote` option.
 
 * Default: `false`
+* Overrides `.editorconfig.quote_type`
 
 ##### overrides\[n].options.sortImports
 
@@ -3391,6 +3394,7 @@ Use single quotes instead of double quotes.
 For JSX, you can set the `jsxSingleQuote` option.
 
 * Default: `false`
+* Overrides `.editorconfig.quote_type`
 
 ## sortImports
 
@@ -4227,6 +4231,7 @@ Use single quotes instead of double quotes.
 For JSX, you can set the `jsxSingleQuote` option.
 
 * Default: `false`
+* Overrides `.editorconfig.quote_type`
 
 ##### overrides\[n].options.sortImports
 
@@ -4625,6 +4630,7 @@ Use single quotes instead of double quotes.
 For JSX, you can set the `jsxSingleQuote` option.
 
 * Default: `false`
+* Overrides `.editorconfig.quote_type`
 
 ## sortImports
 
@@ -6350,23 +6356,12 @@ Enforce this rule for class fields that are functions.
 
 ### exceptMethods
 
-type: `array`
+type: `string[]`
 
 default: `[]`
 
-List of method names to exempt from this rule.
-
-#### exceptMethods\[n]
-
-type: `object`
-
-##### exceptMethods\[n].name
-
-type: `string`
-
-##### exceptMethods\[n].private
-
-type: `boolean`
+List of method names to exempt from this rule. Names can include the hash for private methods.
+Example: `save`, `#rerender`
 
 ### ignoreClassesWithImplements
 
@@ -6375,6 +6370,14 @@ type: `"all" | "public-fields"`
 default: `null`
 
 Whether to ignore classes that implement interfaces.
+
+#### `"all"`
+
+Ignores all classes that implement interfaces
+
+#### `"public-fields"`
+
+Only ignores public fields in classes that implement interfaces
 
 ### ignoreOverrideMethods
 
@@ -6832,6 +6835,8 @@ Require braces when the block spans multiple lines
 Require braces when the block is nested or spans multiple lines
 
 ### The 2nd option
+
+type: `"consistent"`
 
 ## How to use
 
@@ -7529,6 +7534,8 @@ This option is an object with the following properties:
 
 #### generators
 
+type: `"always" | "as-needed" | "never"`
+
 Configuration for generator function expressions. If not specified, uses the
 primary configuration.
 
@@ -8172,8 +8179,15 @@ type: `"always" | "never"`
 
 default: `"always"`
 
-When set to `"never"`, property names are not checked for length.
-When set to `"always"` (default), property names are checked just like other identifiers.
+Whether to check property names for length.
+
+#### `"always"`
+
+Property names are checked just like other identifiers
+
+#### `"never"`
+
+Property names are not checked for length.
 
 ## How to use
 
@@ -8701,6 +8715,8 @@ let foo = (bar, baz, qux) => {
 This rule accepts a configuration object with the following properties:
 
 ### countThis
+
+type: `"always" | "never" | "except-void"`
 
 This option controls when to count a `this` parameter.
 
@@ -14039,125 +14055,11 @@ url: /docs/guide/usage/linter/rules/eslint/no-restricted-exports.md
 
 This rule disallows specified names from being used as exported names.
 
+By default, this rule doesn’t disallow any names. Only the names you specify in the configuration will be disallowed.
+
 ### Why is this bad?
 
 In a project, certain names may be disallowed from being used as exported names for various reasons.
-
-### Options
-
-By default, this rule doesn’t disallow any names. Only the names you specify in the configuration will be disallowed.
-
-#### restrictedNamedExports
-
-This option is an array of strings, where each string is a name to be restricted.
-
-```json
-{"rules: {"no-restricted-exports": ["error", { "restrictedNamedExports": ["foo", "bar"] }]}}
-```
-
-Example of **incorrect** code for the "restrictedNamedExports" option:
-
-```js
-{"rules: {"no-restricted-exports": ["error", { "restrictedNamedExports": ["foo"] }]}}
-
-export const foo = 1;
-```
-
-##### Default exports
-
-By design, the `restrictedNamedExports` option doesn’t disallow export default declarations. If you configure `default` as a restricted name, that restriction will apply only to named export declarations.
-
-Examples of additional **incorrect** code for the `"restrictedNamedExports": ["default"]` option:
-
-```js
-{"rules: {"no-restricted-exports": ["error", { "restrictedNamedExports": ["default"] }]}}
-
-function foo() {}
-export { foo as default };
-```
-
-```js
-{"rules: {"no-restricted-exports": ["error", { "restrictedNamedExports": ["default"] }]}}
-
-export { default } from "some_module";
-```
-
-#### restrictedNamedExportsPattern
-
-This option is a string representing a regular expression pattern. Named exports matching this pattern will be restricted. This option does not apply to default named exports.
-
-Example of **incorrect** code for the "restrictedNamedExportsPattern" option:
-
-```js
-{"rules: {"no-restricted-exports": ["error", { "restrictedNamedExportsPattern": "bar$" }]}}
-
-export const foobar = 1;
-```
-
-#### restrictDefaultExports
-
-This option is an object option with boolean properties to restrict certain default export declarations. The option works only if the restrictedNamedExports option does not contain the "default" value.
-
-##### direct
-
-Whether to restricts `export default` declarations.
-
-Example of **incorrect** code for the `"restrictDefaultExports": { "direct": true }` option:
-
-```js
-{"rules: {"no-restricted-exports": ["error", { "restrictDefaultExports": { "direct": true } }]}}
-
-export default foo;
-```
-
-##### named
-
-Whether to restricts `export { foo as default };` declarations.
-
-Example of **incorrect** code for the `"restrictDefaultExports": { "named": true }` option:
-
-```js
-{"rules: {"no-restricted-exports": ["error", { "restrictDefaultExports": { "named": true } }]}}
-
-const foo = 123;
-export { foo as default };
-```
-
-##### defaultFrom
-
-Whether to restricts `export { default } from 'foo';` declarations.
-
-Example of **incorrect** code for the `"restrictDefaultExports": { "defaultFrom": true }` option:
-
-```js
-{"rules: {"no-restricted-exports": ["error", { "restrictDefaultExports": { "defaultFrom": true } }]}}
-
-export { default } from 'foo';
-```
-
-##### namedFrom
-
-Whether to restricts `export { foo as default } from 'foo';` declarations.
-
-Example of **incorrect** code for the `"restrictDefaultExports": { "namedFrom": true }` option:
-
-```js
-{"rules: {"no-restricted-exports": ["error", { "restrictDefaultExports": { "namedFrom": true } }]}}
-
-export { foo as default } from 'foo';
-```
-
-##### namespaceFrom
-
-Whether to restricts `export * as default from 'foo';` declarations.
-
-Example of **incorrect** code for the `"restrictDefaultExports": { "namespaceFrom": true }` option:
-
-```js
-{"rules: {"no-restricted-exports": ["error", { "restrictDefaultExports": { "namespaceFrom": true } }]}}
-
-export * as default from 'foo';
-```
 
 ## Configuration
 
@@ -14171,11 +14073,23 @@ type: `boolean`
 
 type: `object`
 
+An object with boolean properties to restrict certain default export
+declarations. This option works only if the `restrictedNamedExports`
+option does not contain the `"default"` value.
+
 #### restrictDefaultExports.defaultFrom
 
 type: `boolean`
 
 default: `false`
+
+Whether to restrict `export { default } from` declarations.
+
+Example of **incorrect** code for `"restrictDefaultExports": { "defaultFrom": true }`:
+
+```js
+export { default } from "foo";
+```
 
 #### restrictDefaultExports.direct
 
@@ -14183,11 +14097,29 @@ type: `boolean`
 
 default: `false`
 
+Whether to restrict `export default` declarations.
+
+Example of **incorrect** code for `"restrictDefaultExports": { "direct": true }`:
+
+```js
+const foo = 123;
+export default foo;
+```
+
 #### restrictDefaultExports.named
 
 type: `boolean`
 
 default: `false`
+
+Whether to restrict `export { foo as default }` declarations.
+
+Example of **incorrect** code for `"restrictDefaultExports": { "named": true }`:
+
+```js
+const foo = 123;
+export { foo as default };
+```
 
 #### restrictDefaultExports.namedFrom
 
@@ -14195,11 +14127,27 @@ type: `boolean`
 
 default: `false`
 
+Whether to restrict `export { foo as default } from` declarations.
+
+Example of **incorrect** code for `"restrictDefaultExports": { "namedFrom": true }`:
+
+```js
+export { foo as default } from "foo";
+```
+
 #### restrictDefaultExports.namespaceFrom
 
 type: `boolean`
 
 default: `false`
+
+Whether to restrict `export * as default from` declarations.
+
+Example of **incorrect** code for `"restrictDefaultExports": { "namespaceFrom": true }`:
+
+```js
+export * as default from "foo";
+```
 
 ### restrictedNamedExports
 
@@ -14207,9 +14155,52 @@ type: `string[]`
 
 default: `[]`
 
+An array of strings, where each string is a name to be restricted.
+
+Example of **incorrect** code for `"restrictedNamedExports": ["foo"]`:
+
+```ts
+export const foo = 1;
+```
+
+Example of **correct** code for `"restrictedNamedExports": ["foo"]`:
+
+```ts
+export const bar = 1;
+```
+
+By design, this option doesn't disallow export default declarations. If
+you configure `default` as a restricted name, that restriction will apply
+only to named export declarations.
+
+Example of **incorrect** code for `"restrictedNamedExports": ["default"]`:
+
+```ts
+function foo() {}
+export { foo as default };
+
+export { default } from "some_module";
+```
+
 ### restrictedNamedExportsPattern
 
 type: `string`
+
+A string representing a regular expression pattern. Named exports
+matching this pattern will be restricted. This option does not apply to
+default named exports.
+
+Example of **incorrect** code for \`"restrictedNamedExportsPattern": "bar$":
+
+```ts
+export const foobar = 1;
+```
+
+Example of **correct** code for \`"restrictedNamedExportsPattern": "bar$":
+
+```ts
+export const foo = 1;
+```
 
 ## How to use
 
@@ -22405,8 +22396,13 @@ default: `"single"`
 
 Configuration option to specify the target type for preferring default exports.
 
-* `"single"`: Prefer default export when there is only one export in the module.
-* `"any"`: Prefer default export in any module that has exports.
+#### `"single"`
+
+Prefer default export when there is only one export in the module.
+
+#### `"any"`
+
+Prefer default export in any module that has exports.
 
 ## How to use
 
@@ -25038,6 +25034,126 @@ to use it, add the following configuration to your `.oxlintrc.json`:
 ---
 
 ---
+url: /docs/guide/usage/linter/rules/jest/prefer-ending-with-an-expect.md
+---
+
+### What it does
+
+Enforces that test blocks end with an assertion (`expect` or a configured
+assertion function).
+
+### Why is this bad?
+
+A test that doesn't end with an assertion may be performing side effects
+or setup after its last check, which makes the test harder to understand
+and can hide failures. Ending with an assertion ensures the test's final
+action is verifying behavior.
+
+### Examples
+
+Examples of **incorrect** code for this rule with default values:
+
+```js
+it("lets me change the selected option", () => {
+  const container = render(MySelect, {
+    props: { options: [1, 2, 3], selected: 1 },
+  });
+
+  expect(container).toBeDefined();
+  expect(container.toHTML()).toContain('<option value="1" selected>');
+
+  container.setProp("selected", 2);
+});
+```
+
+Examples of **correct** code for this rule with defaults values:
+
+```js
+it("lets me change the selected option", () => {
+  const container = render(MySelect, {
+    props: { options: [1, 2, 3], selected: 1 },
+  });
+
+  expect(container).toBeDefined();
+  expect(container.toHTML()).toContain('<option value="1" selected>');
+
+  container.setProp("selected", 2);
+
+  expect(container.toHTML()).not.toContain('<option value="1" selected>');
+  expect(container.toHTML()).toContain('<option value="2" selected>');
+});
+```
+
+Examples of **incorrect** code for this rule with `{ "assertFunctionNames": ["expect"] }`:
+
+```js
+import { expectSaga } from "redux-saga-test-plan";
+import { addSaga } from "../src/sagas";
+
+test("returns sum", () => {
+  expectSaga(addSaga, 1, 1).returns(2).run();
+});
+```
+
+Examples of **correct** code for this rule with `{ "assertFunctionNames": ["expect"] }`:
+
+```js
+import { expectSaga } from "redux-saga-test-plan";
+import { addSaga } from "../src/sagas";
+
+test("returns sum", () => {
+  expectSaga(addSaga, 1, 1).returns(2).run();
+});
+```
+
+Examples of **correct** code for this rule with `{ "additionalTestBlockFunctions": ["each.test"] }`:
+
+```js
+each([
+  [2, 3],
+  [1, 3],
+]).test("the selection can change from %d to %d", (firstSelection, secondSelection) => {
+  const container = render(MySelect, {
+    props: { options: [1, 2, 3], selected: firstSelection },
+  });
+
+  expect(container).toBeDefined();
+  expect(container.toHTML()).toContain(`<option value="${firstSelection}" selected>`);
+
+  container.setProp("selected", secondSelection);
+
+  expect(container.toHTML()).not.toContain(`<option value="${firstSelection}" selected>`);
+  expect(container.toHTML()).toContain(`<option value="${secondSelection}" selected>`);
+});
+```
+
+## Configuration
+
+This rule accepts a configuration object with the following properties:
+
+### additionalTestBlockFunctions
+
+type: `string[]`
+
+default: `[]`
+
+An array of function names that should also be treated as test blocks.
+
+### assertFunctionNames
+
+type: `string[]`
+
+default: `["expect"]`
+
+A list of function names that should be treated as assertion functions.
+
+## How to use
+
+## References
+
+---
+
+---
 url: /docs/guide/usage/linter/rules/jest/prefer-equality-matcher.md
 ---
 
@@ -25425,6 +25541,64 @@ to use it, add the following configuration to your `.oxlintrc.json`:
   }
 }
 ```
+
+## How to use
+
+## References
+
+---
+
+---
+url: /docs/guide/usage/linter/rules/jest/prefer-importing-jest-globals.md
+---
+
+### What it does
+
+Prefer importing Jest globals (`describe`, `test`, `expect`, etc.) from
+`@jest/globals` rather than relying on ambient globals.
+
+### Why is this bad?
+
+Using global Jest functions without explicit imports makes dependencies
+implicit and can cause issues with type checking, editor tooling, and
+when migrating between test runners.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```javascript
+describe("suite", () => {
+  test("foo");
+  expect(true).toBeDefined();
+});
+```
+
+Examples of **correct** code for this rule:
+
+```javascript
+import { describe, expect, test } from "@jest/globals";
+describe("suite", () => {
+  test("foo");
+  expect(true).toBeDefined();
+});
+```
+
+## Configuration
+
+This rule accepts a configuration object with the following properties:
+
+### types
+
+type: `array`
+
+default: `["hook", "describe", "test", "expect", "jest", "unknown"]`
+
+Jest function types to enforce importing for.
+
+#### types\[n]
+
+type: `"hook" | "describe" | "test" | "expect" | "jest" | "unknown"`
 
 ## How to use
 
@@ -25957,7 +26131,13 @@ to use it, add the following configuration to your `.oxlintrc.json`:
 
 This rule accepts one of the following string values:
 
-type: `"always" | "multi"`
+### `"always"`
+
+Require a hint to always be provided when using external snapshot matchers.
+
+### `"multi"`
+
+Require a hint to be provided when there are multiple external snapshot matchers within the scope (meaning it includes nested calls).
 
 ## How to use
 
@@ -26786,6 +26966,83 @@ type: `integer`
 default: `1`
 
 Minimum number of arguments `expect` should be called with.
+
+## How to use
+
+## References
+
+---
+
+---
+url: /docs/guide/usage/linter/rules/jest/valid-expect-in-promise.md
+---
+
+### What it does
+
+Ensures that `expect` calls inside promise chains (`.then()`, `.catch()`,
+`.finally()`) are properly awaited or returned from the test.
+
+### Why is this bad?
+
+When `expect` is called inside a promise callback that is not awaited or
+returned, the test may pass even if the assertion fails because the test
+completes before the promise resolves. This leads to silently passing
+tests with broken assertions.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```javascript
+test("promise test", async () => {
+  something().then((value) => {
+    expect(value).toBe("red");
+  });
+});
+
+test("promises test", () => {
+  const onePromise = something().then((value) => {
+    expect(value).toBe("red");
+  });
+  const twoPromise = something().then((value) => {
+    expect(value).toBe("blue");
+  });
+
+  return Promise.any([onePromise, twoPromise]);
+});
+```
+
+Examples of **correct** code for this rule:
+
+```javascript
+test("promise test", async () => {
+  await something().then((value) => {
+    expect(value).toBe("red");
+  });
+});
+
+test("promises test", () => {
+  const onePromise = something().then((value) => {
+    expect(value).toBe("red");
+  });
+  const twoPromise = something().then((value) => {
+    expect(value).toBe("blue");
+  });
+
+  return Promise.all([onePromise, twoPromise]);
+});
+```
+
+This rule is compatible with [eslint-plugin-vitest](https://github.com/vitest-dev/eslint-plugin-vitest/blob/main/docs/rules/valid-expect-in-promise.md),
+to use it, add the following configuration to your `.oxlintrc.json`:
+
+```json
+{
+  "rules": {
+    "vitest/valid-expect-in-promise": "error"
+  }
+}
+```
 
 ## How to use
 
@@ -28968,6 +29225,22 @@ type: `"htmlFor" | "nesting" | "both" | "either"`
 default: `"either"`
 
 The type of association required between the label and the control.
+
+#### `"htmlFor"`
+
+Assert that the label uses `htmlFor` to associate a control.
+
+#### `"nesting"`
+
+Assert that the label has a nested control
+
+#### `"both"`
+
+Assert that the label uses both `htmlFor` and nesting for associating a control
+
+#### `"either"`
+
+Assert that the label uses either `htmlFor` or nesting for associating a control
 
 ### controlComponents
 
@@ -34679,8 +34952,51 @@ type: `Record<string, boolean>`
 Predefine global variables.
 
 Environments specify what global variables are predefined.
-See [ESLint's list of environments](https://eslint.org/docs/v8.x/use/configure/language-options#specifying-environments)
-for what environments are available and what each one provides.
+Available environments:
+
+* amd - require() and define() globals.
+* applescript - AppleScript globals.
+* astro - Astro globals.
+* atomtest - Atom test globals.
+* audioworklet - AudioWorklet globals.
+* browser - browser globals.
+* builtin - Latest ECMAScript globals, equivalent to es2026.
+* commonjs - CommonJS globals and scoping.
+* embertest - Ember test globals.
+* es2015 - ECMAScript 2015 globals.
+* es2016 - ECMAScript 2016 globals.
+* es2017 - ECMAScript 2017 globals.
+* es2018 - ECMAScript 2018 globals.
+* es2019 - ECMAScript 2019 globals.
+* es2020 - ECMAScript 2020 globals.
+* es2021 - ECMAScript 2021 globals.
+* es2022 - ECMAScript 2022 globals.
+* es2023 - ECMAScript 2023 globals.
+* es2024 - ECMAScript 2024 globals.
+* es2025 - ECMAScript 2025 globals.
+* es2026 - ECMAScript 2026 globals.
+* es6 - ECMAScript 6 globals except modules.
+* greasemonkey - GreaseMonkey globals.
+* jasmine - Jasmine globals.
+* jest - Jest globals.
+* jquery - jQuery globals.
+* meteor - Meteor globals.
+* mocha - Mocha globals.
+* mongo - MongoDB globals.
+* nashorn - Java 8 Nashorn globals.
+* node - Node.js globals and scoping.
+* phantomjs - PhantomJS globals.
+* prototypejs - Prototype.js globals.
+* protractor - Protractor globals.
+* qunit - QUnit globals.
+* serviceworker - Service Worker globals.
+* shared-node-browser - Node.js and Browser common globals.
+* shelljs - ShellJS globals.
+* svelte - Svelte globals.
+* vitest - Vitest globals.
+* vue - Vue globals.
+* webextensions - WebExtensions globals.
+* worker - Web Workers globals.
 
 ## extends
 
@@ -34843,6 +35159,8 @@ Specify a warning threshold. Exits with an error status if warnings exceed this 
 Equivalent to passing `--max-warnings` on the CLI.
 
 ### options.reportUnusedDisableDirectives
+
+type: `"allow" | "off" | "warn" | "error" | "deny" | integer`
 
 Report unused disable directives (e.g. `// oxlint-disable-line` or `// eslint-disable-line`).
 
@@ -35456,8 +35774,51 @@ type: `Record<string, boolean>`
 Predefine global variables.
 
 Environments specify what global variables are predefined.
-See [ESLint's list of environments](https://eslint.org/docs/v8.x/use/configure/language-options#specifying-environments)
-for what environments are available and what each one provides.
+Available environments:
+
+* amd - require() and define() globals.
+* applescript - AppleScript globals.
+* astro - Astro globals.
+* atomtest - Atom test globals.
+* audioworklet - AudioWorklet globals.
+* browser - browser globals.
+* builtin - Latest ECMAScript globals, equivalent to es2026.
+* commonjs - CommonJS globals and scoping.
+* embertest - Ember test globals.
+* es2015 - ECMAScript 2015 globals.
+* es2016 - ECMAScript 2016 globals.
+* es2017 - ECMAScript 2017 globals.
+* es2018 - ECMAScript 2018 globals.
+* es2019 - ECMAScript 2019 globals.
+* es2020 - ECMAScript 2020 globals.
+* es2021 - ECMAScript 2021 globals.
+* es2022 - ECMAScript 2022 globals.
+* es2023 - ECMAScript 2023 globals.
+* es2024 - ECMAScript 2024 globals.
+* es2025 - ECMAScript 2025 globals.
+* es2026 - ECMAScript 2026 globals.
+* es6 - ECMAScript 6 globals except modules.
+* greasemonkey - GreaseMonkey globals.
+* jasmine - Jasmine globals.
+* jest - Jest globals.
+* jquery - jQuery globals.
+* meteor - Meteor globals.
+* mocha - Mocha globals.
+* mongo - MongoDB globals.
+* nashorn - Java 8 Nashorn globals.
+* node - Node.js globals and scoping.
+* phantomjs - PhantomJS globals.
+* prototypejs - Prototype.js globals.
+* protractor - Protractor globals.
+* qunit - QUnit globals.
+* serviceworker - Service Worker globals.
+* shared-node-browser - Node.js and Browser common globals.
+* shelljs - ShellJS globals.
+* svelte - Svelte globals.
+* vitest - Vitest globals.
+* vue - Vue globals.
+* webextensions - WebExtensions globals.
+* worker - Web Workers globals.
 
 ## extends
 
@@ -35620,6 +35981,8 @@ Specify a warning threshold. Exits with an error status if warnings exceed this 
 Equivalent to passing `--max-warnings` on the CLI.
 
 ### options.reportUnusedDisableDirectives
+
+type: `"allow" | "off" | "warn" | "error" | "deny" | integer`
 
 Report unused disable directives (e.g. `// oxlint-disable-line` or `// eslint-disable-line`).
 
@@ -36270,185 +36633,6 @@ Today, comments are not printed. *It will be supported thanks to [oxc-parser #13
 ---
 
 ---
-url: /docs/learn/architecture/parser.md
----
-
-# Parser Architecture
-
-Oxc maintains its own AST and parser, which is by far the fastest and most conformant JavaScript and TypeScript (including JSX and TSX) parser written in Rust.
-
-As the parser often represents a key performance bottleneck in JavaScript tooling,
-any minor improvements can have a cascading effect on our downstream tools.
-By developing our parser, we have the opportunity to explore and implement well-researched performance techniques.
-
-## AST Design Philosophy
-
-While many existing JavaScript tools rely on [estree] as their AST specification,
-a notable drawback is its abundance of ambiguous nodes.
-This ambiguity often leads to confusion during development with [estree].
-
-The Oxc AST differs from the [estree] AST by removing ambiguous nodes and introducing distinct types.
-For example, instead of using a generic [estree] `Identifier`,
-the Oxc AST provides specific types such as `BindingIdentifier`, `IdentifierReference`, and `IdentifierName`.
-
-This clear distinction greatly enhances the development experience by aligning more closely with the ECMAScript specification.
-
-### AST Node Types
-
-```rust
-// Instead of generic Identifier
-pub struct BindingIdentifier<'a> {
-    pub span: Span,
-    pub name: Atom<'a>,
-}
-
-pub struct IdentifierReference<'a> {
-    pub span: Span,
-    pub name: Atom<'a>,
-    pub reference_id: Cell<Option<ReferenceId>>,
-}
-
-pub struct IdentifierName<'a> {
-    pub span: Span,
-    pub name: Atom<'a>,
-}
-```
-
-### Semantic Clarity
-
-This approach provides semantic clarity:
-
-* **`BindingIdentifier`**: Variable declarations (`let x = 1`)
-* **`IdentifierReference`**: Variable usage (`console.log(x)`)
-* **`IdentifierName`**: Property names (`obj.property`)
-
-## Performance Architecture
-
-### How is it so fast
-
-* **Memory Arena**: AST is allocated in a [memory arena](https://crates.io/crates/bumpalo) for fast allocation and deallocation
-* **String Optimization**: Short strings are inlined by [CompactString](https://crates.io/crates/compact_str)
-* **Minimal Heap Usage**: No other heap allocations are done except the above two
-* **Separation of Concerns**: Scope binding, symbol resolution and some syntax errors are delegated to the semantic analyzer
-
-### Memory Management Details
-
-#### Arena Allocation
-
-```rust
-use oxc_allocator::Allocator;
-
-// All AST nodes are allocated in this arena
-let allocator = Allocator::default();
-let ast_node = allocator.alloc(Expression::NumericLiteral(
-    allocator.alloc(NumericLiteral { value: 42.0, span: SPAN })
-));
-```
-
-Benefits:
-
-* **O(1) allocation**: Simple pointer bump
-* **O(1) deallocation**: Drop entire arena at once
-* **Cache-friendly**: Linear memory layout
-* **No fragmentation**: Continuous memory usage
-
-#### String Interning with CompactString
-
-```rust
-// Strings ≤ 24 bytes are stored inline (no heap allocation)
-let short_name = CompactString::from("variableName");  // Stack allocated
-let long_name = CompactString::from("a_very_long_variable_name_that_exceeds_limit");  // Heap allocated
-```
-
-This reduces memory allocations for the majority of JavaScript identifiers and string literals.
-
-## Parser Architecture
-
-### Two-Phase Design
-
-The Oxc parser follows a two-phase approach:
-
-1. **Parsing Phase**: Build AST structure with minimal semantic analysis
-2. **Semantic Phase**: Perform scope analysis, symbol resolution, and advanced error checking
-
-```rust
-// Phase 1: Parse to AST
-let parser_result = Parser::new(&allocator, &source_text, source_type).parse();
-
-// Phase 2: Semantic analysis
-let semantic_result = SemanticBuilder::new()
-    // Enable additional syntax checks not performed by the parser
-    .with_check_syntax_error(true)
-    .build(&parser_result.program);
-```
-
-### Parser Components
-
-#### Lexer
-
-* **Token generation**: Converts source text to structured tokens
-* **SIMD optimization**: Uses SIMD instructions for whitespace skipping
-* **Context-aware**: Handles regex vs division operator disambiguation
-
-#### Recursive Descent Parser
-
-* **Hand-written**: Custom implementation for maximum performance
-* **Error recovery**: Advanced error handling with meaningful messages
-* **Grammar compliance**: Follows ECMAScript specification precisely
-
-#### AST Builder
-
-* **Type safety**: Leverages Rust's type system for correctness
-* **Memory efficiency**: Direct arena allocation
-* **Builder pattern**: Convenient node construction methods
-
-## Conformance Strategy
-
-### Test Suite Coverage
-
-* **Test262**: 100% pass rate on ECMAScript conformance tests
-* **Babel**: 99.62% compatibility with Babel parser tests
-* **TypeScript**: 99.86% compatibility with TypeScript compiler tests
-
-### Error Handling Philosophy
-
-```rust
-// Meaningful error messages with source location
-pub struct OxcDiagnostic {
-    pub message: String,
-    pub span: Span,
-    pub severity: Severity,
-    pub help: Option<String>,
-}
-```
-
-The parser provides:
-
-* **Precise error locations**: Exact source positions
-* **Recovery strategies**: Continue parsing after errors
-* **Helpful suggestions**: Actionable error messages
-
-## Advanced Features
-
-### TypeScript Support
-
-* **Type stripping**: Removes TypeScript-specific syntax
-* **Decorator parsing**: Handles experimental decorators
-* **Namespace support**: Full module and namespace parsing
-* **JSX integration**: TypeScript + JSX (TSX) support
-
-### Research Areas
-
-* **SIMD text processing**: Vectorized string operations
-* **Cache optimization**: Minimize memory access patterns
-* **Branch prediction**: Optimize hot parsing paths
-* **Zero-copy parsing**: Eliminate unnecessary string copies
-
-[estree]: https://github.com/estree/estree
-
----
-
----
 url: /docs/learn/parser_in_rust/parser.md
 ---
 
@@ -36855,6 +37039,185 @@ function isParenthesizedArrowFunctionExpression(): Tristate {
 ```
 
 In summary, the TypeScript parser uses a combination of lookahead (fast path) and backtracking to parse arrow functions.
+
+---
+
+---
+url: /docs/learn/architecture/parser.md
+---
+
+# Parser Architecture
+
+Oxc maintains its own AST and parser, which is by far the fastest and most conformant JavaScript and TypeScript (including JSX and TSX) parser written in Rust.
+
+As the parser often represents a key performance bottleneck in JavaScript tooling,
+any minor improvements can have a cascading effect on our downstream tools.
+By developing our parser, we have the opportunity to explore and implement well-researched performance techniques.
+
+## AST Design Philosophy
+
+While many existing JavaScript tools rely on [estree] as their AST specification,
+a notable drawback is its abundance of ambiguous nodes.
+This ambiguity often leads to confusion during development with [estree].
+
+The Oxc AST differs from the [estree] AST by removing ambiguous nodes and introducing distinct types.
+For example, instead of using a generic [estree] `Identifier`,
+the Oxc AST provides specific types such as `BindingIdentifier`, `IdentifierReference`, and `IdentifierName`.
+
+This clear distinction greatly enhances the development experience by aligning more closely with the ECMAScript specification.
+
+### AST Node Types
+
+```rust
+// Instead of generic Identifier
+pub struct BindingIdentifier<'a> {
+    pub span: Span,
+    pub name: Atom<'a>,
+}
+
+pub struct IdentifierReference<'a> {
+    pub span: Span,
+    pub name: Atom<'a>,
+    pub reference_id: Cell<Option<ReferenceId>>,
+}
+
+pub struct IdentifierName<'a> {
+    pub span: Span,
+    pub name: Atom<'a>,
+}
+```
+
+### Semantic Clarity
+
+This approach provides semantic clarity:
+
+* **`BindingIdentifier`**: Variable declarations (`let x = 1`)
+* **`IdentifierReference`**: Variable usage (`console.log(x)`)
+* **`IdentifierName`**: Property names (`obj.property`)
+
+## Performance Architecture
+
+### How is it so fast
+
+* **Memory Arena**: AST is allocated in a [memory arena](https://crates.io/crates/bumpalo) for fast allocation and deallocation
+* **String Optimization**: Short strings are inlined by [CompactString](https://crates.io/crates/compact_str)
+* **Minimal Heap Usage**: No other heap allocations are done except the above two
+* **Separation of Concerns**: Scope binding, symbol resolution and some syntax errors are delegated to the semantic analyzer
+
+### Memory Management Details
+
+#### Arena Allocation
+
+```rust
+use oxc_allocator::Allocator;
+
+// All AST nodes are allocated in this arena
+let allocator = Allocator::default();
+let ast_node = allocator.alloc(Expression::NumericLiteral(
+    allocator.alloc(NumericLiteral { value: 42.0, span: SPAN })
+));
+```
+
+Benefits:
+
+* **O(1) allocation**: Simple pointer bump
+* **O(1) deallocation**: Drop entire arena at once
+* **Cache-friendly**: Linear memory layout
+* **No fragmentation**: Continuous memory usage
+
+#### String Interning with CompactString
+
+```rust
+// Strings ≤ 24 bytes are stored inline (no heap allocation)
+let short_name = CompactString::from("variableName");  // Stack allocated
+let long_name = CompactString::from("a_very_long_variable_name_that_exceeds_limit");  // Heap allocated
+```
+
+This reduces memory allocations for the majority of JavaScript identifiers and string literals.
+
+## Parser Architecture
+
+### Two-Phase Design
+
+The Oxc parser follows a two-phase approach:
+
+1. **Parsing Phase**: Build AST structure with minimal semantic analysis
+2. **Semantic Phase**: Perform scope analysis, symbol resolution, and advanced error checking
+
+```rust
+// Phase 1: Parse to AST
+let parser_result = Parser::new(&allocator, &source_text, source_type).parse();
+
+// Phase 2: Semantic analysis
+let semantic_result = SemanticBuilder::new()
+    // Enable additional syntax checks not performed by the parser
+    .with_check_syntax_error(true)
+    .build(&parser_result.program);
+```
+
+### Parser Components
+
+#### Lexer
+
+* **Token generation**: Converts source text to structured tokens
+* **SIMD optimization**: Uses SIMD instructions for whitespace skipping
+* **Context-aware**: Handles regex vs division operator disambiguation
+
+#### Recursive Descent Parser
+
+* **Hand-written**: Custom implementation for maximum performance
+* **Error recovery**: Advanced error handling with meaningful messages
+* **Grammar compliance**: Follows ECMAScript specification precisely
+
+#### AST Builder
+
+* **Type safety**: Leverages Rust's type system for correctness
+* **Memory efficiency**: Direct arena allocation
+* **Builder pattern**: Convenient node construction methods
+
+## Conformance Strategy
+
+### Test Suite Coverage
+
+* **Test262**: 100% pass rate on ECMAScript conformance tests
+* **Babel**: 99.62% compatibility with Babel parser tests
+* **TypeScript**: 99.86% compatibility with TypeScript compiler tests
+
+### Error Handling Philosophy
+
+```rust
+// Meaningful error messages with source location
+pub struct OxcDiagnostic {
+    pub message: String,
+    pub span: Span,
+    pub severity: Severity,
+    pub help: Option<String>,
+}
+```
+
+The parser provides:
+
+* **Precise error locations**: Exact source positions
+* **Recovery strategies**: Continue parsing after errors
+* **Helpful suggestions**: Actionable error messages
+
+## Advanced Features
+
+### TypeScript Support
+
+* **Type stripping**: Removes TypeScript-specific syntax
+* **Decorator parsing**: Handles experimental decorators
+* **Namespace support**: Full module and namespace parsing
+* **JSX integration**: TypeScript + JSX (TSX) support
+
+### Research Areas
+
+* **SIMD text processing**: Vectorized string operations
+* **Cache optimization**: Minimize memory access patterns
+* **Branch prediction**: Optimize hot parsing paths
+* **Zero-copy parsing**: Eliminate unnecessary string copies
+
+[estree]: https://github.com/estree/estree
 
 ---
 
@@ -39838,9 +40201,13 @@ A forbidden element, either as a plain element name or with a custom message.
 
 type: `string`
 
+The element name to forbid.
+
 ##### forbid\[n].message
 
 type: `string`
+
+The message to display when this element is found
 
 ## How to use
 
@@ -40424,6 +40791,14 @@ default: `"always"`
 When to allow a JSX filename extension. By default all files may have a JSX extension.
 Set this to `as-needed` to only allow JSX file extensions in files that contain JSX syntax.
 
+#### `"always"`
+
+Always allow a `.jsx` file extension.
+
+#### `"as-needed"`
+
+Only allow `.jsx` file extension for files that contain JSX syntax.
+
 ### extensions
 
 type: `string[]`
@@ -40993,6 +41368,14 @@ type: `"always" | "never"`
 default: `"always"`
 
 Whether to enforce dynamic links or enforce static links.
+
+#### `"always"`
+
+Always enforce dynamic links.
+
+#### `"never"`
+
+Always enforce static links.
 
 ### forms
 
@@ -42431,7 +42814,13 @@ var Hello = createReactClass({
 
 This rule accepts one of the following string values:
 
-type: `"allowed" | "disallow-in-func"`
+### `"allowed"`
+
+Forbids any call to `this.setState` in `componentWillUpdate` outside of functions.
+
+### `"disallow-in-func"`
+
+Makes this rule more strict by disallowing calls to \`this.setState\`\` even within functions.
 
 ## How to use
 
@@ -45577,44 +45966,18 @@ Using the `Array` type directly is not idiomatic. Instead, use the array type `T
 
 ### Examples
 
-Examples of **incorrect** code for this rule:
+Examples of **incorrect** code for this rule (with default configuration):
 
 ```typescript
-/*oxlint array-type: ["error", { "default": "array" }] */
 const arr: Array<number> = new Array<number>();
+const readonlyArr: ReadonlyArray<number> = [1, 2, 3];
 ```
 
+Examples of **correct** code for this rule (with default configuration):
+
 ```typescript
-/*oxlint array-type: ["error", { "default": "generic" }] */
 const arr: number[] = new Array<number>();
-```
-
-```typescript
-/*oxlint array-type: ["error", { "default": "array-simple" }] */
-const a: (string | number)[] = ["a", "b"];
-const b: { prop: string }[] = [{ prop: "a" }];
-const c: Array<MyType> = ["a", "b"];
-const d: Array<string> = ["a", "b"];
-```
-
-Examples of **correct** code for this rule:
-
-```typescript
-/*oxlint array-type: ["error", { "default": "array" }] */
-const arr: number[] = new Array<number>();
-```
-
-```typescript
-/*oxlint array-type: ["error", { "default": "generic" }] */
-const arr: Array<number> = new Array<number>();
-```
-
-```typescript
-/*oxlint array-type: ["error", { "default": "array-simple" }] */
-const a: Array<string | number> = ["a", "b"];
-const b: Array<{ prop: string }> = [{ prop: "a" }];
-const c: string[] = ["a", "b"];
-const d: MyType[] = ["a", "b"];
+const readonlyArr: readonly number[] = [1, 2, 3];
 ```
 
 ## Configuration
@@ -45628,6 +45991,60 @@ type: `"array" | "array-simple" | "generic"`
 default: `"array"`
 
 The array type expected for mutable cases.
+
+#### `"array"`
+
+Enforce using `T[]` for all array types.
+
+Example of **incorrect** code for this option:
+
+```ts
+const arr: Array<number> = new Array<number>();
+```
+
+Example of **correct** code for this option:
+
+```ts
+const arr: number[] = new Array<number>();
+```
+
+#### `"array-simple"`
+
+Enforce using `T[]` for simple types, and `Array<T>` for complex types.
+
+Example of **incorrect** code for this option:
+
+```ts
+const a: (string | number)[] = ["a", "b"];
+const b: { prop: string }[] = [{ prop: "a" }];
+const c: Array<MyType> = ["a", "b"];
+const d: Array<string> = ["a", "b"];
+```
+
+Example of **correct** code for this option:
+
+```ts
+const a: Array<string | number> = ["a", "b"];
+const b: Array<{ prop: string }> = [{ prop: "a" }];
+const c: string[] = ["a", "b"];
+const d: MyType[] = ["a", "b"];
+```
+
+#### `"generic"`
+
+Enforce using `Array<T>` for all array types.
+
+Example of **incorrect** code for this option:
+
+```ts
+const arr: number[] = new Array<number>();
+```
+
+Example of **correct** code for this option:
+
+```ts
+const arr: Array<number> = new Array<number>();
+```
 
 ### readonly
 
@@ -45894,7 +46311,49 @@ class C {
 
 This rule accepts one of the following string values:
 
-type: `"fields" | "getters"`
+### `"fields"`
+
+Enforce using readonly fields for literal values.
+
+Examples of **incorrect** code with this option:
+
+```ts
+class C {
+  get name() {
+    return "oxc";
+  }
+}
+```
+
+Examples of **correct** code with this option:
+
+```ts
+class C {
+  readonly name = "oxc";
+}
+```
+
+### `"getters"`
+
+Enforce using getters for literal values.
+
+Examples of **incorrect** code with this option:
+
+```ts
+class C {
+  readonly name = "oxc";
+}
+```
+
+Examples of **correct** code with this option:
+
+```ts
+class C {
+  get name() {
+    return "oxc";
+  }
+}
+```
 
 ## How to use
 
@@ -46126,47 +46585,192 @@ Examples of **correct** code for this rule (default: `assertionStyle: "as"`):
 const value = bar as Foo;
 ```
 
-Examples of **incorrect** code for this rule with `assertionStyle: "angle-bracket"`:
+When `objectLiteralTypeAssertions` or `arrayLiteralTypeAssertions` are set to `never`, then the preferred syntax
+for type assertions on object and array literals is to use a type annotation or the `satisfies` operator instead of a type assertion.
+
+Examples of **incorrect** code when `objectLiteralTypeAssertions: "never"` and `arrayLiteralTypeAssertions: "never"`:
 
 ```ts
-const value = bar as Foo;
-```
-
-Examples of **correct** code for this rule with `assertionStyle: "angle-bracket"`:
-
-```ts
-const value = <Foo>bar;
-```
-
-Examples of **incorrect** code for this rule with `assertionStyle: "never"`:
-
-```ts
-const value = bar as Foo;
-```
-
-Examples of **correct** code for this rule with `assertionStyle: "never"`:
-
-```ts
-const value: Foo = bar;
-const value = bar satisfies Foo;
-```
-
-When object/array literal assertions are disallowed, prefer annotations or `satisfies`:
-
-```ts
-// incorrect (when `objectLiteralTypeAssertions: "never"`)
 const obj = { a: 1 } as Foo;
+const arr = [1, 2] as Foo[];
+```
 
-// correct
+Examples of **correct** code when `objectLiteralTypeAssertions: "never"` and `arrayLiteralTypeAssertions: "never"`:
+
+```ts
 const obj: Foo = { a: 1 };
 const obj = { a: 1 } satisfies Foo;
 ```
 
 ## Configuration
 
+This rule accepts a configuration object with the following properties:
+
+### arrayLiteralTypeAssertions
+
+type: `"allow" | "allow-as-parameter" | "never"`
+
+Whether array literal type assertions are allowed, allowed only as parameters, or disallowed.
+
+#### `"allow"`
+
+Allow type assertions on array literals.
+
+Examples of **correct** code with this option:
+
+```ts
+const x = [1, 2] as number[];
+const x = ["a"] as Array<string>;
+```
+
+#### `"allow-as-parameter"`
+
+Allow type assertions on array literals only when used as a function parameter,
+`throw` target, or default value.
+
+Examples of **incorrect** code with this option:
+
+```ts
+const x = [1, 2] as Foo;
+const foo = () => [5] as Foo;
+```
+
+Examples of **correct** code with this option:
+
+```ts
+print([5] as Foo);
+throw [1, 2] as Bar;
+function f(x = [5] as Foo.Bar) {}
+```
+
+#### `"never"`
+
+Disallow type assertions on array literals entirely.
+
+Examples of **incorrect** code with this option:
+
+```ts
+const x = [1, 2] as Foo;
+print([5] as Foo);
+```
+
+Examples of **correct** code with this option:
+
+```ts
+const x: Foo = [1, 2];
+const x = [1, 2] satisfies Foo;
+```
+
 ### assertionStyle
 
-type: `"never"`
+type: `"as" | "angle-bracket" | "never"`
+
+Which assertion syntax is enforced.
+
+#### `"as"`
+
+Enforce `as` syntax for type assertions.
+
+Examples of **incorrect** code with this option:
+
+```ts
+const value = <Foo>bar;
+```
+
+Examples of **correct** code with this option:
+
+```ts
+const value = bar as Foo;
+```
+
+#### `"angle-bracket"`
+
+Enforce angle-bracket syntax for type assertions.
+
+Examples of **incorrect** code with this option:
+
+```ts
+const value = bar as Foo;
+```
+
+Examples of **correct** code with this option:
+
+```ts
+const value = <Foo>bar;
+```
+
+#### `"never"`
+
+Disallow type assertions entirely.
+
+Examples of **incorrect** code with this option:
+
+```ts
+const value = bar as Foo;
+const value = <Foo>bar;
+```
+
+Examples of **correct** code with this option:
+
+```ts
+const value: Foo = bar;
+const value = bar satisfies Foo;
+```
+
+### objectLiteralTypeAssertions
+
+type: `"allow" | "allow-as-parameter" | "never"`
+
+Whether object literal type assertions are allowed, allowed only as parameters, or disallowed.
+
+#### `"allow"`
+
+Allow type assertions on object literals.
+
+Examples of **correct** code with this option:
+
+```ts
+const x = { a: 1 } as Foo;
+const x = {} as Foo<int>;
+```
+
+#### `"allow-as-parameter"`
+
+Allow type assertions on object literals only when used as a function parameter,
+`throw` target, or default value.
+
+Examples of **incorrect** code with this option:
+
+```ts
+const x = { a: 1 } as Foo;
+const x = {} as Foo<int>;
+```
+
+Examples of **correct** code with this option:
+
+```ts
+print({ a: 1 } as Foo);
+throw { bar: 5 } as Foo;
+function f(x = {} as Foo) {}
+```
+
+#### `"never"`
+
+Disallow type assertions on object literals entirely.
+
+Examples of **incorrect** code with this option:
+
+```ts
+const x = { a: 1 } as Foo;
+print({ a: 1 } as Foo);
+```
+
+Examples of **correct** code with this option:
+
+```ts
+const x: Foo = { a: 1 };
+const x = { a: 1 } satisfies Foo;
+```
 
 ## How to use
 
@@ -47429,11 +48033,17 @@ default: `"never"`
 
 Whether to allow empty interfaces.
 
-Allowed values are:
+#### `"never"`
 
-* `'always'`: to always allow interfaces with no fields
-* `'never'` *(default)*: to never allow interfaces with no fields
-* `'with-single-extends'`: to allow empty interfaces that `extend` from a single base interface
+Never allow interfaces with no fields.
+
+#### `"always"`
+
+Always allow interfaces with no fields.
+
+#### `"with-single-extends"`
+
+Allow empty interfaces that `extend` from a single base interface.
 
 Examples of **correct** code for this rule with `{ allowInterfaces: 'with-single-extends' }`:
 
@@ -47452,10 +48062,13 @@ default: `"never"`
 
 Whether to allow empty object type literals.
 
-Allowed values are:
+#### `"never"`
 
-* `'always'`: to always allow object type literals with no fields
-* `'never'` *(default)*: to never allow object type literals with no fields
+Never allow object type literals with no fields.
+
+#### `"always"`
+
+Always allow object type literals with no fields.
 
 ### allowWithName
 
@@ -52076,9 +52689,17 @@ This rule accepts a configuration object with the following properties:
 
 type: `"always" | "never"`
 
-default: `null`
+default: `"never"`
 
 Whether equality checks against the first/last character are allowed.
+
+#### `"always"`
+
+Always allow equality checks against the first or last character.
+
+#### `"never"`
+
+Never allow equality checks against the first or last character.
 
 ## How to use
 
@@ -53943,6 +54564,42 @@ Whether to check scoping with arrow functions.
 ---
 
 ---
+url: /docs/guide/usage/linter/rules/unicorn/consistent-template-literal-escape.md
+---
+
+### What it does
+
+Enforce consistent style for escaping ${ in template literals.
+
+### Why is this bad?
+
+Using `\${` instead of `${` can improve readability and prevent confusion.
+
+### Examples
+
+Examples of **incorrect** code for this rule:
+
+```js
+const foo = `$\{a}`;
+```
+
+```js
+const foo = `\$\{a}`;
+```
+
+Examples of **correct** code for this rule:
+
+```js
+const foo = `\${a}`;
+```
+
+## How to use
+
+## References
+
+---
+
+---
 url: /docs/guide/usage/linter/rules/unicorn/custom-error-definition.md
 ---
 
@@ -54208,8 +54865,13 @@ default: `"greater-than"`
 
 Configuration option to specify how non-zero length checks should be enforced.
 
-`greater-than`: Enforces non-zero to be checked with `foo.length > 0`
-`not-equal`: Enforces non-zero to be checked with `foo.length !== 0`
+#### `"greater-than"`
+
+Enforces non-zero to be checked with `foo.length > 0`.
+
+#### `"not-equal"`
+
+Enforces non-zero to be checked with `foo.length !== 0`.
 
 ## How to use
 
@@ -55297,8 +55959,13 @@ default: `"loose"`
 
 Controls which built-in constructors are checked.
 
-* `"loose"` (default): Only checks Array, Function, Error (if `useErrorIsError` is true), and primitive wrappers
-* `"strict"`: Additionally checks Error types, collections, typed arrays, and other built-in constructors
+#### `"strict"`
+
+Additionally checks Error types, collections, typed arrays, and other built-in constructors.
+
+#### `"loose"`
+
+Only checks Array, Function, Error (if `useErrorIsError` is true), and primitive wrappers.
 
 ### useErrorIsError
 
@@ -59731,6 +60398,8 @@ Arguments:
 
 * **`    --silent`** —
   Do not display any diagnostics
+* **`    --no-error-on-unmatched-pattern`** —
+  Do not exit with an error when no files are selected for linting (for example, after applying ignore patterns)
 * **`    --threads`**=*`INT`* —
   Number of threads to use. Set to 1 for using only 1 CPU core.
 * **`    --print-config`** —
@@ -59907,17 +60576,25 @@ This rule accepts a configuration object with the following properties:
 
 type: `"for" | "each"`
 
+Preferred method to create parameterized tests for `describe` blocks.
+
 ### it
 
 type: `"for" | "each"`
+
+Preferred method to create parameterized tests for `it` blocks.
 
 ### suite
 
 type: `"for" | "each"`
 
+Preferred method to create parameterized tests for `suite` blocks.
+
 ### test
 
 type: `"for" | "each"`
+
+Preferred method to create parameterized tests for `test` blocks.
 
 ## How to use
 
@@ -60504,6 +61181,10 @@ This rule accepts a configuration object with the following properties:
 ### fixable
 
 type: `boolean`
+
+default: `true`
+
+Whether the rule should generate fixes or not.
 
 ## How to use
 
